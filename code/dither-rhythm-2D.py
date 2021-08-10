@@ -39,7 +39,7 @@ time = 0
 channel = 0
 pitch = 60
 duration = 1/4
-track_name = "1D rhythm " + seed + " {} bar".format(len(stress_list) // 16)
+track_name = "2D rhythm " + seed + " {} bar".format(len(stress_list) // 16)
 if (len(stress_list) // 16) > 1:
     track_name += "s"
 output_file.addTrackName(track, time, track_name)
