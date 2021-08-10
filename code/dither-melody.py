@@ -8,6 +8,8 @@ import sys
 from heightmap import diamond_square
 from midiutil.MidiFile import MIDIFile
 
+scale = [60, 62, 64, 66, 67, 69, 71, 72]
+
 if len(sys.argv) > 1:
     seed = str(sys.argv[1])
 else:
@@ -24,6 +26,12 @@ stress_list = []
 for i in range(length):
     stress_list.extend(stress_map[i][:length])
 
+pitch_map = diamond_square(iter, smoothing, seed + "pitch_map")
+# trim to 2^iter square and flatten
+pitch_list = []
+for i in range(length):
+    stress_list.extend(pitch_map[i][:length])
+
 # dither
 threshold = []
 format_string = '0' + str(iter) + 'b'
@@ -37,14 +45,16 @@ output_file = MIDIFile(1)
 track = 0
 time = 0
 channel = 0
-pitch = 60
 duration = 1/4
-track_name = "2D rhythm " + seed + " {} bar".format(len(stress_list) // 16)
+track_name = "melody " + seed + " {} bar".format(len(stress_list) // 16)
 if (len(stress_list) // 16) > 1:
     track_name += "s"
 output_file.addTrackName(track, time, track_name)
 for index, value in enumerate(rhythm):
     if value:
+        pitch_index = math.floor(len(scale)*pitch_list[i])
+        pitch_index = min(pitch_index, len(scale))
+        pitch = scale[pitch_index]
         time = index/4
         # no zero velocity notes
         volume = math.ceil(stress_list[i]*127)

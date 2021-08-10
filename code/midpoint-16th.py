@@ -38,6 +38,7 @@ for i in range(len(stress_list)):
     time = i/4
     # no zero velocity notes
     volume = math.ceil(stress_list[i]*127)
+    volume = max(volume, 1)
     output_file.addNote(track, channel, pitch, time, duration, volume)
 
 filename = track_name + ".mid"
