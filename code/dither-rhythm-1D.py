@@ -2,7 +2,10 @@
 
 #= initialize ==================================================================
 
-import random, string, sys
+import math
+import random
+import string
+import sys
 from midiutil.MidiFile import MIDIFile
 
 if len(sys.argv) > 1:

@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import math
 import random
 import string
 import sys
@@ -46,8 +47,7 @@ for index, value in enumerate(rhythm):
     if value:
         time = index/4
         # no zero velocity notes
-        volume = int(stress_list[i]*127)
-        volume = max(volume, 1)
+        volume = math.ceiling(stress_list[i]*127)
         output_file.addNote(track, channel, pitch, time, duration, volume)
 
 filename = track_name + ".mid"
