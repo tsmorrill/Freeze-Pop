@@ -68,7 +68,7 @@ channel = 0
 pitch = 60
 duration = 1/4
 
-track_name = seed + " {} bar".format(length // 16)
+track_name = "2D rhythm" seed + " {} bar".format(length // 16)
 if (length // 16) > 1:
     track_name += "s"
 
