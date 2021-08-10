@@ -30,7 +30,7 @@ pitch_map = diamond_square(iter, smoothing, seed + "pitch_map")
 # trim to 2^iter square and flatten
 pitch_list = []
 for i in range(length):
-    stress_list.extend(pitch_map[i][:length])
+    pitch_list.extend(pitch_map[i][:length])
 
 # dither
 threshold = []
@@ -52,8 +52,8 @@ if (len(stress_list) // 16) > 1:
 output_file.addTrackName(track, time, track_name)
 for index, value in enumerate(rhythm):
     if value:
-        pitch_index = math.floor(len(scale)*pitch_list[i])
-        pitch_index = min(pitch_index, len(scale))
+        pitch_index = math.floor(len(scale)*pitch_list[index])
+        pitch_index = min(pitch_index, len(scale)-1)
         pitch = scale[pitch_index]
         time = index/4
         # no zero velocity notes
