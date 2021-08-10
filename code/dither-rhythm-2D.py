@@ -21,8 +21,9 @@ smoothing = 1
 stress_map = diamond_square(iter, smoothing, seed + "stress_map")
 # trim to 2^iter square and flatten
 stress_list = []
-for i in range(length):
+for i in range(length // 2):
     stress_list.extend(stress_map[i][:length])
+    stress_list.extend(stress_map[i + length//2][:length])
 
 # dither
 threshold = []

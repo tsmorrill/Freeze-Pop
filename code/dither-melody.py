@@ -8,7 +8,9 @@ import sys
 from heightmap import diamond_square
 from midiutil.MidiFile import MIDIFile
 
-scale = [60, 62, 64, 66, 67, 69, 71, 72]
+scale = [60, 62, 64, 66, 67, 69, 71,
+         72, 74, 76, 78, 79, 81, 83,
+         84]
 
 if len(sys.argv) > 1:
     seed = str(sys.argv[1])
@@ -18,19 +20,23 @@ else:
 
 iter = 4
 length = 2**iter
-smoothing = 1
+smoothing = 1.2
 
 stress_map = diamond_square(iter, smoothing, seed + "stress_map")
 # trim to 2^iter square and flatten
 stress_list = []
-for i in range(length):
+for i in range(length // 2):
     stress_list.extend(stress_map[i][:length])
+    stress_list.extend(stress_map[i + length//2][:length])
+
+smoothing = 1.4
 
 pitch_map = diamond_square(iter, smoothing, seed + "pitch_map")
 # trim to 2^iter square and flatten
 pitch_list = []
-for i in range(length):
+for i in range(length // 2):
     pitch_list.extend(pitch_map[i][:length])
+    pitch_list.extend(pitch_map[i +  length//2][:length])
 
 # dither
 threshold = []
@@ -57,7 +63,7 @@ for index, value in enumerate(rhythm):
         pitch = scale[pitch_index]
         time = index/4
         # no zero velocity notes
-        volume = math.ceil(stress_list[i]*127)
+        volume = math.ceil(stress_list[index]*127)
         volume = max(volume, 1)
         output_file.addNote(track, channel, pitch, time, duration, volume)
 

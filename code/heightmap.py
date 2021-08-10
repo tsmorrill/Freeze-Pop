@@ -17,12 +17,12 @@ def diamond_square(iter, smoothing, seed):
         row = height_map[0]
         # left column
         j = 0
-        center = (random.uniform(-1,1)*2**(--smoothing*n)
+        center = (random.uniform(-1,1)*2**(-smoothing*n)
                   + (  height_map[i  ][j] + height_map[i  ][j+1]
                      + height_map[i+1][j] + height_map[i+1][j+1])/4)
-        top = (random.uniform(-1,1)*2**(--smoothing*n)
+        top = (random.uniform(-1,1)*2**(-smoothing*n)
                + (height_map[i][j] + height_map[i][j+1] + center)/3)
-        left = (random.uniform(-1,1)*2**(--smoothing*n)
+        left = (random.uniform(-1,1)*2**(-smoothing*n)
                 + (height_map[i][j] + height_map[i+1][j] + center)/3)
         temp_map[2*i  ][2*j], temp_map[2*i  ][2*j+1] = row[j], top
         temp_map[2*i+1][2*j], temp_map[2*i+1][2*j+1] = left,   center
@@ -30,19 +30,19 @@ def diamond_square(iter, smoothing, seed):
         # interior columns
         for j, value in enumerate(row[1:-1]):
             j += 1
-            center = (random.uniform(-1,1)*2**(--smoothing*n)
+            center = (random.uniform(-1,1)*2**(-smoothing*n)
                       + (  height_map[i  ][j] + height_map[i  ][j+1]
                          + height_map[i+1][j] + height_map[i+1][j+1])/4)
-            top = (random.uniform(-1,1)*2**(--smoothing*n)
+            top = (random.uniform(-1,1)*2**(-smoothing*n)
                    + (height_map[i][j] + height_map[i][j+1] + center)/3)
-            left = (random.uniform(-1,1)*2**(--smoothing*n)
+            left = (random.uniform(-1,1)*2**(-smoothing*n)
                     + (height_map[i][j] + height_map[i+1][j]
                        + temp_map[2*i+1][2*j-1] + center)/4)
             temp_map[2*i  ][2*j], temp_map[2*i  ][2*j+1] = row[j], top
             temp_map[2*i+1][2*j], temp_map[2*i+1][2*j+1] = left,   center
         # right column
         j = in_cols - 1
-        left = (random.uniform(-1,1)*2**(--smoothing*n)
+        left = (random.uniform(-1,1)*2**(-smoothing*n)
                 + (height_map[i][j] + height_map[i+1][j]
                    + temp_map[2*i+1][2*j-1])/3)
         temp_map[2*i  ][2*j] = row[j]
@@ -52,33 +52,33 @@ def diamond_square(iter, smoothing, seed):
             i += 1
             # left column
             j = 0
-            center = (random.uniform(-1,1)*2**(--smoothing*n)
+            center = (random.uniform(-1,1)*2**(-smoothing*n)
                       + (  height_map[i  ][j] + height_map[i  ][j+1]
                          + height_map[i+1][j] + height_map[i+1][j+1])/4)
-            top = (random.uniform(-1,1)*2**(--smoothing*n)
+            top = (random.uniform(-1,1)*2**(-smoothing*n)
                    + (height_map[i][j] + height_map[i][j+1]
                       + temp_map[2*i-1][2*j+1] + center)/4)
-            left = (random.uniform(-1,1)*2**(--smoothing*n)
+            left = (random.uniform(-1,1)*2**(-smoothing*n)
                     + (height_map[i][j] + height_map[i+1][j] + center)/3)
             temp_map[2*i  ][2*j], temp_map[2*i  ][2*j+1] = row[j], top
             temp_map[2*i+1][2*j], temp_map[2*i+1][2*j+1] = left,   center
             # interior columns
             for j, value in enumerate(row[1:-1]):
                 j += 1
-                center = (random.uniform(-1,1)*2**(--smoothing*n)
+                center = (random.uniform(-1,1)*2**(-smoothing*n)
                           + (  height_map[i  ][j] + height_map[i  ][j+1]
                              + height_map[i+1][j] + height_map[i+1][j+1])/4)
-                top = (random.uniform(-1,1)*2**(--smoothing*n)
+                top = (random.uniform(-1,1)*2**(-smoothing*n)
                        + (height_map[i][j] + height_map[i][j+1]
                           + temp_map[2*i-1][2*j+1] + center)/4)
-                left = (random.uniform(-1,1)*2**(--smoothing*n)
+                left = (random.uniform(-1,1)*2**(-smoothing*n)
                         + (height_map[i][j] + height_map[i+1][j]
                            + temp_map[2*i+1][2*j-1] + center)/4)
                 temp_map[2*i  ][2*j], temp_map[2*i  ][2*j+1] = row[j], top
                 temp_map[2*i+1][2*j], temp_map[2*i+1][2*j+1] = left,   center
             # right column
             j = in_cols - 1
-            left = (random.uniform(-1,1)*2**(--smoothing*n)
+            left = (random.uniform(-1,1)*2**(-smoothing*n)
                     + (height_map[i][j] + height_map[i+1][j]
                        + temp_map[2*i+1][2*j-1])/3)
             temp_map[2*i  ][2*j] = row[j]
@@ -88,13 +88,13 @@ def diamond_square(iter, smoothing, seed):
         row = height_map[i]
         # left column
         j = 0
-        top = (random.uniform(-1,1)*2**(--smoothing*n)
+        top = (random.uniform(-1,1)*2**(-smoothing*n)
                + (height_map[i][j] + height_map[i][j+1] + center)/3)
         temp_map[2*i  ][2*j], temp_map[2*i  ][2*j+1] = row[j], top
         # interior columns
         for j, value in enumerate(row[1:-1]):
             j += 1
-            top = (random.uniform(-1,1)*2**(--smoothing*n)
+            top = (random.uniform(-1,1)*2**(-smoothing*n)
                    + (height_map[i][j] + height_map[i][j+1] + center)/3)
 
             temp_map[2*i  ][2*j], temp_map[2*i  ][2*j+1] = row[j], top
