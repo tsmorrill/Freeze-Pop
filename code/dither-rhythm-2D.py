@@ -19,7 +19,7 @@ length = 2**iter
 smoothing = 1
 
 stress_map = diamond_square(iter, smoothing, seed + "stress_map")
-# trim to 2^iter square
+# trim to 2^iter square and flatten
 stress_list = []
 for i in range(length):
     stress_list.extend(stress_map[i][:length])
