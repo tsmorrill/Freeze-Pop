@@ -1,5 +1,27 @@
 import random
 
+def heightmap_1D(iter, smoothing, seed):
+    """Create 2^iter + 1 linear heightmap via midpoint displacement.
+    """
+    random.seed(seed)
+    height_map = [random.random(), random.random()]
+    for i in range(iter):
+        temp_list = []
+        for j in range(2**i):
+            temp_list.append(height_map[j])
+            temp_list.append((height_map[j]+height_map[j+1])/2
+                             + random.uniform(-1,1)*2**(-smoothing*i))
+        temp_list.append(height_map[-1])
+        height_map = temp_list
+
+    # normalize
+    m = min(height_map)
+    M = max(height_map)
+    width = M - m
+    for index, value in enumerate(height_map):
+        height_map[index] = (value - m)/width
+    return(height_map)
+
 def diamond_square(iter, smoothing, seed):
     """Create 2^iter + 1 square heightmap via diamond square algorithm.
     """
@@ -12,6 +34,7 @@ def diamond_square(iter, smoothing, seed):
         out_rows = 2*in_rows - 1
         out_cols = 2*in_cols - 1
         temp_map = [[None for j in range(out_cols)] for i in range(out_rows)]
+
         # top row
         i = 0
         row = height_map[0]
@@ -26,7 +49,6 @@ def diamond_square(iter, smoothing, seed):
                 + (height_map[i][j] + height_map[i+1][j] + center)/3)
         temp_map[2*i  ][2*j], temp_map[2*i  ][2*j+1] = row[j], top
         temp_map[2*i+1][2*j], temp_map[2*i+1][2*j+1] = left,   center
-
         # interior columns
         for j, value in enumerate(row[1:-1]):
             j += 1
@@ -47,6 +69,7 @@ def diamond_square(iter, smoothing, seed):
                    + temp_map[2*i+1][2*j-1])/3)
         temp_map[2*i  ][2*j] = row[j]
         temp_map[2*i+1][2*j] = left
+
         # interior rows
         for i, row in enumerate(height_map[1:-1]):
             i += 1
@@ -83,6 +106,7 @@ def diamond_square(iter, smoothing, seed):
                        + temp_map[2*i+1][2*j-1])/3)
             temp_map[2*i  ][2*j] = row[j]
             temp_map[2*i+1][2*j] = left
+
         # bottom row
         i = in_rows - 1
         row = height_map[i]
@@ -102,6 +126,7 @@ def diamond_square(iter, smoothing, seed):
         j = in_cols - 1
         temp_map[2*i][2*j] = row[j]
         height_map = temp_map
+
     # normalize
     m = min(min(height_map[i]) for i in range(len(height_map)))
     M = max(max(height_map[i]) for i in range(len(height_map)))
