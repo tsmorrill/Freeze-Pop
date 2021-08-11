@@ -1,3 +1,4 @@
+* invert dithering threshold
 * make valleys of heightmap prefer off-beats
 * make rhythms more likely to sound on downbeat
   - add initialization argument to heightmap.py functions
@@ -5,3 +6,4 @@
 * add erosion/ornamentation to pitch map
   - remove normalization from heightmap.py functions
 * add harmony generation
+* undersample an oversized heightmap
