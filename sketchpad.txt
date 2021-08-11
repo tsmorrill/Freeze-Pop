@@ -3,7 +3,8 @@
 * make rhythms more likely to sound on downbeat
   - add initialization argument to heightmap.py functions
 * add proceedural generation of key/chord by bar
-* add erosion/ornamentation to pitch map
+* add erosio
   - remove normalization from heightmap.py functions
+* add ornamentation to pitch map
 * add harmony generation
 * undersample an oversized heightmap
