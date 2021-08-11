@@ -44,8 +44,8 @@ track_name = "2D rhythm " + seed + " {} bar".format(len(stress_list) // 16)
 if (len(stress_list) // 16) > 1:
     track_name += "s"
 output_file.addTrackName(track, time, track_name)
-for index, value in enumerate(rhythm):
-    if value:
+for index, play_note in enumerate(rhythm):
+    if play_note:
         time = index/4
         # no zero velocity notes
         volume = math.ceil(stress_list[index]*127)
