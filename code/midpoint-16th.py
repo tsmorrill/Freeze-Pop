@@ -35,10 +35,10 @@ track_name = "16ths " + seed + " {} bar".format(len(stress_list) // 16)
 if (len(stress_list) // 16) > 1:
     track_name += "s"
 output_file.addTrackName(track, time, track_name)
-for i in range(len(stress_list)):
-    time = i/4
+for index, stress in enumerate(stress_list):
+    time = index/4
     # no zero velocity notes
-    volume = math.ceil(stress_list[i]*127)
+    volume = math.ceil(stress*127)
     volume = max(volume, 1)
     output_file.addNote(track, channel, pitch, time, duration, volume)
 
