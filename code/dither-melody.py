@@ -56,8 +56,8 @@ track_name = "melody " + seed + " {} bar".format(len(stress_list) // 16)
 if (len(stress_list) // 16) > 1:
     track_name += "s"
 output_file.addTrackName(track, time, track_name)
-for index, value in enumerate(rhythm):
-    if value:
+for index, play_note in enumerate(rhythm):
+    if play_note:
         pitch_index = math.floor(len(scale)*pitch_list[index])
         pitch_index = min(pitch_index, len(scale)-1)
         pitch = scale[pitch_index]
