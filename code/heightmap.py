@@ -1,5 +1,7 @@
 import random
 
+import numpy as np
+
 def heightmap_1D(iter, smoothing, seed):
     """Create 2^iter + 1 linear heightmap via midpoint displacement.
     """

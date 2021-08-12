@@ -7,6 +7,9 @@ import random
 import string
 import sys
 
+import numpy as np
+
+from dither import dither_1D
 from heightmap import heightmap_1D
 from midiutil.MidiFile import MIDIFile
 
@@ -16,26 +19,15 @@ else:
     chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
     seed = ''.join(random.choice(chars) for i in range(8))
 
-random.seed(seed)
-
 iter = 4
 # length of rhythm in sixteenth notes
 length = 2**iter
-
 smoothing = 1
 
 stress_list = heightmap_1D(iter, smoothing, seed + "stress")
+threshold = dither_1D(iter)
 
-# dither
-threshold = []
-format_string = '0' + str(iter) + 'b'
-
-for i in range(length)[::-1]:
-    threshold.append((int(format(i, format_string)[::-1], 2)+0.5)/length)
-
-rhythm = []
-for i in range(length):
-    rhythm.append(stress_list[i] <= threshold[i])
+rhythm = [threshold[i] < stress_list[i] for i in range(length)]
 
 #= write MIDI file =============================================================
 output_file = MIDIFile(1)
