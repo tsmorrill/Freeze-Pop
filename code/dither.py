@@ -8,5 +8,4 @@ def dither_1D(iter):
     list = [1 - (int(format(i, format_string)[::-1], 2)+0.5)/length
             for i in range(length)[::-1]]
     threshold = np.array(list)
-    print(threshold)
     return(threshold)

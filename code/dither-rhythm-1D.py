@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-#= initialize ==================================================================
-
 import math
 import random
 import string
@@ -24,9 +22,8 @@ iter = 4
 length = 2**iter
 smoothing = 1
 
-stress_list = heightmap_1D(iter, smoothing, seed + "stress")
+stress_list = heightmap_1D(iter, smoothing, seed + "stress", [1,0])
 threshold = dither_1D(iter)
-
 rhythm = [threshold[i] < stress_list[i] for i in range(length)]
 
 #= write MIDI file =============================================================

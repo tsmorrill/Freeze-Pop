@@ -2,27 +2,29 @@ import random
 
 import numpy as np
 
-def heightmap_1D(iter, smoothing, seed):
+def heightmap_1D(iter, smoothing, seed, init):
     """Create 2^iter + 1 linear heightmap via midpoint displacement.
     """
-    random.seed(seed)
-    height_map = [random.random(), random.random()]
+    if init:
+        heightmap = np.array(init)
+    else:
+        random.seed(seed + "init")
+        heightmap = np.array([random.random(), random.random()])
+
+    random.seed(seed + "iterate")
     for i in range(iter):
         temp_list = []
         for j in range(2**i):
-            temp_list.append(height_map[j])
-            temp_list.append((height_map[j]+height_map[j+1])/2
+            temp_list.append(heightmap[j])
+            temp_list.append((heightmap[j]+heightmap[j+1])/2
                              + random.uniform(-1,1)*2**(-smoothing*i))
-        temp_list.append(height_map[-1])
-        height_map = temp_list
+        temp_list.append(heightmap[-1])
+        heightmap = np.array(temp_list)
 
     # normalize
-    m = min(height_map)
-    M = max(height_map)
-    width = M - m
-    for index, value in enumerate(height_map):
-        height_map[index] = (value - m)/width
-    return(height_map)
+    heightmap += heightmap.min()
+    heightmap /= heightmap.max()
+    return(heightmap)
 
 def diamond_square(iter, smoothing, seed):
     """Create 2^iter + 1 square heightmap via diamond square algorithm.
