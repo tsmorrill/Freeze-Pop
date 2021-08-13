@@ -11,7 +11,8 @@ from dither import dither_1D
 from heightmap import diamond_square
 from midiutil.MidiFile import MIDIFile
 
-scale = [60, 62, 67]
+pitch_height = 1.0
+scale = [60, 62, 65, 67, 70, 72]
 
 if len(sys.argv) > 1:
     seed = str(sys.argv[1])
@@ -42,9 +43,30 @@ pitch_map = np.delete(pitch_map, -1, 0)
 pitch_map = np.delete(pitch_map, -1, 1)
 pitch_map = pitch_map.flatten()
 
+pitch_map *= pitch_height
+
+offbeat_init = None
+offbeat_map = diamond_square(iter, smoothing,
+                             seed + "offbeat_map", offbeat_init)
+# delete bottom row
+offbeat_map = np.delete(offbeat_map, -1, 0)
+# delete right column
+offbeat_map = np.delete(offbeat_map, -1, 1)
+offbeat_map = offbeat_map.flatten()
+
+offbeat_average = np.sum(offbeat_map) / offbeat_map.size
+
+if offbeat_average > 0:
+    offbeat_map *= 1/3/offbeat_average
+
 # dither
 threshold = []
 threshold = dither_1D(2*iter)
+
+for (i,), value in np.ndenumerate(offbeat_map):
+    if value > 0.5:
+        threshold[i] = 1 - threshold[i]
+
 # comma required to denote 1-tuple
 rhythm = [threshold[i % len(threshold)] < value
           for (i,), value in np.ndenumerate(stress_map)]
