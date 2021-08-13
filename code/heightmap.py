@@ -42,15 +42,15 @@ def diamond_square(iter, smoothing, seed, init):
 
     random.seed(seed + "iterate")
     for n in range(iter):
-        rows, columns = heightmap.shape
-        temp_map = np.zeros((2*rows - 1, 2*columns - 1))
+        rows, cols = heightmap.shape
+        temp_map = np.zeros((2*rows - 1, 2*cols - 1))
         jitter_diamond = 2**(-smoothing*(2*n + 1))
         jitter_square  = 2**(-smoothing*(2*n + 2))
         for (i, j), value_ij in np.ndenumerate(heightmap):
             north_exists = i > 0
             south_exists = i < rows - 1
             west_exists  = j > 0
-            east_exists  = j < columns - 1
+            east_exists  = j < cols - 1
 
             temp_map[2*i, 2*j] = heightmap[i, j]
 
@@ -98,6 +98,71 @@ def diamond_square(iter, smoothing, seed, init):
     heightmap /= heightmap.max()
     return(heightmap)
 
+def erode(heightmap, seed, iter):
+    rows, cols = heightmap.shape
+    random.seed(seed + "rain")
+
+    for n in range(iter):
+        i = random.randint(0, rows-1)
+        j = random.randint(0, cols-1)
+        droplet_volume = 1
+        while droplet_volume > 0:
+            north_exists = i > 0
+            south_exists = i < rows - 1
+            west_exists  = j > 0
+            east_exists  = j < cols - 1
+
+            current_min = heightmap[i, j]
+            choices = [(0, 0)]
+
+            if north_exists:
+                new_height = heightmap[i - 1, j]
+                if new_height < current_min:
+                    min = heightmap
+                    choices = [(i - 1, j)]
+                elif new_height == current_min:
+                    choices.append((i - 1, j))
+            if south_exists:
+                new_height = heightmap[i + 1, j]
+                if new_height < current_min:
+                    min = heightmap
+                    choices = [(i + 1, j)]
+                elif new_height == current_min:
+                    choices.append((i + 1, j))
+            if west_exists:
+                new_height = heightmap[i, j - 1]
+                if new_height < current_min:
+                    min = heightmap
+                    choices = [(i, j - 1)]
+                elif new_height == current_min:
+                    choices.append((i, j - 1))
+            if east_exists:
+                new_height = heightmap[i, j + 1]
+                if new_height < current_min:
+                    min = heightmap
+                    choices = [(i, j + 1)]
+                elif new_height == current_min:
+                    choices.append((i, j + 1))
+
+            if len(choices) == 1:
+                new_i, new_j = choices[0]
+            else:
+                random.seed(seed + "choose")
+                new_i, new_j = random.choice(choices)
+            if (i, j) == (new_i, new_j):
+                droplet_volume = -1
+            else:
+                average = (heightmap[i, j] + heightmap[new_i, new_j])/2
+                heightmap[i, j] = average
+                heightmap[new_i, new_j] = average
+                droplet_volume -= random.random()/8
+                i, j = new_i, new_j
+
+    # normalize
+    heightmap -= heightmap.min()
+    heightmap /= heightmap.max()
+    return(heightmap)
+
 def heightmap_to_png(heightmap, filename):
     rows, cols = heightmap.shape
 
@@ -120,8 +185,8 @@ def heightmap_to_png(heightmap, filename):
     ax.view_init(elev=45, azim=-100)
     ax.set_title(filename)
 
-    # plt.gca().axes.get_xaxis().set_ticks([])
-    # plt.gca().axes.get_yaxis().set_ticks([])
+    plt.gca().axes.get_xaxis().set_ticks([])
+    plt.gca().axes.get_yaxis().set_ticks([])
 
     plt.xlabel('X')
     plt.ylabel('Y')
