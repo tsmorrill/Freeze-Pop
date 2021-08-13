@@ -11,8 +11,12 @@ from dither import dither_1D
 from heightmap import diamond_square
 from midiutil.MidiFile import MIDIFile
 
+stress_height = 0.8
+
 pitch_height = 1.0
 scale = [60, 62, 65, 67, 70, 72]
+
+offbeat_height = 2/3
 
 if len(sys.argv) > 1:
     seed = str(sys.argv[1])
@@ -20,9 +24,10 @@ else:
     chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
     seed = ''.join(random.choice(chars) for i in range(8))
 
-iter = 4
-smoothing = 0
+iter = 3
 
+# generate stress map
+smoothing = 0.3
 stress_init = [[1, 0],
                [1, 0]]
 stress_map = diamond_square(iter, smoothing, seed + "stress_map", stress_init)
@@ -31,9 +36,10 @@ stress_map = np.delete(stress_map, -1, 0)
 # delete right column
 stress_map = np.delete(stress_map, -1, 1)
 stress_map = stress_map.flatten()
+stress_map *= stress_height
 
-smoothing = 0.2
-
+# generate pitch map
+smoothing = 0.5
 pitch_init = [[0, 0.5],
               [0.5, 1]]
 pitch_map = diamond_square(iter, smoothing, seed + "pitch_map", pitch_init)
@@ -42,9 +48,10 @@ pitch_map = np.delete(pitch_map, -1, 0)
 # delete right column
 pitch_map = np.delete(pitch_map, -1, 1)
 pitch_map = pitch_map.flatten()
-
 pitch_map *= pitch_height
 
+# generate offbeat map
+smoothing = 1
 offbeat_init = None
 offbeat_map = diamond_square(iter, smoothing,
                              seed + "offbeat_map", offbeat_init)
@@ -55,9 +62,7 @@ offbeat_map = np.delete(offbeat_map, -1, 1)
 offbeat_map = offbeat_map.flatten()
 
 offbeat_average = np.sum(offbeat_map) / offbeat_map.size
-
-if offbeat_average > 0:
-    offbeat_map *= 1/3/offbeat_average
+offbeat_map *= offbeat_height
 
 # dither
 threshold = []
