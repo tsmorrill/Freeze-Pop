@@ -34,7 +34,7 @@ stress_map = stress_map.flatten()
 threshold = []
 threshold = dither_1D(2*iter)
 # comma required to denote 1-tuple
-rhythm = [threshold[i % len(threshold)] < 1/3
+rhythm = [threshold[i % len(threshold)] < value
           for (i,), value in np.ndenumerate(stress_map)]
 
 output_file = MIDIFile(1)
