@@ -18,7 +18,7 @@ else:
     seed = ''.join(random.choice(chars) for i in range(8))
 
 iter = 4
-smoothing = 1
+smoothing = 0
 
 stress_init = np.array([[1, 0],
                  [1, 0]])
@@ -32,7 +32,7 @@ stress_map = stress_map.flatten()
 
 # dither
 threshold = []
-threshold = dither_1D(iter)
+threshold = dither_1D(2*iter)
 # comma required to denote 1-tuple
 rhythm = [threshold[i % len(threshold)] < value
           for (i,), value in np.ndenumerate(stress_map)]
