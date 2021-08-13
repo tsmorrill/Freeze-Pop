@@ -5,6 +5,9 @@ import random
 import string
 import sys
 
+import numpy as np
+
+from dither import dither_1D
 from heightmap import diamond_square
 from midiutil.MidiFile import MIDIFile
 
@@ -15,24 +18,24 @@ else:
     seed = ''.join(random.choice(chars) for i in range(8))
 
 iter = 4
-length = 2**iter
 smoothing = 1
 
-stress_map = diamond_square(iter, smoothing, seed + "stress_map")
-# trim to 2^iter square and flatten
-stress_list = []
-for i in range(length // 2):
-    stress_list.extend(stress_map[i][:length])
-    stress_list.extend(stress_map[i + length//2][:length])
+stress_init = np.array([[1, 0],
+                 [1, 0]])
+stress_map = diamond_square(iter, smoothing, seed + "stress_map", stress_init)
+
+# delete bottom row
+stress_map = np.delete(stress_map, -1, 0)
+# delete right column
+stress_map = np.delete(stress_map, -1, 1)
+stress_map = stress_map.flatten()
 
 # dither
 threshold = []
-format_string = '0' + str(iter) + 'b'
-for i in range(length)[::-1]:
-    threshold.append((int(format(i, format_string)[::-1], 2)+0.5)/length)
-rhythm = []
-for i in range(length**2):
-    rhythm.append(stress_list[i] <= threshold[i % length])
+threshold = dither_1D(iter)
+# comma required to denote 1-tuple
+rhythm = [threshold[i % len(threshold)] < value
+          for (i,), value in np.ndenumerate(stress_map)]
 
 output_file = MIDIFile(1)
 track = 0
@@ -40,15 +43,15 @@ time = 0
 channel = 0
 pitch = 60
 duration = 1/4
-track_name = "2D rhythm " + seed + " {} bar".format(len(stress_list) // 16)
-if (len(stress_list) // 16) > 1:
+track_name = "2D rhythm " + seed + " {} bar".format(len(rhythm) // 16)
+if (len(rhythm) // 16) > 1:
     track_name += "s"
 output_file.addTrackName(track, time, track_name)
 for index, play_note in enumerate(rhythm):
     if play_note:
         time = index/4
         # no zero velocity notes
-        volume = math.ceil(stress_list[index]*127)
+        volume = math.ceil(stress_map[index]*127)
         volume = max(volume, 1)
         output_file.addNote(track, channel, pitch, time, duration, volume)
 

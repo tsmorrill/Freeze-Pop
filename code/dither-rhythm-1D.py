@@ -22,7 +22,8 @@ iter = 4
 length = 2**iter
 smoothing = 1
 
-stress_list = heightmap_1D(iter, smoothing, seed + "stress", [1,0])
+init = np.array([1, 0])
+stress_list = heightmap_1D(iter, smoothing, seed + "stress", init)
 threshold = dither_1D(iter)
 rhythm = [threshold[i] < stress_list[i] for i in range(length)]
 
