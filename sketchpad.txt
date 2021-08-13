@@ -1,10 +1,10 @@
-* switch code to numpy arrays
-* invert dithering threshold
-* make valleys of heightmap prefer off-beats
-* make rhythms more likely to sound on downbeat
-  - add initialization argument to heightmap.py functions
-* add proceedural generation of key/chord by bar
-* add erosio
-  - remove normalization from heightmap.py functions
-* add ornamentation to pitch map
-* add harmony generation
+* add terrain visualizer
+* more dithering patterns
+  - make valleys of heightmap invert dithering
+* add key map
+* add chord map
+* add harmony map
+* add legato
+* add oversampling/erosion
+  - add terrain softness map
+* add ornamentation to pitch generation
