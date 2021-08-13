@@ -56,7 +56,8 @@ def diamond_square(iter, smoothing, seed, init):
 
             if east_exists and south_exists:
                 diamond_center = (heightmap[i, j] + heightmap[i, j+1]
-                                  + heightmap[i+1, j] + heightmap[i+1, j+1])/4
+                                  + heightmap[i+1, j] + heightmap[i+1, j+1])
+                diamond_center /= 4
                 diamond_center += random.uniform(-1,1)*jitter_diamond
                 temp_map[2*i + 1, 2*j + 1] = diamond_center
 
@@ -71,7 +72,7 @@ def diamond_square(iter, smoothing, seed, init):
                 temp_map[2*i, 2*j + 1] = square_top
 
                 square_left = (heightmap[i, j] + heightmap[i+1, j]
-                             + diamond_center)
+                              + diamond_center)
                 if west_exists:
                     square_left += temp_map[2*i + 1, 2*j - 1]
                     square_left /= 4
@@ -90,6 +91,10 @@ def diamond_square(iter, smoothing, seed, init):
                 square_left += random.uniform(-1,1)*jitter_square
                 temp_map[2*i + 1, 2*j] = square_left
         heightmap = temp_map
+
+        # noise = 2*np.random.random(heightmap.shape) - 1
+        # noise /= 2**(n+5)
+        # heightmap += noise
 
         # heightmap_to_png(heightmap, seed + ' ' + str(n))
 

@@ -11,13 +11,13 @@ from dither import dither_1D
 from heightmap import diamond_square, erode, heightmap_to_png
 from midiutil.MidiFile import MIDIFile
 
-iter = 10
 smoothing = 1
 
-chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
-seed = ''.join(random.choice(chars) for i in range(8))
+seed = 'test'
 
-init = None
-heightmap = diamond_square(iter, smoothing, seed, init=init)
+init = [[0, 0],
+        [0, 0]]
+for iter in range(1, 10):
+    heightmap = diamond_square(iter, smoothing, seed, init=init)
 
-heightmap_to_png(heightmap, seed)
+    heightmap_to_png(heightmap, seed + ' ' + str(iter))
