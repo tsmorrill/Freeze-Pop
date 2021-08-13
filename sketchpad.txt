@@ -1,11 +1,12 @@
-* add terrain visualizer
+* update readme
 * more dithering patterns
-  - make valleys of heightmap invert dithering
+  - context specific dithering
+* add notelength map
 * add key map
 * add chord map
 * add harmony map
-* add legato
 * add oversampling/erosion
   - add terrain softness map
 * add ornamentation to pitch generation
   - add tiered chord note/neighbor note/chromatic note generation
+  - notes should be processesed in decreasing order of stress value
