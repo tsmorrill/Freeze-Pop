@@ -8,3 +8,4 @@
 * add oversampling/erosion
   - add terrain softness map
 * add ornamentation to pitch generation
+  - add tiered chord note/neighbor note/chromatic note generation
