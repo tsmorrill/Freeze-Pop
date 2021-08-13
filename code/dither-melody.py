@@ -23,8 +23,8 @@ else:
 iter = 4
 smoothing = 0
 
-stress_init = np.array([[1, 0],
-                 [1, 0]])
+stress_init = [[1, 0],
+               [1, 0]]
 stress_map = diamond_square(iter, smoothing, seed + "stress_map", stress_init)
 # delete bottom row
 stress_map = np.delete(stress_map, -1, 0)
@@ -34,8 +34,8 @@ stress_map = stress_map.flatten()
 
 smoothing = 0.2
 
-pitch_init = np.array([[0, 0.5],
-                       [0.5, 1]])
+pitch_init = [[0, 0.5],
+              [0.5, 1]]
 pitch_map = diamond_square(iter, smoothing, seed + "pitch_map", pitch_init)
 # delete bottom row
 pitch_map = np.delete(pitch_map, -1, 0)

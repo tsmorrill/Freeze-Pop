@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 def heightmap_1D(iter, smoothing, seed, init):
     """Create 2^iter + 1 linear heightmap via midpoint displacement.
     """
-    if init == 'none':
+    if init == None:
         random.seed(seed + "init")
         heightmap = np.array([[random.random(), random.random()],
                               [random.random(), random.random()]])
@@ -33,7 +33,7 @@ def heightmap_1D(iter, smoothing, seed, init):
 def diamond_square(iter, smoothing, seed, init):
     """Create 2^iter + 1 square heightmap via diamond square algorithm.
     """
-    if init == 'none':
+    if init == None:
         random.seed(seed + "init")
         heightmap = np.array([[random.random(), random.random()],
                               [random.random(), random.random()]])
@@ -91,7 +91,7 @@ def diamond_square(iter, smoothing, seed, init):
                 temp_map[2*i + 1, 2*j] = square_left
         heightmap = temp_map
 
-        heightmap_to_png(heightmap, seed + ' ' + str(n))
+        # heightmap_to_png(heightmap, seed + ' ' + str(n))
 
     # normalize
     heightmap -= heightmap.min()
