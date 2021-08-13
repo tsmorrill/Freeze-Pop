@@ -17,7 +17,8 @@ smoothing = 1
 chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
 seed = ''.join(random.choice(chars) for i in range(8))
 
-init = [[1,2],[3, 4]]
+init = [[0, 0],
+        [0, 0]]
 
 # heightmap_to_png(init, seed + ' 0')
 

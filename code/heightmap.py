@@ -40,11 +40,12 @@ def diamond_square(iter, smoothing, seed, init):
     else:
         heightmap = np.array(init)
 
-
     random.seed(seed + "iterate")
     for n in range(iter):
         rows, columns = heightmap.shape
         temp_map = np.zeros((2*rows - 1, 2*columns - 1))
+        jitter_diamond = 2**(-smoothing*(2*n + 1))
+        jitter_square  = 2**(-smoothing*(2*n + 2))
         for (i, j), value_ij in np.ndenumerate(heightmap):
             north_exists = i > 0
             south_exists = i < rows - 1
@@ -56,7 +57,7 @@ def diamond_square(iter, smoothing, seed, init):
             if east_exists and south_exists:
                 diamond_center = (heightmap[i, j] + heightmap[i, j+1]
                                   + heightmap[i+1, j] + heightmap[i+1, j+1])/4
-                diamond_center += random.uniform(-1,1)*2**(-smoothing*(n+1))
+                diamond_center += random.uniform(-1,1)*jitter_diamond
                 temp_map[2*i + 1, 2*j + 1] = diamond_center
 
                 square_top = (heightmap[i, j] + heightmap[i, j+1]
@@ -66,27 +67,27 @@ def diamond_square(iter, smoothing, seed, init):
                     square_top /= 4
                 else:
                     square_top /= 3
-                square_top += random.uniform(-1,1)*2**(-smoothing*(n+1))
+                square_top += random.uniform(-1,1)*jitter_square
                 temp_map[2*i, 2*j + 1] = square_top
 
                 square_left = (heightmap[i, j] + heightmap[i+1, j]
                              + diamond_center)
                 if west_exists:
-                    square_left += temp_map[2*i - 1, 2*j + 1]
+                    square_left += temp_map[2*i + 1, 2*j - 1]
                     square_left /= 4
                 else:
                     square_left /= 3
-                square_left += random.uniform(-1,1)*2**(-smoothing*(n+1))
+                square_left += random.uniform(-1,1)*jitter_square
                 temp_map[2*i + 1, 2*j] = square_left
             elif east_exists and not south_exists:
                 square_top = (heightmap[i, j] + heightmap[i, j+1]
-                             + temp_map[i-1, j+1])/3
-                square_top += random.uniform(-1,1)*2**(-smoothing*(n+1))
+                             + temp_map[2*i - 1, 2*j + 1])/3
+                square_top += random.uniform(-1,1)*jitter_square
                 temp_map[2*i, 2*j + 1] = square_top
             elif not east_exists and south_exists:
                 square_left = (heightmap[i, j] + heightmap[i+1, j]
-                             + temp_map[i+1, j-1])/3
-                square_left += random.uniform(-1,1)*2**(-smoothing*(n+1))
+                             + temp_map[2*i + 1, 2*j - 1])/3
+                square_left += random.uniform(-1,1)*jitter_square
                 temp_map[2*i + 1, 2*j] = square_left
         heightmap = temp_map
 
