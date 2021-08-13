@@ -17,4 +17,8 @@ smoothing = 1
 chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
 seed = ''.join(random.choice(chars) for i in range(8))
 
-heightmap = diamond_square(iter, smoothing, seed, init=None)
+init = [[1,2],[3, 4]]
+
+# heightmap_to_png(init, seed + ' 0')
+
+heightmap = diamond_square(iter, smoothing, seed, init=init)

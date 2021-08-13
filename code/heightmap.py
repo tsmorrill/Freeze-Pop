@@ -8,11 +8,12 @@ import matplotlib.pyplot as plt
 def heightmap_1D(iter, smoothing, seed, init):
     """Create 2^iter + 1 linear heightmap via midpoint displacement.
     """
-    if type(init) == "<class 'numpy.ndarray'>":
-        heightmap = init
-    else:
+    if init == 'none':
         random.seed(seed + "init")
-        heightmap = np.array([random.random(), random.random()])
+        heightmap = np.array([[random.random(), random.random()],
+                              [random.random(), random.random()]])
+    else:
+        heightmap = init
 
     random.seed(seed + "iterate")
     for i in range(iter):
@@ -32,12 +33,13 @@ def heightmap_1D(iter, smoothing, seed, init):
 def diamond_square(iter, smoothing, seed, init):
     """Create 2^iter + 1 square heightmap via diamond square algorithm.
     """
-    if type(init) == "<class 'numpy.ndarray'>":
-        heightmap = init
-    else:
+    if init == 'none':
         random.seed(seed + "init")
         heightmap = np.array([[random.random(), random.random()],
                               [random.random(), random.random()]])
+    else:
+        heightmap = np.array(init)
+
 
     random.seed(seed + "iterate")
     for n in range(iter):
@@ -49,32 +51,42 @@ def diamond_square(iter, smoothing, seed, init):
             west_exists  = j > 0
             east_exists  = j < columns - 1
 
-            temp_map[2*i, 2*j] = value_ij
+            temp_map[2*i, 2*j] = heightmap[i, j]
 
             if east_exists and south_exists:
                 diamond_center = (heightmap[i, j] + heightmap[i, j+1]
                                   + heightmap[i+1, j] + heightmap[i+1, j+1])/4
-                diamond_center += random.uniform(-1,1)*2**(-smoothing*(i+1))
+                diamond_center += random.uniform(-1,1)*2**(-smoothing*(n+1))
                 temp_map[2*i + 1, 2*j + 1] = diamond_center
 
                 square_top = (heightmap[i, j] + heightmap[i, j+1]
-                             + temp_map[i-1, j+1] + temp_map[i+1, j+1])/4
-                square_top += random.uniform(-1,1)*2**(-smoothing*(i+1))
+                             + diamond_center)
+                if north_exists:
+                    square_top += temp_map[2*i + 1, 2*j - 1]
+                    square_top /= 4
+                else:
+                    square_top /= 3
+                square_top += random.uniform(-1,1)*2**(-smoothing*(n+1))
                 temp_map[2*i, 2*j + 1] = square_top
 
                 square_left = (heightmap[i, j] + heightmap[i+1, j]
-                             + temp_map[i+1, j-1] + temp_map[i+1, j+1])/4
-                square_left += random.uniform(-1,1)*2**(-smoothing*(i+1))
+                             + diamond_center)
+                if west_exists:
+                    square_left += temp_map[2*i - 1, 2*j + 1]
+                    square_left /= 4
+                else:
+                    square_left /= 3
+                square_left += random.uniform(-1,1)*2**(-smoothing*(n+1))
                 temp_map[2*i + 1, 2*j] = square_left
             elif east_exists and not south_exists:
                 square_top = (heightmap[i, j] + heightmap[i, j+1]
                              + temp_map[i-1, j+1])/3
-                square_top += random.uniform(-1,1)*2**(-smoothing*(i+1))
+                square_top += random.uniform(-1,1)*2**(-smoothing*(n+1))
                 temp_map[2*i, 2*j + 1] = square_top
             elif not east_exists and south_exists:
                 square_left = (heightmap[i, j] + heightmap[i+1, j]
                              + temp_map[i+1, j-1])/3
-                square_left += random.uniform(-1,1)*2**(-smoothing*(i+1))
+                square_left += random.uniform(-1,1)*2**(-smoothing*(n+1))
                 temp_map[2*i + 1, 2*j] = square_left
         heightmap = temp_map
 
