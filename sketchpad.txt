@@ -1,16 +1,25 @@
 * update readme
-* add trap hi-hat generator
-* more dithering patterns
+* add phrase mutation functions
+  - reverse
+  - invert/dilate
+  - double/half time
+* add in_radius, out_radias kwargs to heightmap_radar_list()
+* add grammar for realizing song/melody structure from generated phrases
+* add classes
+  - song
+  - key
+  - structure
+  - section
+  - melody
+  - harmony
+  - rhythm
+  - phrase
+* add routine for realizing MIDI file from songs/tracks/phrases
+* processes notes in decreasing order of stress
+  - ornamentation via tiered chord note/neighbor note/chromatic note generation
+* add more dithering patterns
   - context specific dithering
   - byteswaps
-* add notelength map
-* add key map
-* add chord map
-* add harmony map
-* sample along a rotating radius
-* find cause of east boundary artifacting when iter is large
-* add oversampling/erosion
-  - add terrain softness map
-* add ornamentation to pitch generation
-  - add tiered chord note/neighbor note/chromatic note generation
-  - notes should be processesed in decreasing order of stress value
+* add legato map
+* research improvements to diamond square algorithm
+  - research FFT techniques
