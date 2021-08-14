@@ -1,5 +1,5 @@
 * update readme
-* apply Gaussian blur to heightmaps
+* add trap hi-hat generator
 * more dithering patterns
   - context specific dithering
   - byteswaps
