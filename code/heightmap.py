@@ -4,7 +4,6 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 def heightmap_1D(iter, smoothing, seed, init):
     """Create 2^iter + 1 linear heightmap via midpoint displacement.
     """
