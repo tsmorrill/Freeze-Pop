@@ -8,7 +8,7 @@ import sys
 import numpy as np
 
 from dither import dither_1D
-from heightmap import diamond_square
+from heightmap import diamond_square, entrywise_product, trim_and_flatten
 from midiutil.MidiFile import MIDIFile
 
 stress_height = 0.8
@@ -26,46 +26,36 @@ else:
 
 iter = 3
 
-# generate stress map
+
+smoothing = 1.0
+mult_init = [[0, 0],
+             [0, 0]]
+mult_map = diamond_square(iter, smoothing, seed + "mult_map", mult_init)
+
 smoothing = 0.3
 stress_init = [[1, 0],
                [1, 0]]
 stress_map = diamond_square(iter, smoothing, seed + "stress_map", stress_init)
-# delete bottom row
-stress_map = np.delete(stress_map, -1, 0)
-# delete right column
-stress_map = np.delete(stress_map, -1, 1)
-stress_map = stress_map.flatten()
+stress_map = entrywise_product(stress_map, mult_map)
+stress_map = trim_and_flatten(stress_map)
 stress_map *= stress_height
 
-# generate pitch map
 smoothing = 0.5
 pitch_init = [[0, 0.5],
               [0.5, 1]]
 pitch_map = diamond_square(iter, smoothing, seed + "pitch_map", pitch_init)
-# delete bottom row
-pitch_map = np.delete(pitch_map, -1, 0)
-# delete right column
-pitch_map = np.delete(pitch_map, -1, 1)
-pitch_map = pitch_map.flatten()
+pitch_map = entrywise_product(pitch_map, mult_map)
+pitch_map = trim_and_flatten(pitch_map)
 pitch_map *= pitch_height
 
-# generate offbeat map
 smoothing = 1
 offbeat_init = None
 offbeat_map = diamond_square(iter, smoothing,
                              seed + "offbeat_map", offbeat_init)
-# delete bottom row
-offbeat_map = np.delete(offbeat_map, -1, 0)
-# delete right column
-offbeat_map = np.delete(offbeat_map, -1, 1)
-offbeat_map = offbeat_map.flatten()
-
-offbeat_average = np.sum(offbeat_map) / offbeat_map.size
+offbeat_map = entrywise_product(offbeat_map, mult_map)
+offbeat_map = trim_and_flatten(offbeat_map)
 offbeat_map *= offbeat_height
 
-# dither
-threshold = []
 threshold = dither_1D(2*iter)
 
 for (i,), value in np.ndenumerate(offbeat_map):

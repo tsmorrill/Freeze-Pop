@@ -103,6 +103,23 @@ def diamond_square(iter, smoothing, seed, init):
     heightmap /= heightmap.max()
     return(heightmap)
 
+def trim_and_flatten(heightmap, rows=1, cols=1):
+    for i in range(rows):
+        heightmap = np.delete(heightmap, -1, 0)
+    for j in range(cols):
+        heightmap = np.delete(heightmap, -1, 1)
+    heightmap = heightmap.flatten()
+    return(heightmap)
+
+def entrywise_product(heightmap0, heightmap1, normalize=True):
+    output = np.zeros(heightmap0.shape)
+    for (i, j), value in np.ndenumerate(heightmap0):
+        output[i,j] = heightmap0[i,j]*heightmap1[i,j]
+    if normalize:
+        output -= output.min()
+        output /= output.max()
+    return(output)
+
 def erode(heightmap, seed, iter):
     rows, cols = heightmap.shape
     random.seed(seed + "rain")

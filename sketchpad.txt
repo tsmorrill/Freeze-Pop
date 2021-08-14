@@ -1,8 +1,8 @@
 * update readme
 * apply Gaussian blur to heightmaps
-* multiply generated heightmaps against a constant heightmap
 * more dithering patterns
   - context specific dithering
+  - byteswaps
 * add notelength map
 * add key map
 * add chord map
