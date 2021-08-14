@@ -11,10 +11,12 @@ from dither import dither_1D
 from heightmap import diamond_square, entrywise_product, trim_and_flatten
 from midiutil.MidiFile import MIDIFile
 
-stress_height = 0.8
+mult_height = 1/4
+stress_height = 1.0
 
 pitch_height = 1.0
 scale = [60, 62, 65, 67, 70, 72]
+# scale = [i for i in range(60, 73)]
 
 offbeat_height = 2/3
 
@@ -26,13 +28,14 @@ else:
 
 iter = 3
 
-
-smoothing = 1.0
+smoothing = 0
 mult_init = [[0, 0],
              [0, 0]]
 mult_map = diamond_square(iter, smoothing, seed + "mult_map", mult_init)
+mult_map *= mult_height
+mult_map += 1 - mult_height
 
-smoothing = 0.3
+smoothing = 0
 stress_init = [[1, 0],
                [1, 0]]
 stress_map = diamond_square(iter, smoothing, seed + "stress_map", stress_init)
@@ -40,7 +43,7 @@ stress_map = entrywise_product(stress_map, mult_map)
 stress_map = trim_and_flatten(stress_map)
 stress_map *= stress_height
 
-smoothing = 0.5
+smoothing = 0
 pitch_init = [[0, 0.5],
               [0.5, 1]]
 pitch_map = diamond_square(iter, smoothing, seed + "pitch_map", pitch_init)

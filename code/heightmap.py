@@ -116,9 +116,13 @@ def entrywise_product(heightmap0, heightmap1, normalize=True):
     for (i, j), value in np.ndenumerate(heightmap0):
         output[i,j] = heightmap0[i,j]*heightmap1[i,j]
     if normalize:
-        output -= output.min()
-        output /= output.max()
+        output = heightmap_normalize(output)
     return(output)
+
+def heightmap_normalize(heightmap):
+    heightmap -= heightmap.min()
+    heightmap /= heightmap.max()
+    return(heightmap)
 
 def erode(heightmap, seed, iter):
     rows, cols = heightmap.shape
