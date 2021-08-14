@@ -7,7 +7,7 @@
 * add key map
 * add chord map
 * add harmony map
-* sample along a line rotating on the center of the map
+* sample along a rotating radius
 * find cause of east boundary artifacting when iter is large
 * add oversampling/erosion
   - add terrain softness map
