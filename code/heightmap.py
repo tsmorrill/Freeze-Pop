@@ -123,24 +123,24 @@ def heightmap_normalize(heightmap):
     heightmap /= heightmap.max()
     return(heightmap)
 
-def heightmap_radar_list(heightmap, theta_step):
-    """Interpolate and read a square heightmap radially from the center.
+def heightmap_radar_list(heightmap, r_step, theta_step, sweep=np.pi):
+    """Read and interpolate a square heightmap radially from the center.
     """
-    N = heightmap.size[0]
-    r_step = (N-1) / 2
+    N = heightmap.shape[0]
     list = []
     for turn in range(theta_step):
-        angle = 2*np.pi*turn/theta_step
+        angle = sweep*turn/theta_step
         for length in range(r_step):
             x, y = length*np.cos(angle), length*np.sin(angle)
             # correct for orientation
-            i, j = np.floor(y + N/2), np.floor(x + N/2)
+            i, j = int(np.floor(y + N/2)), int(np.floor(x + N/2))
             u, v = y + N/2 - i, x + N/2 - j
-            (A, B, C, D) = (heightmap[i, j], heightmap[i, j+1],
-                            heightmap[i+1, j], heightmap[i+1, j+1])
+            A, B = heightmap[  i, j], heightmap[  i, j+1]
+            C, D = heightmap[i+1, j], heightmap[i+1, j+1]
             interp = (A*(1-v) + B*v)*(1-u) + (C*(1-v) + D*v)*u
             list.append(interp)
-    return(interp)
+    list = np.array(list)
+    return(list)
 
 def erode(heightmap, seed, iter):
     rows, cols = heightmap.shape
