@@ -123,7 +123,8 @@ def heightmap_normalize(heightmap):
     heightmap /= heightmap.max()
     return(heightmap)
 
-def heightmap_radar_list(heightmap, r_step, theta_step, sweep=np.pi):
+def heightmap_radar_list(heightmap, r_step, theta_step,
+                         init_angle=0, sweep=np.pi):
     """Read and interpolate a square heightmap radially from the center.
     """
     N = heightmap.shape[0]
