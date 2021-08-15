@@ -9,8 +9,7 @@ def heightmap_1D(iter, smoothing, seed, init):
     """
     if init == None:
         random.seed(seed + "init")
-        heightmap = np.array([[random.random(), random.random()],
-                              [random.random(), random.random()]])
+        heightmap = np.array([random.random(), random.random()])
     else:
         heightmap = init
 

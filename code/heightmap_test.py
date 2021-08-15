@@ -1,15 +1,6 @@
 #!/usr/bin/python
 
-import math
-import random
-import string
-import sys
 
-import numpy as np
-
-from dither import dither_1D
-from heightmap import diamond_square, entrywise_product, heightmap_to_png, trim_and_flatten
-from midiutil.MidiFile import MIDIFile
 
 mult_height = 1/8
 stress_height = 1
@@ -26,7 +17,7 @@ else:
     chars = string.ascii_lowercase + string.ascii_uppercase + string.digits
     seed = ''.join(random.choice(chars) for i in range(8))
 
-iter = 9
+iter = 4
 
 smoothing = 0.6
 mult_init = [[0, 0],
