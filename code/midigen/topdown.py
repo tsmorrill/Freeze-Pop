@@ -1,18 +1,23 @@
 from heightmap import heightmap_1D
 
+class Skeleton:
+
+    def __init__(self, blueprint, parts):
+        self.blueprint = blueprint
+        self.parts = parts
+
+    @staticmethod
+    def from_blueprint(blueprint)
+        pass
+
+    def mutate(self):
+        pass
+
 class Song:
 
     def __init__(self, skeleton, sections):
         self.skeleton = skeleton
         self.sections = sections
-
-    def mutate(self):
-        pass
-
-class Skeleton:
-
-    def __init__(self):
-        pass
 
     def mutate(self):
         pass
