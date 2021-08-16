@@ -1,8 +1,14 @@
-from mpl_toolkits import mplot3d
+import math
 import random
+import string
+import sys
 
 import numpy as np
+
+from mpl_toolkits import mplot3d
+from midiutil.MidiFile import MIDIFile
 import matplotlib.pyplot as plt
+
 
 def heightmap_1D(iter, smoothing, seed, init):
     """Create 2^iter + 1 linear heightmap via midpoint displacement.

@@ -1,15 +1,6 @@
 #!/usr/bin/python
 
-import math
-import random
-import string
-import sys
-
-import numpy as np
-
-from dither import dither_1D
-from heightmap import diamond_square, entrywise_product, heightmap_radar_list
-from midiutil.MidiFile import MIDIFile
+from midigen import heightmap
 
 mult_height = 1/8
 stress_height = 1

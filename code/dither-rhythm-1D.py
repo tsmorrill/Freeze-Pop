@@ -7,9 +7,10 @@ import sys
 
 import numpy as np
 
-from dither import dither_1D
-from heightmap import heightmap_1D
 from midiutil.MidiFile import MIDIFile
+
+from midigen import heightmap
+from midigen import dither
 
 if len(sys.argv) > 1:
     seed = str(sys.argv[1])
@@ -22,9 +23,9 @@ iter = 4
 length = 2**iter
 smoothing = 1
 
-init = np.array([1, 0])
-stress_list = heightmap_1D(iter, smoothing, seed + "stress", init)
-threshold = dither_1D(iter)
+init = [1, 0]
+stress_list = heightmap.heightmap_1D(iter, smoothing, seed + "stress", init)
+threshold = dither.dither_1D(iter)
 rhythm = [threshold[i] < stress_list[i] for i in range(length)]
 
 #= write MIDI file =============================================================
