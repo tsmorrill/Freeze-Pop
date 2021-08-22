@@ -7,8 +7,11 @@ import sys
 
 import numpy as np
 
-from dither import dither_1D
-from heightmap import diamond_square
+from midigen import dither, heightmap
+
+dither_1D = dither.dither_1D
+diamond_square = heightmap.diamond_square
+
 from midiutil.MidiFile import MIDIFile
 
 if len(sys.argv) > 1:
@@ -20,8 +23,8 @@ else:
 iter = 4
 smoothing = 0
 
-stress_init = np.array([[1, 0],
-                 [1, 0]])
+stress_init = [[1, 0],
+               [1, 0]]
 stress_map = diamond_square(iter, smoothing, seed + "stress_map", stress_init)
 
 # delete bottom row

@@ -1,6 +1,19 @@
 #!/usr/bin/python
 
-from midigen import heightmap
+import math
+import numpy as np
+import sys
+import string
+import random
+
+from midigen import dither, heightmap
+from midiutil.MidiFile import MIDIFile
+
+diamond_square = heightmap.diamond_square
+entrywise_product = heightmap.entrywise_product
+heightmap_radar_list = heightmap.heightmap_radar_list
+dither_1D = dither.dither_1D
+
 
 mult_height = 1/8
 stress_height = 1
