@@ -6,14 +6,9 @@
 * add in_radius, out_radias kwargs to heightmap_radar_list()
 * add grammar for realizing song/melody structure from generated phrases
 * add classes
-  - song
   - key
-  - structure
-  - section
-  - melody
   - harmony
   - rhythm
-  - phrase
 * add routine for realizing MIDI file from songs/tracks/phrases
 * add routine for outputting to text/console
   - volca and pocket operator modes
