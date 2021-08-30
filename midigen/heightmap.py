@@ -232,7 +232,7 @@ def heightmap_to_png(heightmap, filename):
     stride = 1
     surf = ax.plot_surface(x, y, z, cmap = my_cmap, rstride=stride, cstride=stride, antialiased=False)
 
-    ax.view_init(elev=45, azim=-100)
+    ax.view_init(elev=20, azim=290)
     ax.set_title(filename)
 
     plt.gca().axes.get_xaxis().set_ticks([])
