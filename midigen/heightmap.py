@@ -68,7 +68,7 @@ def diamond_square(iter, smoothing, seed, init):
                 square_top = (heightmap[i, j] + heightmap[i, j+1]
                              + diamond_center)
                 if north_exists:
-                    square_top += temp_map[2*i + 1, 2*j - 1]
+                    square_top += temp_map[2*i - 1, 2*j + 1]
                     square_top /= 4
                 else:
                     square_top /= 3
