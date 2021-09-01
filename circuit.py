@@ -12,7 +12,7 @@ map = map.flatten()
 
 threshold = dither.dither_1D(4)
 beat_list = dither.dither(map, threshold)
-row_list = strings.list_to_print_str(beat_list)
+row_list = strings.list_to_print_str(beat_list, 8)
 
 for row in row_list:
     print(row)
