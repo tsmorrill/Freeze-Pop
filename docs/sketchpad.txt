@@ -11,8 +11,6 @@
   - harmony
   - rhythm
 * add routine for realizing MIDI file from songs/tracks/phrases
-* add routine for outputting to text/console
-  - volca and pocket operator modes
 * processes notes in decreasing order of stress
   - ornamentation via tiered chord note/neighbor note/chromatic note generation
 * add more dithering patterns
