@@ -4,6 +4,7 @@
   - invert/dilate
   - double/half time
 * add in_radius, out_radias kwargs to heightmap_radar_list()
+  - add arbitrary sweep parameters
 * add grammar for realizing song/melody structure from generated phrases
 * add classes
   - key

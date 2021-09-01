@@ -107,6 +107,15 @@ def diamond_square(iter, smoothing, seed, init):
     heightmap /= heightmap.max()
     return(heightmap)
 
+def map_interp(heightmap):
+    rows, cols = heightmap.shape
+    temp_map = np.zeros((rows - 1, cols - 1))
+    for (i, j), value_ij in np.ndenumerate(temp_map):
+        average = (heightmap[i, j] + heightmap[i, j+1]
+                  + heightmap[i+1, j] + heightmap[i+1, j+1])/4
+        temp_map[i, j] =  average
+    return(temp_map)
+
 def trim_and_flatten(heightmap, rows=1, cols=1):
     for i in range(rows):
         heightmap = np.delete(heightmap, -1, 0)
