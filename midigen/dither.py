@@ -9,3 +9,13 @@ def dither_1D(iter):
             for i in range(length)[::-1]]
     threshold = np.array(list)
     return(threshold)
+
+def dither(heightmap, dither_map):
+    temp_list = []
+    for i, value in enumerate(heightmap):
+        threshold = dither_map[i]
+        if value >= threshold:
+            temp_list.append('X')
+        else:
+            temp_list.append('-')
+    return temp_list
