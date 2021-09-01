@@ -17,5 +17,4 @@
   - context specific dithering
   - byteswaps
 * add legato map
-* research improvements to diamond square algorithm
-  - research FFT techniques
+* research FFT techniques
