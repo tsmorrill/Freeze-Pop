@@ -1,4 +1,5 @@
 * update readme
+* use more __init__.py functionality
 * add phrase mutation functions
   - reverse
   - invert/dilate
