@@ -17,12 +17,17 @@ dithering_xor_D = [13, 5, 9, 1, 15, 7, 11, 3, 12, 4, 8, 0, 14, 6, 10, 2]
 dithering_xor_E = [14, 6, 10, 2, 12, 4, 8, 0, 15, 7, 11, 3, 13, 5, 9, 1]
 dithering_xor_F = [15, 7, 11, 3, 13, 5, 9, 1, 14, 6, 10, 2, 12, 4, 8, 0]
 
+def dithermap_to_threshold(dithermap):
+    length = len(dithermap)
+    output = [(i + 0.5)/length for i in dithermap]
+    return(output)
+
 def dither_1D(iter):
-    """Create 1 x 2^iter dithering matrix.
+    """Create 1 x 2^iter dithering map.
     """
     length = 2**iter
     format_string = '0' + str(iter) + 'b'
-    list = [1 - (int(format(i, format_string)[::-1], 2)+0.5)/length
+    list = [1 - int(format(i, format_string)[::-1], 2)
             for i in range(length)[::-1]]
     threshold = np.array(list)
     return(threshold)
