@@ -1,5 +1,3 @@
-from heightmap import heightmap_1D
-
 class Skeleton:
 
     def __init__(self, blueprint, parts):
@@ -7,7 +5,7 @@ class Skeleton:
         self.parts = parts
 
     @staticmethod
-    def from_blueprint(blueprint)
+    def from_blueprint(blueprint):
         pass
 
     def mutate(self):

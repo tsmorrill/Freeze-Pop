@@ -1,14 +1,5 @@
-import math
-import random
-import string
-import sys
-
 import numpy as np
-
-from mpl_toolkits import mplot3d
-from midiutil.MidiFile import MIDIFile
-import matplotlib.pyplot as plt
-
+import random
 
 def heightmap_1D(iter, smoothing, seed, init):
     """Create 2^iter + 1 linear heightmap via midpoint displacement.
@@ -135,6 +126,12 @@ def entrywise_product(heightmap0, heightmap1, normalize=True):
 def heightmap_normalize(heightmap):
     heightmap -= heightmap.min()
     heightmap /= heightmap.max()
+    return(heightmap)
+
+def mean_normalize(heightmap, new_mean):
+    size = heightmap.shape
+    old_mean = np.sum(heightmap.reshape(1, -1))/size
+    heightmap = heightmap*new_mean/old_mean
     return(heightmap)
 
 def heightmap_radar_list(heightmap, r_step, theta_step,
