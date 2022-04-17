@@ -1,4 +1,4 @@
-drom .bresenham import *
+from .bresenham import *
 from .dither import *
 from .heightmap import *
 from .strings import *
