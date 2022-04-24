@@ -2,8 +2,7 @@ import random
 
 
 def guido(lyric):
-    """Assign pitches to text using method of Guido d'Arezzo, minimizing
-    distance between consecutive pitches.
+    """Probalistically assign pitches to text using method of Guido d'Arezzo.
     """
     lyric = lyric.upper()
     vowels = [char for char in lyric if char in "AEIOU"]
