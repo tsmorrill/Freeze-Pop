@@ -1,17 +1,22 @@
 import random
 
+guido_scale = [55, 57, 59, 60, 62,           # list indices will be taken mod 5
+               64, 65, 67, 69, 71,
+               72, 74, 76, 77, 79,
+               81]
 
-def guido(lyric):
+
+def guido(lyric, scale=guido_scale):
     """Probalistically assign pitches to text using method of Guido d'Arezzo.
     """
     lyric = lyric.upper()
     vowels = [char for char in lyric if char in "AEIOU"]
 
-    dict = {"A": [55, 64, 72, 81],                # MIDI notes : G3, E4, C5, A5
-            "E": [57, 65, 74],                                 # A3, F4, D5
-            "I": [59, 67, 76],                                 # B3, G4, E5
-            "O": [60, 69, 77],                                 # C4, A4, F5
-            "U": [62, 71, 79]}                                 # D4, B4, G5
+    dict = {"A": scale[0::5],
+            "E": scale[1::5],
+            "I": scale[2::5],
+            "O": scale[3::5],
+            "U": scale[4::5]}
 
     def weighting(potential_notes, prev_note):
         if prev_note is None:
