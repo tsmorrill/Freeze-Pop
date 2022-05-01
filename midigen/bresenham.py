@@ -15,6 +15,5 @@ def Bresenham(k, n):
 
 
 if __name__ == "__main__":
-    list = Bresenham(2, 5)
-    list = [int(item) for item in list]
+    list = [int(item) for item in Bresenham(7, 16)]
     print(list)
