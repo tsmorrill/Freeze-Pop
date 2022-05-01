@@ -10,11 +10,11 @@ def euclid(i, k, n):
 
 def Bresenham(k, n):
     """Return Euclidean rhythm of k pulses and length n."""
-    list = [euclid(i, k, n) for i in range(-1, n)]      # shift by -1 to ensure
+    list = [euclid(i, k, n) for i in range(-1, n-1)]    # shift by -1 to ensure
     return(list)                                        # list[0] == True
 
 
 if __name__ == "__main__":
-    list = Bresenham(2, 16)
+    list = Bresenham(2, 5)
     list = [int(item) for item in list]
     print(list)
