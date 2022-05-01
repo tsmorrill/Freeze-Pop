@@ -1,7 +1,7 @@
-def euclid(t, k, n):
-    """Determine whether a pulse occurs on beat t in the (k,n) Euclidean rhythm.
+def euclid(i, k, n):
+    """Determine whether a pulse occurs on beat i in the (k,n) Euclidean rhythm.
     """
-    rollover = (k*t % n) > (k*(t+1) % n)
+    rollover = (k*i % n) > (k*(i+1) % n)
     return(rollover)
 
 
