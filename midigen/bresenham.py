@@ -10,8 +10,8 @@ def euclid(i, k, n):
 
 def Bresenham(k, n):
     """Return Euclidean rhythm of k pulses and length n."""
-    bool_list = [euclid(i, k, n) for i in range(-1, n-1)]    # shift to ensure
-    return(bool_list)                                        # list[0] == True
+    bool_list = [euclid(i, k, n) for i in range(-1, n-1)]     # shift to ensure
+    return(bool_list)                                         # list[0] == True
 
 
 if __name__ == "__main__":

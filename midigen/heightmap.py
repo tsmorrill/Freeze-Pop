@@ -183,28 +183,28 @@ def erode(heightmap, seed, iter):
             if north_exists:
                 new_height = heightmap[i - 1, j]
                 if new_height < current_min:
-                    min = heightmap
+                    current_min = heightmap
                     choices = [(i - 1, j)]
                 elif new_height == current_min:
                     choices.append((i - 1, j))
             if south_exists:
                 new_height = heightmap[i + 1, j]
                 if new_height < current_min:
-                    min = heightmap
+                    current_min = heightmap
                     choices = [(i + 1, j)]
                 elif new_height == current_min:
                     choices.append((i + 1, j))
             if west_exists:
                 new_height = heightmap[i, j - 1]
                 if new_height < current_min:
-                    min = heightmap
+                    current_min = heightmap
                     choices = [(i, j - 1)]
                 elif new_height == current_min:
                     choices.append((i, j - 1))
             if east_exists:
                 new_height = heightmap[i, j + 1]
                 if new_height < current_min:
-                    min = heightmap
+                    current_min = heightmap
                     choices = [(i, j + 1)]
                 elif new_height == current_min:
                     choices.append((i, j + 1))
