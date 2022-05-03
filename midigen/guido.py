@@ -7,7 +7,7 @@ guido_scale = [55, 57, 59, 60, 62,           # list indices will be taken mod 5
 
 
 def guido(lyric, scale=guido_scale):
-    """Probalistically assign pitches to text using method of Guido d'Arezzo.
+    """Probabilistically assign pitches to text using method of Guido d'Arezzo.
     """
     lyric = lyric.upper()
     vowels = [char for char in lyric if char in "AEIOU"]
