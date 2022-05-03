@@ -4,8 +4,8 @@ def euclid(i, k, n):
     if k > n:
         raise Exception("k cannot exceed n.")
     prod = i*k
-    bool_rollover = (prod % n) > ((prod+k) % n)
-    return(bool_rollover)
+    rollover_bool = (prod % n) > ((prod+k) % n)
+    return(rollover_bool)
 
 
 def Bresenham(k, n):
