@@ -18,7 +18,7 @@ def guido(lyric, scale=guido_scale):
             "O": scale[3::5],
             "U": scale[4::5]}
 
-    def weighting(potential_notes, prev_note):
+    def weigh(potential_notes, prev_note):
         if prev_note is None:
             return [1 for note in potential_notes]
         weights = [1/max(abs(note - prev_note), 1/2)      # avoid division by 0
@@ -30,7 +30,7 @@ def guido(lyric, scale=guido_scale):
 
     for char in vowels:
         potential_notes = dict[char]
-        weights = weighting(potential_notes, prev_note)
+        weights = weigh(potential_notes, prev_note)
         new_note = random.choices(potential_notes, weights, k=1)[0]
         note_list.append(new_note)
         prev_note = new_note
