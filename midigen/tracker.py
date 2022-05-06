@@ -129,27 +129,29 @@ def process_function(func, t):
     return func(t)
 
 
-def none_cmd(pitch, vel, t):
+def none_cmd(pitch, vel, s, t):
     midi_note = process_function(pitch, t)
     midi_vel = process_function(vel, t)
-    print(f"At time {t} play pitch {midi_note} with velocity {midi_vel}.")
+    print(f"At phrase {s}, time {t} play pitch {midi_note} "
+          + f"with velocity {midi_vel}.")
 
 
-def print_cmd(pitch, vel, t):
+def print_cmd(pitch, vel, s, t):
     midi_note = process_function(pitch, t)
     midi_vel = process_function(vel, t)
-    print(f"At time {t} play pitch {midi_note} with velocity {midi_vel}.")
+    print(f"At phrase {s}, time {t} play pitch {midi_note} "
+          + f"with velocity {midi_vel}.")
 
 
 def process_chain(chain):
-    def process_phrase(phrase):
+    def process_phrase(phrase, s):
         for t, [pitch, vel, cmd] in enumerate(phrase):
             if cmd is None:
                 cmd = none_cmd
-            cmd(pitch, vel, t)
+            cmd(pitch, vel, s, t)
 
-    for phrase in chain:
-        process_phrase(phrase)
+    for s, phrase in enumerate(chain):
+        process_phrase(phrase, s)
 
 
 if __name__ == "__main__":
