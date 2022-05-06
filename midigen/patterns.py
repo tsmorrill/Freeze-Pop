@@ -1,5 +1,39 @@
-import numpy as np
 import random
+import numpy as np
+
+
+def main(a, b):
+    bits = [int(item) for item in fractioning(a, b)]
+    print(bits)
+
+
+def resultant(a, b):
+    beats = [i % a == 0 or i % b == 0 for i in range(a*b)]
+    return(beats)
+
+
+def fractioning(a, b):
+    beats = [i % a == 0 for i in range(a*a)]
+    for i in range(a - b + 1):
+        for j in range(a):
+            beats[i*a + j*b] = True
+    return(beats)
+
+
+def euclid(i, k, n):
+    """Determine whether a pulse occurs on beat i in the (k,n) Euclidean rhythm.
+    """
+    if k > n:
+        raise Exception("k cannot exceed n.")
+    prod = i*k
+    rollover_bool = (prod % n) > ((prod+k) % n)
+    return(rollover_bool)
+
+
+def Bresenham(k, n):
+    """Return Euclidean rhythm of k pulses and length n."""
+    bool_list = [euclid(i, k, n) for i in range(-1, n-1)]     # shift to ensure
+    return(bool_list)                                         # list[0] == True
 
 
 def heightmap_1D(iter, smoothing, seed, init):
@@ -227,3 +261,104 @@ def erode(heightmap, seed, iter):
     heightmap -= heightmap.min()
     heightmap /= heightmap.max()
     return(heightmap)
+
+    dithering_xor_0 = [0,  8,  4, 12,  2, 10,  6, 14,
+                       1,  9,  5, 13,  3, 11,  7, 15]
+    dithering_xor_1 = [1,  9,  5, 13,  3, 11,  7, 15,
+                       0,  8,  4, 12,  2, 10,  6, 14]
+    dithering_xor_2 = [2, 10,  6, 14,  0,  8,  4, 12,
+                       3, 11,  7, 15,  1,  9,  5, 13]
+    dithering_xor_3 = [3, 11,  7, 15,  1,  9,  5, 13,
+                       2, 10,  6, 14,  0,  8,  4, 12]
+    dithering_xor_4 = [4, 12,  0,  8,  6, 14,  2, 10,
+                       5, 13,  1,  9,  7, 15,  3, 11]
+    dithering_xor_5 = [5, 13,  1,  9,  7, 15,  3, 11,
+                       4, 12,  0,  8,  6, 14,  2, 10]
+    dithering_xor_6 = [6, 14,  2, 10,  4, 12,  0,  8,
+                       7, 15,  3, 11,  5, 13,  1,  9]
+    dithering_xor_7 = [7, 15,  3, 11,  5, 13,  1,  9,
+                       6, 14,  2, 10,  4, 12,  0,  8]
+    dithering_xor_8 = [8,  0, 12,  4, 10,  2, 14,  6,
+                       9,  1, 13,  5, 11,  3, 15,  7]
+    dithering_xor_9 = [9,  1, 13,  5, 11,  3, 15,  7,
+                       8,  0, 12,  4, 10,  2, 14,  6]
+    dithering_xor_A = [10,  2, 14,  6,  8,  0, 12,  4,
+                       11,  3, 15,  7,  9,  1, 13,  5]
+    dithering_xor_B = [11,  3, 15,  7,  9,  1, 13,  5,
+                       10,  2, 14,  6,  8,  0, 12,  4]
+    dithering_xor_C = [12,  4,  8,  0, 14,  6, 10,  2,
+                       13,  5,  9,  1, 15,  7, 11,  3]
+    dithering_xor_D = [13,  5,  9,  1, 15,  7, 11,  3,
+                       12,  4,  8,  0, 14,  6, 10,  2]
+    dithering_xor_E = [14,  6, 10,  2, 12,  4,  8,  0,
+                       15,  7, 11,  3, 13,  5,  9,  1]
+    dithering_xor_F = [15,  7, 11,  3, 13,  5,  9,  1,
+                       14,  6, 10,  2, 12,  4,  8,  0]
+
+    def dithermap_to_threshold(dithermap):
+        length = len(dithermap)
+        output = [(i + 0.5)/length for i in dithermap]
+        return(output)
+
+    def dither_1D(iter):
+        """Create 1 x 2^iter dithering map.
+        """
+        length = 2**iter
+        format_string = '0' + str(iter) + 'b'
+        list = [1 - int(format(i, format_string)[::-1], 2)
+                for i in range(length)[::-1]]
+        threshold = np.array(list)
+        return(threshold)
+
+    def dither(heightmap, dither_map):
+        temp_list = []
+        for i, value in enumerate(heightmap):
+            threshold = dither_map[i]
+            if value >= threshold:
+                temp_list.append('X')
+            else:
+                temp_list.append('-')
+        return temp_list
+
+
+guido_scale = [55, 57, 59, 60, 62,           # list indices will be taken mod 5
+               64, 65, 67, 69, 71,
+               72, 74, 76, 77, 79,
+               81]
+
+
+def guido(lyric, scale=guido_scale):
+    """Probabilistically assign pitches to text using method of Guido d'Arezzo.
+    """
+    lyric = lyric.upper()
+    vowels = [char for char in lyric if char in "AEIOU"]
+
+    dict = {"A": scale[0::5],
+            "E": scale[1::5],
+            "I": scale[2::5],
+            "O": scale[3::5],
+            "U": scale[4::5]}
+
+    def weigh(potential_notes, prev_note):
+        if prev_note is None:
+            return [1 for note in potential_notes]
+        weights = [1/max(abs(note - prev_note), 1/2)      # avoid division by 0
+                   for note in potential_notes]
+        return weights
+
+    note_list = []
+    prev_note = None
+
+    for char in vowels:
+        potential_notes = dict[char]
+        weights = weigh(potential_notes, prev_note)
+        new_note = random.choices(potential_notes, weights, k=1)[0]
+        note_list.append(new_note)
+        prev_note = new_note
+    return note_list
+
+
+if __name__ == "__main__":
+    lyric = "Sphinx of black quartz, judge my vow."
+    print(lyric)
+    print(guido(lyric))
