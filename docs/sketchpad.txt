@@ -1,14 +1,18 @@
 * develop tracker.py
- - none_command should output lists of tuples
-* create generators.py
- - combine dither.py, heightmap.py, schillinger.py, guido.py, bressenham.py
-* create output.py
+ - none_cmd should output lists of tuples
+ - add more commands as wrappers for none_cmd
+ - add render_track()
+ - add aliases for general MIDI drum numbers
+* develop patterns.py
+ - add callable sequences class
+ - convert old functions to output velocity
+ - add phrase generator functions
+   . reverse
+   . invert/dilate
+   . double/half time
+ - add tree-based pitch-to-rhythm assignment
 * update readme
 * use more __init__.py functionality
-* add phrase mutation functions
-  - reverse
-  - invert/dilate
-  - double/half time
 * add in_radius, out_radias kwargs to heightmap_radar_list()
   - add arbitrary sweep parameters
 * process notes in decreasing order of stress?
@@ -16,3 +20,4 @@
 * add more dithering patterns
   - context specific dithering
 * research FFT techniques
+* fork tracker.py to a liveplay project
