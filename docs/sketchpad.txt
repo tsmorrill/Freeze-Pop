@@ -3,6 +3,7 @@
  - add more commands as wrappers for none_cmd
  - add render_track()
  - add aliases for general MIDI drum numbers
+* fix scripts
 * develop patterns.py
  - add callable sequences class
  - convert old functions to output velocity
@@ -11,13 +12,14 @@
    . invert/dilate
    . double/half time
  - add tree-based pitch-to-rhythm assignment
+ - add in_radius, out_radias kwargs to heightmap_radar_list()
+   . add arbitrary sweep parameters
+ - process notes in decreasing order of stress?
+   . ornamentation via tiered chord note/neighbor note/chromatic note generation
+ - add more dithering patterns
+   . context specific dithering
+ - research FFT techniques
+* rename project
 * update readme
 * use more __init__.py functionality
-* add in_radius, out_radias kwargs to heightmap_radar_list()
-  - add arbitrary sweep parameters
-* process notes in decreasing order of stress?
-  - ornamentation via tiered chord note/neighbor note/chromatic note generation
-* add more dithering patterns
-  - context specific dithering
-* research FFT techniques
 * fork tracker.py to a liveplay project
