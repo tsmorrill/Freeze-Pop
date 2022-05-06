@@ -1,3 +1,5 @@
+from typing import Callable
+
 C0 = 12
 Db0 = 13
 D0 = 14
@@ -124,9 +126,9 @@ ff = 127
 
 
 def process_function(func, t):
-    if isinstance(func, int):
-        return func
-    return func(t)
+    if isinstance(func, Callable):
+        return func(t)
+    return func
 
 
 def none_cmd(pitch, vel, s, t):
@@ -154,10 +156,14 @@ def process_chain(chain):
         process_phrase(phrase, s)
 
 
+def process_song(song):
+    pass
+
+
 if __name__ == "__main__":
-    phrase = [[C3,  f, print_cmd],
-              [C3, mf, print_cmd],
-              [C3, mp, print_cmd],
-              [C3,  p, print_cmd]]
+    phrase = [[C3,    f,   print_cmd],
+              [E3,   mf,   print_cmd],
+              [G3,   mp,   print_cmd],
+              [E3,    p,   print_cmd]]
     chain = [phrase, phrase]
     process_chain(chain)
