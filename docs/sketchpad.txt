@@ -1,3 +1,8 @@
+* develop tracker.py
+ - none_command should output lists of tuples
+* create generators.py
+ - combine dither.py, heightmap.py, schillinger.py, guido.py, bressenham.py
+* create output.py
 * update readme
 * use more __init__.py functionality
 * add phrase mutation functions
@@ -6,15 +11,8 @@
   - double/half time
 * add in_radius, out_radias kwargs to heightmap_radar_list()
   - add arbitrary sweep parameters
-* add grammar for realizing song/melody structure from generated phrases
-* add classes
-  - key
-  - harmony
-  - rhythm
-* add routine for realizing MIDI file from songs/tracks/phrases
-* processes notes in decreasing order of stress
+* process notes in decreasing order of stress?
   - ornamentation via tiered chord note/neighbor note/chromatic note generation
 * add more dithering patterns
   - context specific dithering
-* add legato map
 * research FFT techniques

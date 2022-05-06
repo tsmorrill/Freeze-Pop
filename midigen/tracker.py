@@ -141,14 +141,13 @@ def print_cmd(pitch, vel, t):
     print(f"At time {t} play pitch {midi_note} with velocity {midi_vel}.")
 
 
-def process_phrase(phrase):
-    for t, [pitch, vel, cmd] in enumerate(phrase):
-        if cmd is None:
-            cmd = none_cmd
-        cmd(pitch, vel, t)
-
-
 def process_chain(chain):
+    def process_phrase(phrase):
+        for t, [pitch, vel, cmd] in enumerate(phrase):
+            if cmd is None:
+                cmd = none_cmd
+            cmd(pitch, vel, t)
+
     for phrase in chain:
         process_phrase(phrase)
 
