@@ -44,9 +44,15 @@ class Euclid(Sequence):
         self.clock = 0
 
 
-def resultant(a, b):
-    beats = [(t % a == 0) or (t % b == 0) for t in range(a*b)]
-    return(beats)
+class Resultant(Sequence):
+    @staticmethod
+    def trigs(a, b):
+        return [(t % a == 0) or (t % b == 0) for t in range(a*b)]
+
+    def __init__(self, a, b):
+        self.values = Resultant.trigs(a, b)
+        self.len = a*b
+        self.clock = 0
 
 
 def fractioning(a, b):
@@ -380,5 +386,5 @@ def guido(lyric, scale=guido_scale):
 
 
 if __name__ == "__main__":
-    seq = Euclid(7, 10)
+    seq = Resultant(7, 10)
     print(seq.values)
