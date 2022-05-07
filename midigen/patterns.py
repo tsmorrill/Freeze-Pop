@@ -28,10 +28,8 @@ class Sequence:
 class Euclid(Sequence):
     @staticmethod
     def is_trig(t, trig_count, len):
-        """Determine whether a pulse occurs on beat t in the (k, n) Euclidean rhythm.
-        """
         if trig_count > len:
-            raise Exception("k cannot exceed n.")
+            raise Exception("trig_count cannot exceed len.")
         prod = t * trig_count
         rollover_bool = (prod % len) > ((prod + trig_count) % len)
         return(rollover_bool)
