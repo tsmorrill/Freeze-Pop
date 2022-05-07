@@ -5,12 +5,11 @@
  - add aliases for general MIDI drum numbers
 * fix scripts
 * develop patterns.py
- - add callable sequences class
  - convert old functions to output velocity
  - add phrase generator functions
-   . reverse
    . invert/dilate
    . double/half time
+ - improve Fractioning.__init__ by applying Chicken McNugget theorem
  - add tree-based pitch-to-rhythm assignment
  - add in_radius, out_radias kwargs to heightmap_radar_list()
    . add arbitrary sweep parameters
