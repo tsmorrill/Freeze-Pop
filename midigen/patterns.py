@@ -8,7 +8,7 @@ class Sequence:
         self.len = len(list)
         self.clock = 0
 
-    def trigger(self):
+    def trig(self):
         value = self.values[self.clock]
         self.clock = (self.clock + 1) % self.len
         return value
@@ -27,23 +27,23 @@ class Sequence:
 
 class Euclid(Sequence):
     @classmethod
-    def euclid(cls, i, k, n):
-        """Determine whether a pulse occurs on beat i in the (k,n) Euclidean rhythm.
+    def is_trig(cls, t, k, n):
+        """Determine whether a pulse occurs on beat t in the (k, n) Euclidean rhythm.
         """
         if k > n:
             raise Exception("k cannot exceed n.")
-        prod = i*k
+        prod = t*k
         rollover_bool = (prod % n) > ((prod+k) % n)
         return(rollover_bool)
 
     def __init__(self, pulses, len):
-        self.values = [self.euclid(t, pulses, len) for t in range(-1, len-1)]
+        self.values = [self.is_trig(t, pulses, len) for t in range(-1, len-1)]
         self.len = len
         self.clock = 0
 
 
 def resultant(a, b):
-    beats = [i % a == 0 or i % b == 0 for i in range(a*b)]
+    beats = [(t % a == 0) or (t % b == 0) for t in range(a*b)]
     return(beats)
 
 
