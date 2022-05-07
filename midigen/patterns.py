@@ -55,12 +55,19 @@ class Resultant(Sequence):
         self.clock = 0
 
 
-def fractioning(a, b):
-    beats = [i % a == 0 for i in range(a*a)]
-    for i in range(a - b + 1):
-        for j in range(a):
-            beats[i*a + j*b] = True
-    return(beats)
+class Fractioning(Sequence):
+    @staticmethod
+    def trigs(a, b):
+        trig_list = [0 for t in range(a*a)]
+        for i in range(a - b + 1):
+            for j in range(a):
+                trig_list[i*a + j*b] = True
+        return(trig_list)
+
+    def __init__(self, a, b):
+        self.values = Fractioning.trigs(a, b)
+        self.len = a*a
+        self.clock = 0
 
 
 def heightmap_1D(iter, smoothing, seed, init):
@@ -386,5 +393,7 @@ def guido(lyric, scale=guido_scale):
 
 
 if __name__ == "__main__":
-    seq = Resultant(7, 10)
-    print(seq.values)
+    seq = Fractioning(4, 3)
+    list = seq.values
+    list = [int(val) for val in list]
+    print(list)
