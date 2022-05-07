@@ -29,7 +29,7 @@ class Euclid(Sequence):
     @staticmethod
     def is_trig(t, trig_count, len):
         if trig_count > len:
-            raise Exception("trig_count cannot exceed len.")
+            raise ValueError("trig_count cannot exceed len")
         prod = t * trig_count
         rollover_bool = (prod % len) > ((prod + trig_count) % len)
         return(rollover_bool)
@@ -58,6 +58,8 @@ class Resultant(Sequence):
 class Fractioning(Sequence):
     @staticmethod
     def trigs(a, b):
+        if a < b:
+            raise ValueError("b cannot exceed a")
         trig_list = [0 for t in range(a*a)]
         for i in range(a - b + 1):
             for j in range(a):
