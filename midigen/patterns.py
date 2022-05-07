@@ -2,9 +2,44 @@ import random
 import numpy as np
 
 
-def main(a, b):
-    bits = [int(item) for item in fractioning(a, b)]
-    print(bits)
+class Sequence:
+    def __init__(self, list):
+        self.values = list
+        self.len = len(list)
+        self.clock = 0
+
+    def trigger(self):
+        value = self.values[self.clock]
+        self.clock = (self.clock + 1) % self.len
+        return value
+
+    def reset(self):
+        value = self.values[0]
+        self.clock = 1
+        return value
+
+    def reverse(self):
+        value = self.values[self.clock - 1]
+        self.values = self.values[::-1]
+        self.clock = (1 - self.clock) % self.len
+        return value
+
+
+class Euclid(Sequence):
+    @classmethod
+    def euclid(cls, i, k, n):
+        """Determine whether a pulse occurs on beat i in the (k,n) Euclidean rhythm.
+        """
+        if k > n:
+            raise Exception("k cannot exceed n.")
+        prod = i*k
+        rollover_bool = (prod % n) > ((prod+k) % n)
+        return(rollover_bool)
+
+    def __init__(self, pulses, len):
+        self.values = [self.euclid(t, pulses, len) for t in range(-1, len-1)]
+        self.len = len
+        self.clock = 0
 
 
 def resultant(a, b):
@@ -18,22 +53,6 @@ def fractioning(a, b):
         for j in range(a):
             beats[i*a + j*b] = True
     return(beats)
-
-
-def euclid(i, k, n):
-    """Determine whether a pulse occurs on beat i in the (k,n) Euclidean rhythm.
-    """
-    if k > n:
-        raise Exception("k cannot exceed n.")
-    prod = i*k
-    rollover_bool = (prod % n) > ((prod+k) % n)
-    return(rollover_bool)
-
-
-def Bresenham(k, n):
-    """Return Euclidean rhythm of k pulses and length n."""
-    bool_list = [euclid(i, k, n) for i in range(-1, n-1)]     # shift to ensure
-    return(bool_list)                                         # list[0] == True
 
 
 def heightmap_1D(iter, smoothing, seed, init):
@@ -359,6 +378,5 @@ def guido(lyric, scale=guido_scale):
 
 
 if __name__ == "__main__":
-    lyric = "Sphinx of black quartz, judge my vow."
-    print(lyric)
-    print(guido(lyric))
+    seq = Euclid(7, 10)
+    print(seq.values)
