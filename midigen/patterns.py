@@ -26,18 +26,22 @@ class Sequence:
 
 
 class Euclid(Sequence):
-    @classmethod
-    def is_trig(cls, t, k, n):
+    @staticmethod
+    def is_trig(t, pulses, len):
         """Determine whether a pulse occurs on beat t in the (k, n) Euclidean rhythm.
         """
-        if k > n:
+        if pulses > len:
             raise Exception("k cannot exceed n.")
-        prod = t*k
-        rollover_bool = (prod % n) > ((prod+k) % n)
+        prod = t*pulses
+        rollover_bool = (prod % len) > ((prod + pulses) % len)
         return(rollover_bool)
 
+    @staticmethod
+    def trigs(pulses, len):
+        return [Euclid.is_trig(t, pulses, len) for t in range(-1, len-1)]
+
     def __init__(self, pulses, len):
-        self.values = [self.is_trig(t, pulses, len) for t in range(-1, len-1)]
+        self.values = Euclid.trigs(pulses, len)
         self.len = len
         self.clock = 0
 
