@@ -214,6 +214,18 @@ class Phrase:
         self.len = len
         self.unit = unit
 
+    @classmethod
+    def from_pitches(cls, pitches):
+        notes = []
+        for pitch in pitches:
+            if pitch is None:
+                note = None
+            else:
+                note = Note(pitch, f, None)
+            notes.append(note)
+        time_sig = [None, None]
+        return(Phrase(notes, time_sig))
+
 
 class Chain:
     def __init__(self, phrases):
@@ -226,5 +238,6 @@ class Song:
 
 
 if __name__ == "__main__":
-    note = Note(60, f, None)
-    note.render(0, 1)
+    phrase = Phrase.from_pitches([60, 62, None, 67])
+    for note in phrase.notes:
+        print(note.pitch, note.vel, note.cmd)
