@@ -2,7 +2,7 @@ import random
 import numpy as np
 
 
-class Sequence:
+class Sequencer:
     def __init__(self, list):
         self.values = list
         self.len = len(list)
@@ -25,7 +25,7 @@ class Sequence:
         return value
 
 
-class Euclid(Sequence):
+class Euclid(Sequencer):
     @staticmethod
     def is_trig(t, trig_count, len):
         if trig_count > len:
@@ -44,7 +44,7 @@ class Euclid(Sequence):
         self.clock = 0
 
 
-class Resultant(Sequence):
+class Resultant(Sequencer):
     @staticmethod
     def trigs(a, b):
         return [(t % a == 0) or (t % b == 0) for t in range(a*b)]
@@ -55,7 +55,7 @@ class Resultant(Sequence):
         self.clock = 0
 
 
-class Fractioning(Sequence):
+class Fractioning(Sequencer):
     @staticmethod
     def trigs(a, b):
         if a < b:
