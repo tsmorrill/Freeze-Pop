@@ -215,7 +215,7 @@ class Phrase:
         self.unit = unit
 
     @classmethod
-    def from_pitches(cls, pitches, vel=f, cmd=None):
+    def from_pitches(cls, pitches, vel=88, cmd=None):
         notes = []
         for pitch in pitches:
             if pitch is None:
@@ -227,7 +227,7 @@ class Phrase:
         return(Phrase(notes, time_sig))
 
     @classmethod
-    def from_rtm(cls, rtm, pitch=60, vel=f, cmd=None):
+    def from_rtm(cls, rtm, pitch=60, vel=88, cmd=None):
         notes = []
         for bool in rtm:
             note = Note(pitch, vel, cmd) if bool else None
