@@ -215,22 +215,22 @@ class Phrase:
         self.unit = unit
 
     @classmethod
-    def from_pitches(cls, pitches):
+    def from_pitches(cls, pitches, vel=f, cmd=None):
         notes = []
         for pitch in pitches:
             if pitch is None:
                 note = None
             else:
-                note = Note(pitch, f, None)
+                note = Note(pitch, vel, cmd)
             notes.append(note)
         time_sig = [None, None]
         return(Phrase(notes, time_sig))
 
     @classmethod
-    def from_rtm(cls, rtm, pitch=60):
+    def from_rtm(cls, rtm, pitch=60, vel=f, cmd=None):
         notes = []
         for bool in rtm:
-            note = Note(pitch, f, None) if bool else None
+            note = Note(pitch, vel, cmd) if bool else None
             notes.append(note)
         time_sig = [None, None]
         return(Phrase(notes, time_sig))
