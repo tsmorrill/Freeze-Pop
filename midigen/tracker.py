@@ -213,7 +213,7 @@ class Phrase:
         self.time_sig = time_sig
 
     @classmethod
-    def from_pitches(cls, pitches, vel=88, cmd=None):
+    def from_pitches(cls, pitches, vel=88, cmd=None, time_sig=None):
         notes = []
         for pitch in pitches:
             if pitch is None:
@@ -221,14 +221,11 @@ class Phrase:
             else:
                 note = Note(pitch, vel, cmd)
             notes.append(note)
-        time_sig = None
         return(Phrase(notes, time_sig))
 
     @classmethod
-    def from_trigs(cls, trigs, pitch=60, vel=88, cmd=None):
+    def from_trigs(cls, trigs, pitch=60, vel=88, cmd=None, time_sig=None):
         notes = [Note(pitch, vel, cmd) if bool else None for bool in trigs]
-        time_sig = None
-
         return(Phrase(notes, time_sig))
 
     def render(self, s=0):
