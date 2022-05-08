@@ -29,12 +29,6 @@ class Note:
         self.vel = vel
         self.cmd = cmd
 
-    @classmethod
-    def process_function(func, t):
-        if isinstance(func, Callable):
-            return func(t)
-        return func
-
     def render(self, s=0, t=0):
         return(self.cmd(self.pitch, self.vel, s, t))
 
