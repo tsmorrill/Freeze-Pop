@@ -227,9 +227,9 @@ class Phrase:
         return(Phrase(notes, time_sig))
 
     @classmethod
-    def from_rtm(cls, rtm, pitch=60, vel=88, cmd=None):
+    def from_trigs(cls, trigs, pitch=60, vel=88, cmd=None):
         notes = []
-        for bool in rtm:
+        for bool in trigs:
             note = Note(pitch, vel, cmd) if bool else None
             notes.append(note)
         time_sig = [None, None]
@@ -247,6 +247,6 @@ class Song:
 
 
 if __name__ == "__main__":
-    phrase = Phrase.from_rtm([True, True, False, True])
+    phrase = Phrase.from_trigs([True, True, False, True])
     for note in phrase.notes:
         print(note.pitch)
