@@ -183,25 +183,48 @@ def print_cmd(pitch, vel, s, t):
           + f"with velocity {midi_vel}.")
 
 
-def process_chain(chain):
-    def process_phrase(phrase, s):
-        for t, [pitch, vel, cmd] in enumerate(phrase):
-            if cmd is None:
-                cmd = none_cmd
-            cmd(pitch, vel, s, t)
+class Note:
+    def __init__(self, pitch, vel, cmd):
+        if cmd is None:
+            cmd = none_cmd
+        self.pitch = pitch
+        self.vel = vel
+        self.cmd = cmd
 
-    for s, phrase in enumerate(chain):
-        process_phrase(phrase, s)
+    @classmethod
+    def process_function(func, t):
+        if isinstance(func, Callable):
+            return func(t)
+        return func
+
+    def render(self, s, t):
+        self.cmd(self.pitch, self.vel, s, t)
 
 
-def process_song(song):
-    pass
+class Phrase:
+    def __init__(self, notes, time_sig):
+        len, unit = time_sig
+        self.notes = []
+
+        for note in notes:
+            if note is None:
+                note = Note(0, 0, None)
+            self.notes.append(note)
+
+        self.len = len
+        self.unit = unit
+
+
+class Chain:
+    def __init__(self, phrases):
+        self.phrases = phrases
+
+
+class Song:
+    def __init__(self, chains):
+        self.chains = chains
 
 
 if __name__ == "__main__":
-    phrase = [[C3,   f,   print_cmd],
-              [E3,   f,   print_cmd],
-              [G3,   f,   print_cmd],
-              [E3,   f,   print_cmd]]
-    chain = [phrase, phrase]
-    process_chain(chain)
+    note = Note(60, f, None)
+    note.render(0, 1)
