@@ -1,5 +1,6 @@
 * develop tracker.py
  - none_cmd should output lists of tuples
+ - consider class definition for phrases, chains, songs
  - add more commands as wrappers for none_cmd
  - add render_track()
  - add aliases for general MIDI drum numbers
