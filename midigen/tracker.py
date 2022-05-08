@@ -226,6 +226,15 @@ class Phrase:
         time_sig = [None, None]
         return(Phrase(notes, time_sig))
 
+    @classmethod
+    def from_rtm(cls, rtm, pitch=60):
+        notes = []
+        for bool in rtm:
+            note = Note(pitch, f, None) if bool else None
+            notes.append(note)
+        time_sig = [None, None]
+        return(Phrase(notes, time_sig))
+
 
 class Chain:
     def __init__(self, phrases):
@@ -238,6 +247,6 @@ class Song:
 
 
 if __name__ == "__main__":
-    phrase = Phrase.from_pitches([60, 62, None, 67])
+    phrase = Phrase.from_rtm([True, True, False, True])
     for note in phrase.notes:
-        print(note.pitch, note.vel, note.cmd)
+        print(note.pitch)
