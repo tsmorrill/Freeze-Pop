@@ -197,13 +197,12 @@ class Note:
             return func(t)
         return func
 
-    def render(self, s, t):
-        self.cmd(self.pitch, self.vel, s, t)
+    def render(self, s=0, t=0):
+        return(self.cmd(self.pitch, self.vel, s, t))
 
 
 class Phrase:
     def __init__(self, notes, time_sig):
-        len, unit = time_sig
         self.notes = []
 
         for note in notes:
@@ -211,8 +210,7 @@ class Phrase:
                 note = Note(0, 0, None)
             self.notes.append(note)
 
-        self.len = len
-        self.unit = unit
+        self.time_sig = time_sig
 
     @classmethod
     def from_pitches(cls, pitches, vel=88, cmd=None):
@@ -223,17 +221,19 @@ class Phrase:
             else:
                 note = Note(pitch, vel, cmd)
             notes.append(note)
-        time_sig = [None, None]
+        time_sig = None
         return(Phrase(notes, time_sig))
 
     @classmethod
     def from_trigs(cls, trigs, pitch=60, vel=88, cmd=None):
-        notes = []
-        for bool in trigs:
-            note = Note(pitch, vel, cmd) if bool else None
-            notes.append(note)
-        time_sig = [None, None]
+        notes = [Note(pitch, vel, cmd) if bool else None for bool in trigs]
+        time_sig = None
+
         return(Phrase(notes, time_sig))
+
+    def render(self, s=0):
+        render = [note.render(s, t) for t, note in enumerate(self.notes)]
+        return render
 
 
 class Chain:
