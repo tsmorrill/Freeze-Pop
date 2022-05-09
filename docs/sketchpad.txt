@@ -1,9 +1,7 @@
 * develop tracker.py
  - none_cmd should output lists of tuples
- - consider class definition for phrases, chains, songs
  - add more commands as wrappers for none_cmd
  - add render_track()
- - add aliases for general MIDI drum numbers
 * fix scripts
 * develop patterns.py
  - convert old functions to output velocity
@@ -19,6 +17,9 @@
  - add more dithering patterns
    . context specific dithering
  - research FFT techniques
+* develop constants.py
+ - add enharmonic names
+ - add aliases for general MIDI drum numbers
 * rename project
 * update readme
 * use more __init__.py functionality
