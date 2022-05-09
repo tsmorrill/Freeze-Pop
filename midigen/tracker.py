@@ -40,7 +40,6 @@ class Freezer:
     def from_proposition(cls, proposition):
         def func(Note, track=0, channel=0, time=0, duration=0,
                  phrase_counter=0, note_counter=0):
-            cubes = []
             if proposition(phrase_counter, note_counter):
                 cubes = Freezer.freeze_Note(Note,
                                             track=0,
@@ -49,7 +48,8 @@ class Freezer:
                                             duration=0,
                                             phrase_counter=0,
                                             note_counter=0)
-            return(cubes)
+                return(cubes)
+            return([])
 
         return Freezer(func)
 
