@@ -107,7 +107,7 @@ class Chain:
     def freeze(self):
         ice_tray = [phrase.freeze(s) for s, phrase in enumerate(self.chains)]
         cubes = chain.from_iterable(ice_tray)
-        return cubes
+        return(cubes)
 
 
 class Track:
@@ -118,12 +118,23 @@ class Track:
     def freeze(self):
         ice_tray = [chain.freeze for chain in self.chains]
         cubes = chain.from_iterable(ice_tray)
-        return cubes
+        return(cubes)
 
 
 class Song:
-    def __init__(self, tracks):
+    def __init__(self, name, tracks):
+        self.name = name
         self.chains = tracks
+
+    def freeze(self):
+        ice_tray = [track.freeze for track in self.tracks]
+        cubes = chain.from_iterable(ice_tray)
+        return(cubes)
+
+    def to_file(self):
+        cubes = self.freeze()
+        for cube in cubes:
+            pass
 
 
 if __name__ == "__main__":
