@@ -29,7 +29,7 @@ class Note:
         self.vel = vel
         self.cmd = cmd
 
-    def render(self, s=0, t=0):
+    def freeze(self, s=0, t=0):
         return(self.cmd(self.pitch, self.vel, s, t))
 
 
@@ -60,9 +60,9 @@ class Phrase:
         notes = [Note(pitch, vel, cmd) if bool else None for bool in trigs]
         return(Phrase(notes, time_sig))
 
-    def render(self, s=0):
-        render = [note.render(s, t) for t, note in enumerate(self.notes)]
-        return render
+    def freeze(self, s=0):
+        freeze = [note.freeze(s, t) for t, note in enumerate(self.notes)]
+        return freeze
 
 
 class Chain:
