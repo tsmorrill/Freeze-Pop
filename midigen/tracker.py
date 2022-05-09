@@ -25,13 +25,6 @@ def none_cmd(pitch, vel, s, t):
           + f"with velocity {midi_vel}.")
 
 
-def print_cmd(pitch, vel, s, t):
-    midi_note = process_function(pitch, t)
-    midi_vel = process_function(vel, t)
-    print(f"At phrase {s}, time {t} play pitch {midi_note} "
-          + f"with velocity {midi_vel}.")
-
-
 class Note:
     def __init__(self, pitch, vel, cmd):
         if cmd is None:
