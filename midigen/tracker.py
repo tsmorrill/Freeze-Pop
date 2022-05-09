@@ -1,4 +1,5 @@
 from typing import Callable
+from itertools import chain
 
 
 def process_function(func, t):
@@ -61,18 +62,29 @@ class Phrase:
         return(Phrase(notes, time_sig))
 
     def freeze(self, s=0):
-        freeze = [note.freeze(s, t) for t, note in enumerate(self.notes)]
-        return freeze
+        ice = [note.freeze(s, t) for t, note in enumerate(self.notes)]
+        return ice
 
 
 class Chain:
     def __init__(self, phrases):
         self.phrases = phrases
 
+    def freeze(self):
+        ice_tray = [phrase.freeze(s) for s, phrase in enumerate(self.chains)]
+        ice = chain.from_iterable(ice_tray)
+        return ice
+
 
 class Track:
-    def __init__(self, chains):
+    def __init__(self, chains, channel):
         self.chains = chains
+        self.channel = channel
+
+    def freeze(self):
+        ice_tray = [chain.freeze for chain in self.chains]
+        ice = chain.from_iterable(ice_tray)
+        return ice
 
 
 class Song:
