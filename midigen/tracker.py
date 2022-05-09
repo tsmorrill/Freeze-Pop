@@ -8,6 +8,16 @@ def process_function(func, t):
     return func
 
 
+class Cube:
+    def __init__(self, track, channel, pitch, time, duration, vel):
+        self.track = track
+        self.channel = channel
+        self.pitch = pitch
+        self.time = time
+        self.duration = duration
+        self.vel = vel
+
+
 def none_cmd(pitch, vel, s, t):
     midi_note = process_function(pitch, t)
     midi_vel = process_function(vel, t)
@@ -62,8 +72,8 @@ class Phrase:
         return(Phrase(notes, time_sig))
 
     def freeze(self, s=0):
-        ice = [note.freeze(s, t) for t, note in enumerate(self.notes)]
-        return ice
+        cubes = [note.freeze(s, t) for t, note in enumerate(self.notes)]
+        return cubes
 
 
 class Chain:
@@ -72,8 +82,8 @@ class Chain:
 
     def freeze(self):
         ice_tray = [phrase.freeze(s) for s, phrase in enumerate(self.chains)]
-        ice = chain.from_iterable(ice_tray)
-        return ice
+        cubes = chain.from_iterable(ice_tray)
+        return cubes
 
 
 class Track:
@@ -83,8 +93,8 @@ class Track:
 
     def freeze(self):
         ice_tray = [chain.freeze for chain in self.chains]
-        ice = chain.from_iterable(ice_tray)
-        return ice
+        cubes = chain.from_iterable(ice_tray)
+        return cubes
 
 
 class Song:
