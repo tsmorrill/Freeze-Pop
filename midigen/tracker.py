@@ -12,19 +12,34 @@ class Cube:
         self.vel = vel
 
 
-def process_function(func, t):
-    if isinstance(func, Callable):
-        return func(t)
-    return func
+class Freezer:
+    @classmethod
+    def freeze_func(func, phrase_counter):
+        if isinstance(func, Callable):
+            return(func(phrase_counter))
+        return(func)
 
+    @classmethod
+    def none_freezer(track, channel, time, note,
+                     chain_counter, phrase_counter):
+        pitch = note.pitch
+        vel = note.vel
 
-def none_freezer(track, channel, pitch, time, duration, vel,
-                 chain_counter, phrase_counter):
-    midi_note = process_function(pitch, phrase_counter)
-    midi_vel = process_function(vel, phrase_counter)
-    cube = Cube(track, channel, midi_note, time, duration, midi_vel)
-    cubes = [cube]
-    return(cubes)
+        midi_note = Freezer.freeze_func(pitch, phrase_counter)
+        midi_vel = Freezer.freeze_func(vel, phrase_counter)
+
+        cube = Cube(track, channel, midi_note, time, duration, midi_vel)
+        cubes = [cube]
+
+        return(cubes)
+
+    def __init__(self):
+        pass
+
+    def freeze_note(Note):
+        pitch = Note.pitch
+        cubes =
+        return cubes
 
 
 class Note:
