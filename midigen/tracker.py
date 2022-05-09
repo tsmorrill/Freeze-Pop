@@ -34,7 +34,8 @@ class Note:
         self.cmd = cmd
 
     def freeze(self, s=0, t=0):
-        return(self.cmd(self.pitch, self.vel, s, t))
+        cubes = self.cmd(self.pitch, self.vel, s, t)
+        return(cubes)
 
 
 class Phrase:
@@ -65,7 +66,8 @@ class Phrase:
         return(Phrase(notes, time_sig))
 
     def freeze(self, s=0):
-        cubes = [note.freeze(s, t) for t, note in enumerate(self.notes)]
+        ice_tray = [note.freeze(s, t) for t, note in enumerate(self.notes)]
+        cubes = chain.from_iterable(ice_tray)
         return cubes
 
 
