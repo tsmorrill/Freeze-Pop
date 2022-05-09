@@ -18,23 +18,25 @@ def process_function(func, t):
     return func
 
 
-def none_cmd(pitch, vel, s, t):
-    midi_note = process_function(pitch, t)
-    midi_vel = process_function(vel, t)
-    print(f"At phrase {s}, time {t} play pitch {midi_note} "
-          + f"with velocity {midi_vel}.")
+def none_freezer(track, channel, pitch, time, duration, vel,
+                 chain_counter, phrase_counter):
+    midi_note = process_function(pitch, phrase_counter)
+    midi_vel = process_function(vel, phrase_counter)
+    cube = Cube(track, channel, midi_note, time, duration, midi_vel)
+    cubes = [cube]
+    return(cubes)
 
 
 class Note:
-    def __init__(self, pitch, vel, cmd):
-        if cmd is None:
-            cmd = none_cmd
+    def __init__(self, pitch, vel, freezer):
+        if freezer is None:
+            freezer = none_freezer
         self.pitch = pitch
         self.vel = vel
-        self.cmd = cmd
+        self.freezer = freezer
 
     def freeze(self, s=0, t=0):
-        cubes = self.cmd(self.pitch, self.vel, s, t)
+        cubes = self.freezer(self.pitch, self.vel, s, t)
         return(cubes)
 
 
@@ -50,19 +52,19 @@ class Phrase:
         self.time_sig = time_sig
 
     @classmethod
-    def from_pitches(cls, pitches, vel=88, cmd=None, time_sig=None):
+    def from_pitches(cls, pitches, vel=88, freezer=None, time_sig=None):
         notes = []
         for pitch in pitches:
             if pitch is None:
                 note = None
             else:
-                note = Note(pitch, vel, cmd)
+                note = Note(pitch, vel, freezer)
             notes.append(note)
         return(Phrase(notes, time_sig))
 
     @classmethod
-    def from_trigs(cls, trigs, pitch=60, vel=88, cmd=None, time_sig=None):
-        notes = [Note(pitch, vel, cmd) if bool else None for bool in trigs]
+    def from_trigs(cls, trigs, pitch=60, vel=88, freezer=None, time_sig=None):
+        notes = [Note(pitch, vel, freezer) if bool else None for bool in trigs]
         return(Phrase(notes, time_sig))
 
     def freeze(self, s=0):
