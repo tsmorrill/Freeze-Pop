@@ -2,12 +2,6 @@ from typing import Callable
 from itertools import chain
 
 
-def process_function(func, t):
-    if isinstance(func, Callable):
-        return func(t)
-    return func
-
-
 class Cube:
     def __init__(self, track, channel, pitch, time, duration, vel):
         self.track = track
@@ -16,6 +10,12 @@ class Cube:
         self.time = time
         self.duration = duration
         self.vel = vel
+
+
+def process_function(func, t):
+    if isinstance(func, Callable):
+        return func(t)
+    return func
 
 
 def none_cmd(pitch, vel, s, t):
