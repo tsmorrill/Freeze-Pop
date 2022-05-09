@@ -13,6 +13,12 @@ class Cube:
 
 
 class Freezer:
+    def __init__(self, cmd):
+        if cmd is None:
+            cmd = Freezer.freeze_note
+        self.cmd = cmd
+        pass
+
     @classmethod
     def freeze_func(func, phrase_counter):
         if isinstance(func, Callable):
@@ -20,32 +26,38 @@ class Freezer:
         return(func)
 
     @classmethod
-    def none_freezer(track, channel, time, note,
-                     chain_counter, phrase_counter):
-        pitch = note.pitch
-        vel = note.vel
+    def freeze_note(cls, Note, track=0, channel=0, time=0, duration=0,
+                    phrase_counter=0, note_counter=0):
+        pitch = Freezer.freeze_func(note.pitch, phrase_counter)
+        vel = Freezer.freeze_func(note.vel, phrase_counter)
 
-        midi_note = Freezer.freeze_func(pitch, phrase_counter)
-        midi_vel = Freezer.freeze_func(vel, phrase_counter)
-
-        cube = Cube(track, channel, midi_note, time, duration, midi_vel)
+        cube = Cube(track, channel, pitch, time, duration, vel)
         cubes = [cube]
 
-        return(cubes)
-
-    def __init__(self):
-        pass
-
-    def freeze_note(Note):
-        pitch = Note.pitch
-        cubes =
         return cubes
+
+    @classmethod
+    def from_proposition(cls, proposition):
+        def func(Note, track=0, channel=0, time=0, duration=0,
+                 phrase_counter=0, note_counter=0):
+            cubes = []
+            if proposition(phrase_counter, note_counter):
+                cubes = Freezer.freeze_Note(Note,
+                                            track=0,
+                                            channel=0,
+                                            time=0,
+                                            duration=0,
+                                            phrase_counter=0,
+                                            note_counter=0)
+            return(cubes)
+
+        return Freezer(func)
 
 
 class Note:
     def __init__(self, pitch, vel, freezer):
         if freezer is None:
-            freezer = none_freezer
+            freezer = Freezer(None)
         self.pitch = pitch
         self.vel = vel
         self.freezer = freezer
