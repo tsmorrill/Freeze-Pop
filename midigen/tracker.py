@@ -70,9 +70,14 @@ class Chain:
         self.phrases = phrases
 
 
-class Song:
+class Track:
     def __init__(self, chains):
         self.chains = chains
+
+
+class Song:
+    def __init__(self, tracks):
+        self.chains = tracks
 
 
 if __name__ == "__main__":
