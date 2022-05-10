@@ -68,6 +68,15 @@ class Freezer:
             return(bool(random() < percent/100))
         return(Freezer.contitional(func))
 
+    @classmethod
+    def ratchet(mult):
+        def func(Note, track=0, channel=0, time=0, duration=0,
+                 phrase_counter=0, note_counter=0):
+            for n in range(mult):
+                pass
+            return(cubes)
+    return(Freezer(func))
+
 
 class Note:
     def __init__(self, pitch, vel=88, freezer=None):

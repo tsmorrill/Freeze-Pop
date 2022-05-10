@@ -1,4 +1,5 @@
 * develop tracker.py
+ - finish areas marked with pass
  - add render method to Song class
 * fix scripts
 * develop patterns.py
