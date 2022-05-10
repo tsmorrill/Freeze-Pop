@@ -21,16 +21,16 @@ class Freezer:
         pass
 
     @classmethod
-    def freeze_func(func, phrase_counter):
+    def freeze_func(func, note_counter):
         if isinstance(func, Callable):
-            return(func(phrase_counter))
+            return(func(note_counter))
         return(func)
 
     @classmethod
     def freeze_note(cls, Note, track=0, channel=0, time=0, duration=0,
                     phrase_counter=0, note_counter=0):
-        pitch = Freezer.freeze_func(note.pitch, phrase_counter)
-        vel = Freezer.freeze_func(note.vel, phrase_counter)
+        pitch = Freezer.freeze_func(note.pitch, note_counter)
+        vel = Freezer.freeze_func(note.vel, note_counter)
 
         cube = Cube(track, channel, pitch, time, duration, vel)
         cubes = [cube]
