@@ -27,7 +27,7 @@ class Freezer:
         return(func)
 
     @classmethod
-    def freeze_note(cls, Note, track=0, channel=0, time=0, duration=0,
+    def freeze_note(cls, note, track=0, channel=0, time=0, duration=0,
                     phrase_counter=0, note_counter=0):
         pitch = Freezer.freeze_func(note.pitch, note_counter)
         vel = Freezer.freeze_func(note.vel, note_counter)
