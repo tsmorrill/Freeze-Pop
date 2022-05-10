@@ -67,7 +67,7 @@ class Freezer:
 
 
 class Note:
-    def __init__(self, pitch, vel, freezer):
+    def __init__(self, pitch, vel=88, freezer=None):
         if freezer is None:
             freezer = Freezer(None)
         self.pitch = pitch
