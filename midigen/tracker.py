@@ -61,6 +61,9 @@ class Freezer:
 
     @classmethod
     def prob(percent):
+        if percent < 0 or percent > 100:
+            raise ValueError("percent must be within 0 and 100 inclusive")
+
         def func(phrase_counter, note_counter):
             return(bool(random() < percent/100))
         return(Freezer.contitional(func))

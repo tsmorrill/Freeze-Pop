@@ -73,8 +73,8 @@ class Sequencer:
 class Euclid(Sequencer):
     @staticmethod
     def is_trig(t, trig_count, len):
-        if trig_count > len:
-            raise ValueError("trig_count cannot exceed len")
+        if trig_count < 0 or trig_count > len:
+            raise ValueError("trig_count must be within 0 and len inclusive")
         prod = t * trig_count
         rollover_bool = (prod % len) > ((prod + trig_count) % len)
         return(rollover_bool)
