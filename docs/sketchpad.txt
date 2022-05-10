@@ -1,7 +1,5 @@
 * develop tracker.py
- - none_cmd should output lists of tuples
- - add more commands as wrappers for none_cmd
- - add render_track()
+ - add render method to Song class
 * fix scripts
 * develop patterns.py
  - convert old functions to output velocity

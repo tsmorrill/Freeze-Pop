@@ -1,5 +1,6 @@
 from typing import Callable
 from itertools import chain
+from random import random
 
 
 class Cube:
@@ -37,10 +38,10 @@ class Freezer:
         return cubes
 
     @classmethod
-    def from_proposition(cls, proposition):
+    def conditional(cls, condition):
         def func(Note, track=0, channel=0, time=0, duration=0,
                  phrase_counter=0, note_counter=0):
-            if proposition(phrase_counter, note_counter):
+            if condition(phrase_counter, note_counter):
                 cubes = Freezer.freeze_Note(Note,
                                             track=0,
                                             channel=0,
@@ -50,8 +51,19 @@ class Freezer:
                                             note_counter=0)
                 return(cubes)
             return([])
-
         return Freezer(func)
+
+    @classmethod
+    def mod(k, n, offset=0):
+        def func(phrase_counter, note_counter):
+            return(bool(phrase_counter - offset % n == 0))
+        return(Freezer.contitional(func))
+
+    @classmethod
+    def prob(percent):
+        def func(phrase_counter, note_counter):
+            return(bool(random() < percent/100))
+        return(Freezer.contitional(func))
 
 
 class Note:
