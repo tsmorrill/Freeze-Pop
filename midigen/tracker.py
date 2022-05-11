@@ -63,12 +63,12 @@ class Freezer:
             return(bool(random() < percent/100))
         return(Freezer.contitional(func))
 
-    @classmethod
-    def ratchet(mult):
-        def func(note, time=0, phrase_counter=0, note_counter=0):
-            for n in range(mult):
-                pass
-        return(Freezer(func))
+    # @classmethod
+    # def ratchet(mult):
+    #     def func(note, time=0, phrase_counter=0, note_counter=0):
+    #         for n in range(mult):
+    #             pass
+    #     return(Freezer(func))
 
 
 class Note:
