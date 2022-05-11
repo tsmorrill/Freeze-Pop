@@ -4,10 +4,10 @@ from random import random
 
 
 class Cube:
-    def __init__(self, pitch, time, duration, vel):
+    def __init__(self, pitch, time, note_len, vel):
         self.pitch = pitch
         self.time = time
-        self.duration = duration
+        self.note_len = note_len
         self.vel = vel
 
 
@@ -25,25 +25,25 @@ class Freezer:
         return(func)
 
     @classmethod
-    def freeze_note(cls, note, time=0, duration=1/4, phrase_counter=0,
+    def freeze_note(cls, note, time=0, note_len=1/4, phrase_counter=0,
                     note_counter=0):
         pitch = Freezer.freeze_func(note.pitch, note_counter)
         vel = Freezer.freeze_func(note.vel, note_counter)
 
-        cube = Cube(pitch, time, duration, vel)
+        cube = Cube(pitch, time, note_len, vel)
         cubes = [cube]
 
-        return cubes
+        return(cubes)
 
     @classmethod
     def conditional(cls, condition):
-        def func(note, time=0, duration=0, phrase_counter=0, note_counter=0):
+        def func(note, time=0, note_len=0, phrase_counter=0, note_counter=0):
             if condition(phrase_counter, note_counter):
                 cubes = Freezer.freeze_Note(note,
-                                            time=0,
-                                            duration=0,
-                                            phrase_counter=0,
-                                            note_counter=0)
+                                            time,
+                                            note_len,
+                                            phrase_counter,
+                                            note_counter)
                 return(cubes)
             return([])
         return Freezer(func)
@@ -65,7 +65,7 @@ class Freezer:
 
     @classmethod
     def ratchet(mult):
-        def func(note, time=0, duration=0, phrase_counter=0, note_counter=0):
+        def func(note, time=0, note_len=1/4, phrase_counter=0, note_counter=0):
             for n in range(mult):
                 pass
         return(Freezer(func))
@@ -79,14 +79,14 @@ class Note:
         self.vel = vel
         self.freezer = freezer
 
-    def freeze(self, time=0, duration=1/4, phrase_counter=0, note_counter=0):
-        cubes = self.freezer(note, time, duration,
+    def freeze(self, time=0, note_len=1/4, phrase_counter=0, note_counter=0):
+        cubes = self.freezer(note, time, note_len,
                              phrase_counter, note_counter)
         return(cubes)
 
 
 class Phrase:
-    def __init__(self, notes, time_sig):
+    def __init__(self, notes, base_note_len):
         self.notes = []
 
         for note in notes:
@@ -94,7 +94,7 @@ class Phrase:
                 note = Note(0, 0, None)
             self.notes.append(note)
 
-        self.time_sig = time_sig
+        self.base_note_len = base_note_len
 
     @classmethod
     def from_pitches(cls, pitches, vel=88, freezer=None, time_sig=None):
@@ -112,8 +112,10 @@ class Phrase:
         notes = [Note(pitch, vel, freezer) if bool else None for bool in trigs]
         return(Phrase(notes, time_sig))
 
-    def freeze(self, s=0):
-        ice_tray = [note.freeze(s, t) for t, note in enumerate(self.notes)]
+    def freeze(self, time=0, phrase_counter=0):
+        note_len = self.base_note_len
+        ice_tray = [note.freeze(time, note_len, phrase_counter, note_counter)
+                    for note_counter, note in enumerate(self.notes)]
         cubes = chain.from_iterable(ice_tray)
         return cubes
 
