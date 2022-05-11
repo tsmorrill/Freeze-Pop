@@ -40,9 +40,7 @@ class Freezer:
     def conditional(cls, condition):
         def func(note, time=0, phrase_counter=0, note_counter=0):
             if condition(phrase_counter, note_counter):
-                cubes = Freezer.freeze_Note(note,
-                                            time,
-                                            phrase_counter,
+                cubes = Freezer.freeze_Note(note, time, phrase_counter,
                                             note_counter)
                 return(cubes)
             return([])
