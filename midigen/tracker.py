@@ -25,23 +25,23 @@ class Freezer:
         return(func)
 
     @classmethod
-    def freeze_note(cls, note, time=0, note_len=1/4, phrase_counter=0,
+    def freeze_note(cls, note, time=0, phrase_counter=0,
                     note_counter=0):
         pitch = Freezer.freeze_func(note.pitch, note_counter)
         vel = Freezer.freeze_func(note.vel, note_counter)
+        len = note.len
 
-        cube = Cube(pitch, time, note_len, vel)
+        cube = Cube(pitch, time, len, vel)
         cubes = [cube]
 
         return(cubes)
 
     @classmethod
     def conditional(cls, condition):
-        def func(note, time=0, note_len=0, phrase_counter=0, note_counter=0):
+        def func(note, time=0, phrase_counter=0, note_counter=0):
             if condition(phrase_counter, note_counter):
                 cubes = Freezer.freeze_Note(note,
                                             time,
-                                            note_len,
                                             phrase_counter,
                                             note_counter)
                 return(cubes)
@@ -65,36 +65,34 @@ class Freezer:
 
     @classmethod
     def ratchet(mult):
-        def func(note, time=0, note_len=1/4, phrase_counter=0, note_counter=0):
+        def func(note, time=0, phrase_counter=0, note_counter=0):
             for n in range(mult):
                 pass
         return(Freezer(func))
 
 
 class Note:
-    def __init__(self, pitch, vel=88, freezer=None):
+    def __init__(self, pitch, vel=88, len=1/4, freezer=None):
         if freezer is None:
             freezer = Freezer(None)
         self.pitch = pitch
         self.vel = vel
+        self.len = len
         self.freezer = freezer
 
-    def freeze(self, time=0, note_len=1/4, phrase_counter=0, note_counter=0):
-        cubes = self.freezer(note, time, note_len,
-                             phrase_counter, note_counter)
+    def freeze(self, time=0, phrase_counter=0, note_counter=0):
+        cubes = self.freezer(note, time, phrase_counter, note_counter)
         return(cubes)
 
 
 class Phrase:
-    def __init__(self, notes, base_note_len):
+    def __init__(self, notes):
         self.notes = []
 
         for note in notes:
             if note is None:
                 note = Note(0, 0, None)
             self.notes.append(note)
-
-        self.base_note_len = base_note_len
 
     @classmethod
     def from_pitches(cls, pitches, vel=88, freezer=None, time_sig=None):
