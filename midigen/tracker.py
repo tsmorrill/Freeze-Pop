@@ -81,7 +81,7 @@ class Note:
         self.freezer = freezer
 
     def freeze(self, time=0, phrase_counter=0, note_counter=0):
-        cubes = self.freezer.freeze(note, time, phrase_counter, note_counter)
+        cubes = self.freezer.freeze(self, time, phrase_counter, note_counter)
         return(cubes)
 
 
