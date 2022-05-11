@@ -12,10 +12,10 @@ class Cube:
 
 
 class Freezer:
-    def __init__(self, cmd):
-        if cmd is None:
-            cmd = Freezer.freeze_note
-        self.cmd = cmd
+    def __init__(self, freeze):
+        if freeze is None:
+            freeze = Freezer.freeze_note
+        self.freeze = freeze
         pass
 
     @classmethod
@@ -81,7 +81,7 @@ class Note:
         self.freezer = freezer
 
     def freeze(self, time=0, phrase_counter=0, note_counter=0):
-        cubes = self.freezer(note, time, phrase_counter, note_counter)
+        cubes = self.freezer.freeze(note, time, phrase_counter, note_counter)
         return(cubes)
 
 
