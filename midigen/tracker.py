@@ -75,7 +75,7 @@ class Freezer:
             for n in range(mult):
                 pass
             return(cubes)
-    return(Freezer(func))
+        return(Freezer(func))
 
 
 class Note:
