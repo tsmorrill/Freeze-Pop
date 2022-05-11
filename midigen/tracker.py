@@ -27,7 +27,7 @@ class Freezer:
         return(func)
 
     @classmethod
-    def freeze_note(cls, note, track=0, channel=0, time=0, duration=0,
+    def freeze_note(cls, note, track=0, channel=0, time=0, duration=1/4,
                     phrase_counter=0, note_counter=0):
         pitch = Freezer.freeze_func(note.pitch, note_counter)
         vel = Freezer.freeze_func(note.vel, note_counter)
@@ -39,7 +39,7 @@ class Freezer:
 
     @classmethod
     def conditional(cls, condition):
-        def func(Note, track=0, channel=0, time=0, duration=0,
+        def func(note, track=0, channel=0, time=0, duration=0,
                  phrase_counter=0, note_counter=0):
             if condition(phrase_counter, note_counter):
                 cubes = Freezer.freeze_Note(Note,
@@ -70,11 +70,10 @@ class Freezer:
 
     @classmethod
     def ratchet(mult):
-        def func(Note, track=0, channel=0, time=0, duration=0,
+        def func(note, track=0, channel=0, time=0, duration=0,
                  phrase_counter=0, note_counter=0):
             for n in range(mult):
                 pass
-            return(cubes)
         return(Freezer(func))
 
 
