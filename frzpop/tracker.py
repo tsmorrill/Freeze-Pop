@@ -16,7 +16,6 @@ class Freezer:
         if freeze is None:
             freeze = Freezer.freeze_note
         self.freeze = freeze
-        pass
 
     @classmethod
     def freeze_func(func, note_counter):
