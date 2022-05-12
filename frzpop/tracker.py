@@ -21,8 +21,8 @@ class Freezer:
     @classmethod
     def freeze_func(func, note_counter):
         if isinstance(func, Callable):
-            return(func(note_counter))
-        return(func)
+            return func(note_counter)
+        return func
 
     @classmethod
     def freeze_note(cls, note, time=0, phrase_counter=0,
@@ -35,23 +35,23 @@ class Freezer:
         cubes = [cube]
         time = time + len
 
-        return(cubes, time)
+        return cubes, time
 
     @classmethod
     def conditional(cls, condition):
         def func(note, time=0, phrase_counter=0, note_counter=0):
+            cubes = []
             if condition(phrase_counter, note_counter):
                 cubes = Freezer.freeze_Note(note, time, phrase_counter,
                                             note_counter)
-                return(cubes)
-            return([])
+            return cubes
         return Freezer(func)
 
     @classmethod
     def mod(k, n, offset=0):
         def func(phrase_counter, note_counter):
-            return(bool(phrase_counter - offset % n == 0))
-        return(Freezer.contitional(func))
+            return (phrase_counter - offset) % n == 0
+        return Freezer.contitional(func)
 
     @classmethod
     def prob(percent):
@@ -59,15 +59,15 @@ class Freezer:
             raise ValueError("percent must be within 0 and 100 inclusive")
 
         def func(phrase_counter, note_counter):
-            return(bool(random() < percent/100))
-        return(Freezer.contitional(func))
+            return random() < percent/100
+        return Freezer.contitional(func)
 
     # @classmethod
     # def ratchet(mult):
     #     def func(note, time=0, phrase_counter=0, note_counter=0):
     #         for n in range(mult):
     #             pass
-    #     return(Freezer(func))
+    #     return Freezer(func)
 
 
 class Note:
@@ -82,7 +82,7 @@ class Note:
     def freeze(self, time=0, phrase_counter=0, note_counter=0):
         cubes, time = self.freezer.freeze(self, time, phrase_counter,
                                           note_counter)
-        return(cubes, time)
+        return cubes, time
 
 
 class Phrase:
@@ -103,13 +103,13 @@ class Phrase:
             else:
                 note = Note(pitch, vel, len, freezer)
             notes.append(note)
-        return(Phrase(notes))
+        return Phrase(notes)
 
     @classmethod
     def from_trigs(cls, trigs, pitch=60, vel=88, len=1/4, freezer=None):
         notes = [Note(pitch, vel, len, freezer) if bool else None
                  for bool in trigs]
-        return(Phrase(notes))
+        return Phrase(notes)
 
     def freeze(self, time=0, phrase_counter=0):
         ice_tray = []
@@ -117,7 +117,7 @@ class Phrase:
             cubes, time = note.freeze(time, phrase_counter, note_counter)
             ice_tray.extend(cubes)
         cubes = chain.from_iterable(ice_tray)
-        return(cubes, time)
+        return cubes, time
 
 
 class Section:
@@ -131,7 +131,7 @@ class Section:
             cubes, time = phrase.freeze(time, phrase_counter)
             ice_tray.extend(cubes)
         cubes = chain.from_iterable(ice_tray)
-        return(cubes)
+        return cubes
 
 
 class Track:
@@ -146,7 +146,7 @@ class Track:
             cubes, time = section.freeze(time)
             ice_tray.extend(cubes)
         cubes = chain.from_iterable(ice_tray)
-        return(cubes)
+        return cubes
 
 
 class Song:
@@ -157,7 +157,7 @@ class Song:
     def freeze(self):
         ice_tray = [track.freeze for track in self.tracks]
         cubes = chain.from_iterable(ice_tray)
-        return(cubes)
+        return cubes
 
     def to_file(self):
         cubes = self.freeze()
