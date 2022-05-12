@@ -33,8 +33,9 @@ class Freezer:
 
         cube = Cube(pitch, time, len, vel)
         cubes = [cube]
+        time = time + len
 
-        return(cubes)
+        return(cubes, time)
 
     @classmethod
     def conditional(cls, condition):
@@ -79,8 +80,9 @@ class Note:
         self.freezer = freezer
 
     def freeze(self, time=0, phrase_counter=0, note_counter=0):
-        cubes = self.freezer.freeze(self, time, phrase_counter, note_counter)
-        return(cubes)
+        cubes, time = self.freezer.freeze(self, time, phrase_counter,
+                                          note_counter)
+        return(cubes, time)
 
 
 class Phrase:
@@ -93,46 +95,56 @@ class Phrase:
             self.notes.append(note)
 
     @classmethod
-    def from_pitches(cls, pitches, vel=88, freezer=None, time_sig=None):
+    def from_pitches(cls, pitches, vel=88, len=1/4, freezer=None):
         notes = []
         for pitch in pitches:
             if pitch is None:
                 note = None
             else:
-                note = Note(pitch, vel, freezer)
+                note = Note(pitch, vel, len, freezer)
             notes.append(note)
-        return(Phrase(notes, time_sig))
+        return(Phrase(notes))
 
     @classmethod
-    def from_trigs(cls, trigs, pitch=60, vel=88, freezer=None, time_sig=None):
-        notes = [Note(pitch, vel, freezer) if bool else None for bool in trigs]
-        return(Phrase(notes, time_sig))
+    def from_trigs(cls, trigs, pitch=60, vel=88, len=1/4, freezer=None):
+        notes = [Note(pitch, vel, len, freezer) if bool else None
+                 for bool in trigs]
+        return(Phrase(notes))
 
     def freeze(self, time=0, phrase_counter=0):
-        note_len = self.base_note_len
-        ice_tray = [note.freeze(time, note_len, phrase_counter, note_counter)
-                    for note_counter, note in enumerate(self.notes)]
+        ice_tray = []
+        for note_counter, note in enumerate(self.notes):
+            cubes, time = note.freeze(time, phrase_counter, note_counter)
+            ice_tray.extend(cubes)
         cubes = chain.from_iterable(ice_tray)
-        return cubes
+        return(cubes, time)
 
 
 class Chain:
-    def __init__(self, phrases):
+    def __init__(self, phrases, time=0):
         self.phrases = phrases
+        self.time = time
 
-    def freeze(self):
-        ice_tray = [phrase.freeze(s) for s, phrase in enumerate(self.chains)]
+    def freeze(self, time=0):
+        ice_tray = []
+        for phrase_counter, phrase in enumerate(self.phrases):
+            cubes, time = phrase.freeze(time, phrase_counter)
+            ice_tray.extend(cubes)
         cubes = chain.from_iterable(ice_tray)
         return(cubes)
 
 
 class Track:
-    def __init__(self, chains, channel):
+    def __init__(self, chains, channel=0):
         self.chains = chains
         self.channel = channel
 
-    def freeze(self):
-        ice_tray = [chain.freeze for chain in self.chains]
+    def freeze(self, self.time):
+        time = 0
+        ice_tray = []
+        for chain in self.chains:
+            cubes, time = chain.freeze(time)
+            ice_tray.extend(cubes)
         cubes = chain.from_iterable(ice_tray)
         return(cubes)
 
