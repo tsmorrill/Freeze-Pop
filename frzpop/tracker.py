@@ -120,7 +120,7 @@ class Phrase:
         return(cubes, time)
 
 
-class Chain:
+class Section:
     def __init__(self, phrases, time=0):
         self.phrases = phrases
         self.time = time
@@ -135,15 +135,15 @@ class Chain:
 
 
 class Track:
-    def __init__(self, chains, channel=0):
-        self.chains = chains
+    def __init__(self, sections, channel=0):
+        self.sections = sections
         self.channel = channel
 
-    def freeze(self, self.time):
+    def freeze(self, time):
         time = 0
         ice_tray = []
-        for chain in self.chains:
-            cubes, time = chain.freeze(time)
+        for section in self.sections:
+            cubes, time = section.freeze(time)
             ice_tray.extend(cubes)
         cubes = chain.from_iterable(ice_tray)
         return(cubes)
