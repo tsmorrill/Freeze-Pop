@@ -1,5 +1,5 @@
 # Freeze Pop
- Generate MIDI with tracker-inspired methods
+ Generate MIDI files with tracker-inspired methods.
 
 ## Cubes
 Describe here
