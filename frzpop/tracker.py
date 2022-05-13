@@ -1,5 +1,4 @@
 from midiutil import MIDIFile
-from typing import Callable
 from random import random
 
 
@@ -19,7 +18,7 @@ class Freezer:
 
     @classmethod
     def freeze_func(cls, func, note_counter):
-        if isinstance(func, Callable):
+        if callable(func):
             return func(note_counter)
         return func
 
