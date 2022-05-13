@@ -115,8 +115,7 @@ class Phrase:
         for note_counter, note in enumerate(self.notes):
             cubes, time = note.freeze(time, phrase_counter, note_counter)
             ice_tray.extend(cubes)
-        cubes = chain.from_iterable(ice_tray)
-        return cubes, time
+        return ice_tray, time
 
 
 class Section:
@@ -129,8 +128,7 @@ class Section:
         for phrase_counter, phrase in enumerate(self.phrases):
             cubes, time = phrase.freeze(time, phrase_counter)
             ice_tray.extend(cubes)
-        cubes = chain.from_iterable(ice_tray)
-        return cubes
+        return ice_tray, time
 
 
 class Track:
@@ -138,32 +136,39 @@ class Track:
         self.sections = sections
         self.channel = channel
 
-    def freeze(self, time):
+    def freeze(self, time=0):
         time = 0
         ice_tray = []
         for section in self.sections:
             cubes, time = section.freeze(time)
             ice_tray.extend(cubes)
-        cubes = chain.from_iterable(ice_tray)
-        return cubes
+        return cubes, time
 
 
 class Song:
     def __init__(self, name, tracks):
         self.name = name
-        self.chains = tracks
+        self.tracks = tracks
 
     def freeze(self):
-        ice_tray = [track.freeze for track in self.tracks]
-        cubes = chain.from_iterable(ice_tray)
-        return cubes
+        time = 0
+        ice_tray = []
+        for track in self.tracks:
+            cubes, time = section.freeze(time)
+            ice_tray.extend(cubes)
+        return ice_tray
 
     def to_file(self):
-        cubes = self.freeze()
-        for cube in cubes:
+        ice_tray = self.freeze()
+        for cube in ice_tray:
             pass
 
 
 if __name__ == "__main__":
     phrase = Phrase.from_pitches([60, 62, 64, 65, 67, 69, 71, 72])
-    cubes, time = phrase.freeze()
+    section = Section([phrase])
+    track = Track([section])
+    song = Song(None, [track])
+    ice_tray = song.freeze()
+    for cube in ice_tray:
+        print(cube.pitch)
