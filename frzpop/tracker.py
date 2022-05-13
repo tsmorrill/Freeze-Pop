@@ -1,5 +1,4 @@
 from typing import Callable
-from itertools import chain
 from random import random
 
 
