@@ -1,6 +1,23 @@
-# MIDI-gen
- Generate MIDI files
+# Freeze Pop
+ Generate MIDI with tracker-inspired methods
 
-## Dither Rhythm
-Generates a single track MIDI file by dithering a height map.
-Work in progress; documentation to follow.
+## Cubes
+Describe here
+
+## Freezers
+Describe here
+
+## Notes
+Describe here
+
+## Phrases
+Describe here
+
+## Sections
+Describe here
+
+## Tracks
+Describe here
+
+## Songs
+Describe here
