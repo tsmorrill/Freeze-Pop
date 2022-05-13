@@ -18,7 +18,7 @@ class Freezer:
         self.freeze = freeze
 
     @classmethod
-    def freeze_func(func, note_counter):
+    def freeze_func(cls, func, note_counter):
         if isinstance(func, Callable):
             return func(note_counter)
         return func
@@ -165,6 +165,5 @@ class Song:
 
 
 if __name__ == "__main__":
-    phrase = Phrase.from_trigs([True, True, False, True])
-    for note in phrase.notes:
-        print(note.pitch)
+    phrase = Phrase.from_pitches([60, 62, 64, 65, 67, 69, 71, 72])
+    cubes, time = phrase.freeze()
