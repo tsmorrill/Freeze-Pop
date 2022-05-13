@@ -1,3 +1,4 @@
+from midiutil import MIDIFile
 from typing import Callable
 from random import random
 
@@ -141,7 +142,7 @@ class Track:
         for section in self.sections:
             cubes, time = section.freeze(time)
             ice_tray.extend(cubes)
-        return cubes, time
+        return cubes
 
 
 class Song:
@@ -149,25 +150,26 @@ class Song:
         self.name = name
         self.tracks = tracks
 
-    def freeze(self):
-        time = 0
-        ice_tray = []
-        for track in self.tracks:
-            cubes, time = section.freeze(time)
-            ice_tray.extend(cubes)
-        return ice_tray
-
-    def to_file(self):
-        ice_tray = self.freeze()
-        for cube in ice_tray:
-            pass
+    def render(self):
+        output_file = MIDIFile()
+        for track_number, track in enumerate(self.tracks):
+            time = 0
+            output_file.addTrackName(track_number, time, str(track_number))
+            for cube in track.freeze(time):
+                output_file.addNote(track_number,
+                                    track.channel,
+                                    cube.pitch,
+                                    cube.time,
+                                    cube.note_len,
+                                    cube.vel)
+            filename = f"{self.name}.mid"
+            with open(filename, 'wb') as outf:
+                output_file.writeFile(outf)
 
 
 if __name__ == "__main__":
     phrase = Phrase.from_pitches([60, 62, 64, 65, 67, 69, 71, 72])
     section = Section([phrase])
     track = Track([section])
-    song = Song(None, [track])
-    ice_tray = song.freeze()
-    for cube in ice_tray:
-        print(cube.pitch)
+    song = Song("Scale", [track])
+    song.render()
