@@ -132,8 +132,9 @@ class Section:
 
 
 class Track:
-    def __init__(self, sections, channel=0):
+    def __init__(self, sections, name=None, channel=0):
         self.sections = sections
+        self.name = name
         self.channel = channel
 
     def freeze(self, time=0):
@@ -154,7 +155,10 @@ class Song:
         output_file = MIDIFile()
         for track_number, track in enumerate(self.tracks):
             time = 0
-            output_file.addTrackName(track_number, time, str(track_number))
+            track_name = track.name
+            if track_name is None:
+                track_name = f"Track {track_number}"
+            output_file.addTrackName(track_number, time, track_name)
             for cube in track.freeze(time):
                 output_file.addNote(track_number,
                                     track.channel,
