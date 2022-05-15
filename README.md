@@ -1,6 +1,12 @@
 # Freeze Pop
  Generate MIDI files with tracker-inspired methods.
 
+## Installation
+
+```
+pip install frzpop==0.0.1
+```
+
 ## Cubes
 Describe here
 
