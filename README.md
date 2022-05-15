@@ -7,23 +7,25 @@
 pip install frzpop==0.0.1
 ```
 
-## Cubes
+## Objects
+
+### Cubes
 Describe here
 
-## Freezers
+### Freezers
 Describe here
 
-## Notes
+### Notes
 Describe here
 
-## Phrases
+### Phrases
 Describe here
 
-## Sections
+### Sections
 Describe here
 
-## Tracks
+### Tracks
 Describe here
 
-## Songs
+### Songs
 Describe here
