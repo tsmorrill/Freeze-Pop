@@ -11,8 +11,15 @@ notes = {"C":   0,
          "As": 10, "Bb": 10,
          "B":  11, }
 
-intervals = {"major": [0, 2, 4, 5, 7, 9, 11],
-             "minor": [0, 2, 3, 5, 7, 8, 10]}
+intervals = {"major":      [0, 2, 4, 5, 7, 9, 11],
+             "ionian":     [0, 2, 4, 5, 7, 9, 11],
+             "dorian":     [0, 2, 3, 5, 7, 9, 10],
+             "phrygian":   [0, 1, 3, 5, 7, 8, 10],
+             "lydian":     [0, 2, 4, 6, 7, 9, 11],
+             "mixolydian": [0, 2, 4, 5, 7, 9, 10],
+             "aeolian":    [0, 2, 3, 5, 7, 8, 10],
+             "minor":      [0, 2, 3, 5, 7, 8, 10],
+             "locrian":    [0, 1, 3, 5, 6, 8, 10]}
 
 
 def make_scale(root, type):
@@ -27,11 +34,39 @@ def major(root):
     return make_scale(root, "major")
 
 
+def ionian(root):
+    return major(root)
+
+
+def dorian(root):
+    return make_scale(root, "dorian")
+
+
+def phrygian(root):
+    return make_scale(root, "phrygian")
+
+
+def lydian(root):
+    return make_scale(root, "lydian")
+
+
+def mixolydian(root):
+    return make_scale(root, "mixolydian")
+
+
 def minor(root):
     return make_scale(root, "minor")
 
 
+def aeolian(root):
+    return minor(root)
+
+
+def locrian(root):
+    return make_scale(root, "locrian")
+
+
 if __name__ == "__main__":
-    scale = minor(60)
+    scale = minor(0)
     for i in range(0, len(scale), 7):
         print(scale[i:i+8])
