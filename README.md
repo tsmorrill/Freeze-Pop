@@ -3,9 +3,15 @@ Generate MIDI files with tracker-inspired methods.
 
 ## Installation
 
+Run
 ```
 pip install frzpop
 ```
+or run
+```
+pip install .
+```
+from inside the /frzpop/ directory.
 
 ## Objects
 
