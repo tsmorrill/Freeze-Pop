@@ -22,16 +22,16 @@ intervals = {"major":      [0, 2, 4, 5, 7, 9, 11],
              "locrian":    [0, 1, 3, 5, 6, 8, 10]}
 
 
-def make_scale(root, type):
+def make_oct_scale(root, type):
     root %= 12
     degrees = intervals[type]
-    degrees = [root + degree for degree in degrees]
+    degrees = [(root + degree) % 12 for degree in degrees]
     all_octaves = [n for n in range(128) if n % 12 in degrees]
     return all_octaves
 
 
 def major(root):
-    return make_scale(root, "major")
+    return make_oct_scale(root, "major")
 
 
 def ionian(root):
@@ -39,23 +39,23 @@ def ionian(root):
 
 
 def dorian(root):
-    return make_scale(root, "dorian")
+    return make_oct_scale(root, "dorian")
 
 
 def phrygian(root):
-    return make_scale(root, "phrygian")
+    return make_oct_scale(root, "phrygian")
 
 
 def lydian(root):
-    return make_scale(root, "lydian")
+    return make_oct_scale(root, "lydian")
 
 
 def mixolydian(root):
-    return make_scale(root, "mixolydian")
+    return make_oct_scale(root, "mixolydian")
 
 
 def minor(root):
-    return make_scale(root, "minor")
+    return make_oct_scale(root, "minor")
 
 
 def aeolian(root):
@@ -63,10 +63,10 @@ def aeolian(root):
 
 
 def locrian(root):
-    return make_scale(root, "locrian")
+    return make_oct_scale(root, "locrian")
 
 
 if __name__ == "__main__":
-    scale = minor(0)
+    scale = minor(11)
     for i in range(0, len(scale), 7):
         print(scale[i:i+8])
