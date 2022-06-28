@@ -1,3 +1,15 @@
+C = 0
+Cs = Db = 1
+D = 2
+Ds = Eb = 3
+E = 4
+F = 5
+Fs = Gb = 6
+G = 7
+Gs = Ab = 8
+A = 9
+As = Bb = 10
+B = 11
 C0 = 12
 Cs0 = Db0 = 13
 D0 = 14
