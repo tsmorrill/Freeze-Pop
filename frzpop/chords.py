@@ -1,5 +1,5 @@
-intervals = {"major":      [0, 4, 7],
-             "minor":      [0, 3, 7]}
+intervals = {"major": [0, 4, 7],
+             "minor": [0, 3, 7]}
 
 
 def make_chord(root, type):
