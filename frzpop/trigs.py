@@ -38,7 +38,7 @@ def Euclid(k, n):
 
     for _ in range(n):
         trigs.append(old_res > new_res)
-        old_res, new_res = new_res, new_res + k % n
+        old_res, new_res = new_res, (new_res + k) % n
 
     return trigs
 
@@ -134,7 +134,5 @@ def guido(lyric, scale=guido_scale):
 
 
 if __name__ == "__main__":
-    seq = Fractioning(4, 3)
-    list = seq.values
-    list = [int(val) for val in list]
-    print(list)
+    trigs = Euclid(3, 8)
+    print(trigs)
