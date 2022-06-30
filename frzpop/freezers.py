@@ -17,16 +17,21 @@ def default_freezer(pitch, vel, time, s, t):
     return ice_tray, time
 
 
-def freeze(song, filename=None):
+def freeze(song, filename=None, combine_tracks=False):
     output_file = MIDIFile()
+    if combine_tracks:
+        output_file.addTrackName(0, 0, "Combined Track")
 
     for track_number, track in enumerate(song):
+        if combine_tracks:
+            track_number = 0
+
         track_name = f"Track {track_number}"
         track_channel = 0
 
         time = 0
-        output_file.addTrackName(track_number, time, track_name)
-
+        if not combine_tracks:
+            output_file.addTrackName(track_number, time, track_name)
         ice_bucket = []
 
         for section in track:
