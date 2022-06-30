@@ -1,4 +1,4 @@
-from math import sin, pi
+from math import abs, sin, pi
 
 
 def p_gen(gen):
@@ -23,6 +23,24 @@ def circle_map(x, freq, coupling):
         yield x
         x = x + freq + tau_inv*sin(tau*x)
         x %= 1
+
+
+@p_gen
+def duffing(x, y, a=2.75, b=0.2):
+    """Return a generator for the Duffing map."""
+
+    while True:
+        yield x
+        x, y = y, -b*x + a*y - y**3
+
+
+@p_gen
+def gingerbread(x, y):
+    """Return a generator for the Gingerbreadman map."""
+
+    while True:
+        yield x
+        x, y = 1 - y + abs(x), x
 
 
 @p_gen
