@@ -1,3 +1,6 @@
+from math import sin, pi
+
+
 def p_gen(gen):
     """Wrap a parameterized generator in a function call."""
 
@@ -8,6 +11,18 @@ def p_gen(gen):
             return next(generator)
         return(func)
     return wrapper
+
+
+@p_gen
+def circle_map(x, freq, coupling):
+    """Return a generator for the circle map."""
+    tau = 2*pi
+    tau_inv = 1/tau
+
+    while True:
+        yield x
+        x = x + freq + tau_inv*sin(tau*x)
+        x %= 1
 
 
 @p_gen
