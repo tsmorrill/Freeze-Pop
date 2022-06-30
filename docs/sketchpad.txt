@@ -1,7 +1,6 @@
 * develop tracker.py
- - finish areas marked with pass
- - add render method to Song class
-* fix scripts
+ - rewrite using functional programming
+* add quantize(float, chord, passing_tones=None)
 * develop patterns.py
  - convert old functions to output velocity
  - add phrase generator functions
@@ -16,10 +15,12 @@
  - add more dithering patterns
    . context specific dithering
  - research FFT techniques
-* develop constants.py
- - add enharmonic names
- - add aliases for general MIDI drum numbers
-* rename project
 * update readme
 * use more __init__.py functionality
 * fork tracker.py to a liveplay project
+
+note = [pitch, vel, freezer]
+phrase = [note1, note2, ...]
+section = [phrase1, phrase2, ...]
+track = [section1, section2, ...]
+song = [track1, track2, ...]
