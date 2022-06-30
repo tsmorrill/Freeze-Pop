@@ -37,7 +37,12 @@ def render(song, filename=None):
                     phrase = phrase(s)
                 t = 0                                            # note counter
 
-                for [pitch, vel, freezer] in phrase:
+                for note in phrase:
+                    if type(note) is int:
+                        pitch = note
+                        vel = 80
+                        freezer = default_freezer
+                        note = [pitch, vel, freezer]
                     if freezer is None:
                         freezer = default_freezer
                     ice_tray, time = freezer(pitch, vel, time, s, t)

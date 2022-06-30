@@ -32,7 +32,11 @@ phrase(s)
 which outputs a list of notes. Here, s is the index of the phrase in its section at the time it is frozen.
 
 ### Notes
-A note is a tuple of the form (pitch, vel, freezer).
+A note is either an integer from 0-127 inclusive, a tuple of the form (pitch, vel, freezer), a function of the form
+```
+note(t)
+```
+which outputs a tuple of the form (pitch, vel, freezer). Here, t is the index of the note in its phrase at the time it is frozen. A note which is an integer is automatically converted into the tuple [pitch, 80, default_freezer].
 
 ### Pitches
 
