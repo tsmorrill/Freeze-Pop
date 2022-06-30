@@ -25,23 +25,22 @@ class Sequencer:
         return value
 
 
-class Euclid(Sequencer):
-    @staticmethod
-    def is_trig(t, trig_count, len):
-        if trig_count < 0 or trig_count > len:
-            raise ValueError("trig_count must be within 0 and len inclusive")
-        prod = t * trig_count
-        rollover_bool = (prod % len) > ((prod + trig_count) % len)
-        return(rollover_bool)
+def Euclid(k, n):
+    """Return Euclidean rhythm of k True bools equally spaced
+    in a list of n bools."""
 
-    @staticmethod
-    def trigs(trig_count, len):
-        return [Euclid.is_trig(t, trig_count, len) for t in range(-1, len-1)]
+    trigs = []
+    old_res = -k % n
+    new_res = 0
 
-    def __init__(self, trig_count, len):
-        self.values = Euclid.trigs(trig_count, len)
-        self.len = len
-        self.clock = 0
+    if k == n:
+        return [True for _ in range(n)]
+
+    for _ in range(n):
+        trigs.append(old_res > new_res)
+        old_res, new_res = new_res, new_res + k % n
+
+    return trigs
 
 
 class Resultant(Sequencer):
