@@ -11,17 +11,6 @@ def p_gen(gen):
 
 
 @p_gen
-def gfrac(x):
-    """Return a generator for the Gauss continued fraction map."""
-
-    x %= 1
-    while True:
-        yield x
-        x = 1/x
-        x -= int(x)
-
-
-@p_gen
 def henon(x, y, a=1.4, b=0.3):
     """Return a generator for the Henon map."""
 
