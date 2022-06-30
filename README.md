@@ -15,9 +15,6 @@ from inside the project directory.
 
 ## Objects
 
-### Cubes
-Describe here
-
 ### Songs
 A song is a list of tracks.
 
