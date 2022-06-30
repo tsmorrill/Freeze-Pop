@@ -17,7 +17,7 @@ def default_freezer(pitch, vel, time, s, t):
     return ice_tray, time
 
 
-def render(song, filename=None):
+def freeze(song, filename=None):
     output_file = MIDIFile()
 
     for track_number, track in enumerate(song):
@@ -76,4 +76,4 @@ if __name__ == "__main__":
     section = [phrase, phrase]
     track = [section]
     test_song = [track]
-    render(test_song)
+    freeze(test_song)
