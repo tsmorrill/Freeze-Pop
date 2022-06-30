@@ -2,29 +2,6 @@ import random
 import numpy as np
 
 
-class Sequencer:
-    def __init__(self, list):
-        self.values = list
-        self.len = len(list)
-        self.clock = 0
-
-    def trig(self):
-        value = self.values[self.clock]
-        self.clock = (self.clock + 1) % self.len
-        return value
-
-    def reset(self):
-        value = self.values[0]
-        self.clock = 1
-        return value
-
-    def reverse(self):
-        value = self.values[self.clock - 1]
-        self.values = self.values[::-1]
-        self.clock = (1 - self.clock) % self.len
-        return value
-
-
 def Euclid(k, n):
     """Return Euclidean rhythm of k True bools equally spaced
     in a list of n bools."""
