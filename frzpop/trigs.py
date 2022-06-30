@@ -43,27 +43,21 @@ def Euclid(k, n):
     return trigs
 
 
+def fractioning(a, b):
+    """Return fractioning of a and b according to the Schillinger system."""
+    if a < b:
+        raise ValueError("b cannot exceed a")
+    trigs = [False for t in range(a*a)]
+    for i in range(a - b + 1):
+        for j in range(a):
+            trigs[i*a + j*b] = True
+    return(trigs)
+
+
 def resultant(a, b):
     """Return resultant of a and b according to the Schillinger system."""
 
     return [(t % a == 0) or (t % b == 0) for t in range(a*b)]
-
-
-class Fractioning(Sequencer):
-    @staticmethod
-    def trigs(a, b):
-        if a < b:
-            raise ValueError("b cannot exceed a")
-        trig_list = [0 for t in range(a*a)]
-        for i in range(a - b + 1):
-            for j in range(a):
-                trig_list[i*a + j*b] = True
-        return(trig_list)
-
-    def __init__(self, a, b):
-        self.values = Fractioning.trigs(a, b)
-        self.len = a*a
-        self.clock = 0
 
 
 def heightmap_1D(iter, smoothing, seed, init):
