@@ -35,12 +35,12 @@ def duffing(x, y, a=2.75, b=0.2):
 
 
 @p_gen
-def gingerbread(x, y):
+def gingerbread(x, y, a=1, b=1):
     """Return a generator for the Gingerbreadman map."""
 
     while True:
         yield x
-        x, y = 1 - y + abs(x), x
+        x, y = 1 - a*y + b*abs(x), x
 
 
 @p_gen
