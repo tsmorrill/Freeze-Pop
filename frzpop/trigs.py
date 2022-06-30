@@ -43,15 +43,10 @@ def Euclid(k, n):
     return trigs
 
 
-class Resultant(Sequencer):
-    @staticmethod
-    def trigs(a, b):
-        return [(t % a == 0) or (t % b == 0) for t in range(a*b)]
+def resultant(a, b):
+    """Return resultant of a and b according to the Schillinger system."""
 
-    def __init__(self, a, b):
-        self.values = Resultant.trigs(a, b)
-        self.len = a*b
-        self.clock = 0
+    return [(t % a == 0) or (t % b == 0) for t in range(a*b)]
 
 
 class Fractioning(Sequencer):
@@ -134,5 +129,6 @@ def guido(lyric, scale=guido_scale):
 
 
 if __name__ == "__main__":
-    trigs = Euclid(3, 8)
-    print(trigs)
+    trigs = resultant(3, 7)
+    ints = [int(trig) for trig in trigs]
+    print(ints)
