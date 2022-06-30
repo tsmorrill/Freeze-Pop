@@ -57,7 +57,7 @@ def render(song, filename=None):
 
     if filename is None:
         dt = datetime.now()
-        filename = dt.strftime("%Y-%m-%d %H:%M:%S")
+        filename = dt.strftime("%Y-%m-%d_%H%M%S")
     filename = f"{filename}.mid"
     with open(filename, 'wb') as outf:
         output_file.writeFile(outf)
