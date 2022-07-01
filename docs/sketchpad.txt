@@ -4,9 +4,18 @@ track = [section1, section2, ...]
 song = [track1, track2, ...]
 
 * add decorators.py
-* add shuffle.py
+* add phrases.py
 * update version number
 * add quantize(float, chord, passing_tones=None)
+
+* freezers.py
+ - add staccato freezer
+ - add legato freezer
+ - add ratchet freezer
+ - add push/pull freezer
+ - add echo freezer
+ - add triplet freezer
+
 * develop generators.py
  - add float_to_CC(x)
  - convert old functions to output velocity
@@ -20,3 +29,8 @@ song = [track1, track2, ...]
    . context specific dithering
  - research FFT techniques
 * fork tracker.py to a liveplay project
+
+* random.py
+ - convert to numpy RNG
+ - add seeding
+ - add probability freezer
