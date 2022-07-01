@@ -28,7 +28,7 @@ def make_freezer(note_len=1/4, gate=1, nudge=0):
     return freezer
 
 
-def freeze(song, filename=None, combine_tracks=False):
+def freeze_song(song, filename=None, combine_tracks=False):
     output_file = MIDIFile()
     if combine_tracks:
         output_file.addTrackName(0, 0, "Combined Track")
@@ -86,7 +86,7 @@ def freeze(song, filename=None, combine_tracks=False):
 
 def freeze_track(track, name=None):
     song = [track]
-    freeze(song, name)
+    freeze_song(song, name)
 
 
 def freeze_section(section, name=None):
