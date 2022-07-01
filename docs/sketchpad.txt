@@ -30,6 +30,8 @@ song = [track1, track2, ...]
  - research FFT techniques
 * fork tracker.py to a liveplay project
 
+* get a royalty free image of freezer pops
+
 * random.py
  - convert to numpy RNG
  - add seeding
