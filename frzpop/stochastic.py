@@ -15,8 +15,8 @@ def p_gen(gen):
 
 
 def make_guido_phrase(lyric_string, scale=None):
-    """Probabilistically assign pitches to text using method of Guido d'Arezzo.
-    """
+    """Return a phrase. Probabilistically assign pitches to text using method
+    of Guido d'Arezzo."""
     lyric_string = lyric_string.upper()
     vowels = [char for char in lyric_string if char in "AEIOU"]
 
