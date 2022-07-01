@@ -18,7 +18,6 @@ song = [track1, track2, ...]
  - add triplet freezer
 
 * generators.py
- - add float_to_CC(x)
  - quantize(float, chord)
  - quantize_passing(float, chord, passing_tones)
  - convert old functions to output velocity

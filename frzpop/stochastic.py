@@ -14,11 +14,11 @@ def p_gen(gen):
     return wrapper
 
 
-def guido(lyric, scale=None):
+def guido(lyric_string, scale=None):
     """Probabilistically assign pitches to text using method of Guido d'Arezzo.
     """
-    lyric = lyric.upper()
-    vowels = [char for char in lyric if char in "AEIOU"]
+    lyric_string = lyric_string.upper()
+    vowels = [char for char in lyric_string if char in "AEIOU"]
 
     if scale is None:                                    # use d'Arezzo's scale
         scale = [55, 57, 59, 60, 62,         # list indices will be taken mod 5
@@ -26,11 +26,11 @@ def guido(lyric, scale=None):
                  72, 74, 76, 77, 79,
                  81]
 
-    dict = {"A": scale[0::5],
-            "E": scale[1::5],
-            "I": scale[2::5],
-            "O": scale[3::5],
-            "U": scale[4::5]}
+    note_assignment = {"A": scale[0::5],
+                       "E": scale[1::5],
+                       "I": scale[2::5],
+                       "O": scale[3::5],
+                       "U": scale[4::5]}
 
     def weigh(potential_notes, prev_note):
         if prev_note is None:
@@ -43,7 +43,7 @@ def guido(lyric, scale=None):
     prev_note = None
 
     for char in vowels:
-        potential_notes = dict[char]
+        potential_notes = note_assignment[char]
         weights = weigh(potential_notes, prev_note)
         new_note = random.choices(potential_notes, weights, k=1)[0]
         note_list.append(new_note)
