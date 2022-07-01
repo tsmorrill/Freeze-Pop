@@ -10,8 +10,8 @@ song = [track1, track2, ...]
 
 * freezers.py
  - add make_ratchet_freezer
- - add make_nudge_freezer
  - add make_echo_freezer
+ - add make_conditional_freezer
 
 * generators.py
  - convert old functions to output velocity
@@ -34,7 +34,7 @@ song = [track1, track2, ...]
 
 
 * quantize.py
-- add quantize_passing(float, chord, passing_tones)
+ - add quantize_passing(float, chord, passing_tones)
 
 * fork into a liveplay project?
 

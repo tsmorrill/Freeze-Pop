@@ -14,10 +14,12 @@ def make_cube(pitch, time, note_len, vel, t):
     return cube
 
 
-def make_freezer(note_len=1/4, gate_multiplier=1):
+def make_freezer(note_len=1/4, gate=1, nudge=0):
     def freezer(pitch, vel, time, s, t):
         ice_tray = []
-        cube = make_cube(pitch, time*gate_multiplier, note_len, vel)
+        cube_time = time + nudge         # push cube off-grid and maintain time
+        cube_len = note_len * gate       # adjust cube length and maintain time
+        cube = make_cube(pitch, cube_time, cube_len, vel, t)
         time += note_len
         if cube is not None:
             ice_tray.append(cube)
@@ -80,6 +82,21 @@ def freeze(song, filename=None, combine_tracks=False):
     with open(filename, 'wb') as outf:
         output_file.writeFile(outf)
         print(f"Wrote to file {filename}.")
+
+
+def freeze_track(track, name=None):
+    song = [track]
+    freeze(song, name)
+
+
+def freeze_section(section, name=None):
+    track = [section]
+    freeze_track(track, name)
+
+
+def freeze_phrase(phrase, name=None):
+    section = [phrase]
+    freeze_section(section, name)
 
 
 if __name__ == "__main__":
