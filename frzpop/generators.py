@@ -72,6 +72,20 @@ def make_logistic(x, r=3.56995):
 
 
 @p_gen
+def make_sweep(start, end, steps):
+    """Return a generator for a sweep."""
+
+    m = (end - start)/(steps - 1)
+    float_list = [start + m*i for i in range(steps)]
+
+    i = 0
+    while True:
+        yield float_list[i]
+        i += 1
+        i %= steps
+
+
+@p_gen
 def make_tent(x, m=1.5):
     """Return a generator for the tent map."""
 
@@ -94,4 +108,9 @@ def make_xor_shift(n):
 
 
 if __name__ == "__main__":
-    pass
+    start = 1
+    end = 2
+    steps = 8
+    generator = make_sweep(start, end, steps)
+    for i in range(12):
+        print(generator())
