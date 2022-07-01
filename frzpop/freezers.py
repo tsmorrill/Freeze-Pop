@@ -1,6 +1,5 @@
 from datetime import datetime
 from midiutil import MIDIFile
-from random import random
 
 
 def default_freezer(pitch, vel, time, s, t):
