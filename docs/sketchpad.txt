@@ -1,11 +1,15 @@
-* develop tracker.py
- - rewrite using functional programming
+phrase = [note1, note2, ...]
+section = [phrase1, phrase2, ...]
+track = [section1, section2, ...]
+song = [track1, track2, ...]
+
+* add decorators.py
+* add shuffle.py
+* update version number
 * add quantize(float, chord, passing_tones=None)
-* develop patterns.py
+* develop generators.py
+ - add float_to_CC(x)
  - convert old functions to output velocity
- - add phrase generator functions
-   . invert/dilate
-   . double/half time
  - improve Fractioning.__init__ by applying Chicken McNugget theorem
  - add tree-based pitch-to-rhythm assignment
  - add in_radius, out_radias kwargs to heightmap_radar_list()
@@ -15,12 +19,4 @@
  - add more dithering patterns
    . context specific dithering
  - research FFT techniques
-* update readme
-* use more __init__.py functionality
 * fork tracker.py to a liveplay project
-
-note = [pitch, vel, freezer]
-phrase = [note1, note2, ...]
-section = [phrase1, phrase2, ...]
-track = [section1, section2, ...]
-song = [track1, track2, ...]
