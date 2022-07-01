@@ -100,15 +100,12 @@ def freeze_phrase(phrase, name=None):
 
 
 if __name__ == "__main__":
-    phrase = [[60,   92, None],
-              [62,   92, None],
-              [64,   92, None],
-              [65,    0, None],
-              [67,   88, None],
-              [69,  127, None],
-              [72,   92, None],
-              [None, 72, None]]
-    section = [phrase, phrase]
-    track = [section]
-    test_song = [track]
-    freeze_song(test_song)
+    test_phrase = [[60,   92, None],
+                   [62,   92, None],
+                   [64,   92, None],
+                   [65,    0, None],
+                   [67,   88, None],
+                   [69,  127, None],
+                   [72,   92, None],
+                   [None, 72, None]]
+    freeze_phrase(test_phrase, name="test")
