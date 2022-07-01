@@ -9,7 +9,7 @@ song = [track1, track2, ...]
  - figure out how to make this import correctly
 
 * freezers.py
- - freezer decorator
+ - add make_freezer
  - add staccato freezer
  - add legato freezer
  - add ratchet freezer
@@ -18,8 +18,6 @@ song = [track1, track2, ...]
  - add triplet freezer
 
 * generators.py
- - quantize(float, chord)
- - quantize_passing(float, chord, passing_tones)
  - convert old functions to output velocity
  - improve fractioning by applying Chicken McNugget theorem
  - add tree-based pitch-to-rhythm assignment
@@ -39,6 +37,9 @@ song = [track1, track2, ...]
   - add probability freezer
 
 
-* fork into a liveplay project
+* quantize.py
+- add quantize_passing(float, chord, passing_tones)
+
+* fork into a liveplay project?
 
 * get a royalty free image of freezer pops
