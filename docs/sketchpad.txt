@@ -5,7 +5,6 @@ song = [track1, track2, ...]
 
 * add decorators.py
 * add phrases.py
-* update version number
 * add quantize(float, chord, passing_tones=None)
 * add examples
 
@@ -29,7 +28,7 @@ song = [track1, track2, ...]
    . context specific dithering
  - research FFT techniques
 
-* fork tracker.py to a liveplay project
+* fork into a liveplay project
 
 * get a royalty free image of freezer pops
 
