@@ -1,4 +1,4 @@
-from math import abs, sin, pi
+from math import floor, sin, pi
 
 
 def p_gen(gen):
@@ -71,6 +71,11 @@ def logistic(x, r=3.56995):
         x = r*x*(1-x)
 
 
+def make_CC(x):
+    x = max(0, min(x, 127))
+    return floor(x)
+
+
 @p_gen
 def tent(x, m=1.5):
     """Return a generator for the tent map."""
@@ -91,3 +96,7 @@ def xor_shift(n):
         n ^= n << 9
         n ^= n >> 13
         n %= modulus
+
+
+if __name__ == "__main__":
+    print(make_CC(23.45))
