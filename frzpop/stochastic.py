@@ -14,7 +14,7 @@ def p_gen(gen):
     return wrapper
 
 
-def guido(lyric_string, scale=None):
+def make_guido_phrase(lyric_string, scale=None):
     """Probabilistically assign pitches to text using method of Guido d'Arezzo.
     """
     lyric_string = lyric_string.upper()
@@ -39,19 +39,19 @@ def guido(lyric_string, scale=None):
                    for note in potential_notes]
         return weights
 
-    note_list = []
+    phrase = []
     prev_note = None
 
     for char in vowels:
         potential_notes = note_assignment[char]
         weights = weigh(potential_notes, prev_note)
         new_note = random.choices(potential_notes, weights, k=1)[0]
-        note_list.append(new_note)
+        phrase.append(new_note)
         prev_note = new_note
-    return note_list
+    return phrase
 
 
-def midpoint_displace(iter, smoothing, seed, init):
+def make_midpoint_displace(iter, smoothing, seed, init):
     """Create 2^iter + 1 linear heightmap via midpoint displacement.
     """
     if init is None:
@@ -77,7 +77,7 @@ def midpoint_displace(iter, smoothing, seed, init):
 
 
 @p_gen
-def pfsr(n, len=8, prob=0.5):
+def make_pfsr(n, len=8, prob=0.5):
     """Return a generator for a probabalistic feedback shift register."""
     modulus = 1 << len
     n %= modulus
