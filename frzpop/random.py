@@ -14,17 +14,17 @@ def p_gen(gen):
     return wrapper
 
 
-guido_scale = [55, 57, 59, 60, 62,           # list indices will be taken mod 5
-               64, 65, 67, 69, 71,
-               72, 74, 76, 77, 79,
-               81]
-
-
-def guido(lyric, scale=guido_scale):
+def guido(lyric, scale=None):
     """Probabilistically assign pitches to text using method of Guido d'Arezzo.
     """
     lyric = lyric.upper()
     vowels = [char for char in lyric if char in "AEIOU"]
+
+    if scale is None:                                    # use d'Arezzo's scale
+        scale = [55, 57, 59, 60, 62,         # list indices will be taken mod 5
+                 64, 65, 67, 69, 71,
+                 72, 74, 76, 77, 79,
+                 81]
 
     dict = {"A": scale[0::5],
             "E": scale[1::5],
