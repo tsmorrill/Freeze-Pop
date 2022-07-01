@@ -14,7 +14,7 @@ def p_gen(gen):
 
 
 @p_gen
-def circle_map(x, omega, coupling):
+def make_circle_map(x, omega, coupling):
     """Return a generator for the circle map."""
     tau = 2*pi
     tau_inv = 1/tau
@@ -26,7 +26,7 @@ def circle_map(x, omega, coupling):
 
 
 @p_gen
-def duffing(x, y, a=2.75, b=0.2):
+def make_duffing(x, y, a=2.75, b=0.2):
     """Return a generator for the Duffing map."""
 
     while True:
@@ -35,7 +35,7 @@ def duffing(x, y, a=2.75, b=0.2):
 
 
 @p_gen
-def gingerbread(x, y, a=1, b=1):
+def make_gingerbread(x, y, a=1, b=1):
     """Return a generator for the Gingerbreadman map."""
 
     while True:
@@ -44,7 +44,7 @@ def gingerbread(x, y, a=1, b=1):
 
 
 @p_gen
-def henon(x, y, a=1.4, b=0.3):
+def make_henon(x, y, a=1.4, b=0.3):
     """Return a generator for the Henon map."""
 
     while True:
@@ -53,7 +53,7 @@ def henon(x, y, a=1.4, b=0.3):
 
 
 @p_gen
-def lfsr(n):
+def make_lfsr(n):
     """Return a generator for a linear feedback shift register."""
     n += int(n == 0)                                    # don't initialize on 0
     while True:
@@ -63,7 +63,7 @@ def lfsr(n):
 
 
 @p_gen
-def logistic(x, r=3.56995):
+def make_logistic(x, r=3.56995):
     """Return a generator for the logistic map."""
 
     while True:
@@ -72,7 +72,7 @@ def logistic(x, r=3.56995):
 
 
 @p_gen
-def tent(x, m=1.5):
+def make_tent(x, m=1.5):
     """Return a generator for the tent map."""
 
     while True:
@@ -81,7 +81,7 @@ def tent(x, m=1.5):
 
 
 @p_gen
-def xor_shift(n):
+def make_xor_shift(n):
     """Return a generator for an xor shift pseudorandom number generator."""
     len = 16
     modulus = 1 << len
