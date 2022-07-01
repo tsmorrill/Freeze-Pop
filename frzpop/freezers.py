@@ -111,4 +111,4 @@ if __name__ == "__main__":
     section = [phrase, phrase]
     track = [section]
     test_song = [track]
-    freeze(test_song)
+    freeze_song(test_song)
