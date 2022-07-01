@@ -14,14 +14,14 @@ def p_gen(gen):
 
 
 @p_gen
-def circle_map(x, freq, coupling):
+def circle_map(x, omega, coupling):
     """Return a generator for the circle map."""
     tau = 2*pi
     tau_inv = 1/tau
 
     while True:
         yield x
-        x = x + freq + tau_inv*sin(tau*x)
+        x = x + omega + tau_inv*sin(tau*x)
         x %= 1
 
 
@@ -53,6 +53,16 @@ def henon(x, y, a=1.4, b=0.3):
 
 
 @p_gen
+def lfsa(n):
+    """Return a generator for a linear feedback shift array."""
+    n += int(n == 0)                                    # don't initialize on 0
+    while True:
+        yield n
+        bit = (n ^ (n >> 1) ^ (n >> 3) ^ (n >> 12)) & 1
+        n = (n >> 1) | (bit << 15)
+
+
+@p_gen
 def logistic(x, r=3.56995):
     """Return a generator for the logistic map."""
 
@@ -68,3 +78,16 @@ def tent(x, m=1.5):
     while True:
         yield x
         x = m*min(x, 1-x)
+
+
+@p_gen
+def xor_shift(n):
+    """Return a generator for an xor shift pseudorandom number generator."""
+    len = 16
+    modulus = 1 << len
+    while True:
+        yield n
+        n ^= n >> 7
+        n ^= n << 9
+        n ^= n >> 13
+        n %= modulus
