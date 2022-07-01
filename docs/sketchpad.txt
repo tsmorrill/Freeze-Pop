@@ -28,6 +28,7 @@ song = [track1, track2, ...]
  - add more dithering patterns
    . context specific dithering
  - research FFT techniques
+
 * fork tracker.py to a liveplay project
 
 * get a royalty free image of freezer pops
