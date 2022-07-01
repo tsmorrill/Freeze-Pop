@@ -77,8 +77,8 @@ def midpoint_displace(iter, smoothing, seed, init):
 
 
 @p_gen
-def pfsa(n, len=8, prob=0.5):
-    """Return a generator for a probabalistic feedback shift array."""
+def pfsr(n, len=8, prob=0.5):
+    """Return a generator for a probabalistic feedback shift register."""
     modulus = 1 << len
     n %= modulus
 

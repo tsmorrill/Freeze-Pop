@@ -53,8 +53,8 @@ def henon(x, y, a=1.4, b=0.3):
 
 
 @p_gen
-def lfsa(n):
-    """Return a generator for a linear feedback shift array."""
+def lfsr(n):
+    """Return a generator for a linear feedback shift register."""
     n += int(n == 0)                                    # don't initialize on 0
     while True:
         yield n
