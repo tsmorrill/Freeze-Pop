@@ -9,6 +9,7 @@ song = [track1, track2, ...]
 * add quantize(float, chord, passing_tones=None)
 
 * freezers.py
+ - add make_note(pitch, vel, note_length=1/4)
  - add staccato freezer
  - add legato freezer
  - add ratchet freezer
