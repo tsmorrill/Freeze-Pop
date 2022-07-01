@@ -7,7 +7,7 @@ def p_gen(gen):
     def wrapper(*args, **kwargs):
         generator = gen(*args, **kwargs)
 
-        def func(t):
+        def func(*args):
             return next(generator)
         return(func)
     return wrapper
