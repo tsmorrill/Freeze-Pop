@@ -1,3 +1,5 @@
+rest = None
+
 C = 0
 Cs = Db = 1
 D = 2

@@ -42,6 +42,8 @@ def freeze(song, filename=None, combine_tracks=False):
                 t = 0                                            # note counter
 
                 for note in phrase:
+                    if note is None:
+                        note = [None, 0, None]
                     if type(note) is int:
                         pitch = note
                         vel = 80
