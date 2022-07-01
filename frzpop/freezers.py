@@ -2,17 +2,25 @@ from datetime import datetime
 from midiutil import MIDIFile
 
 
-def default_freezer(pitch, vel, time, s, t):
+def make_cube(pitch, time, note_len=1/4, vel=80, t=0):
+    """Freeze callables and return a cube."""
     if callable(pitch):
         pitch = pitch(t)
     if callable(vel):
         vel = vel(t)
-    note_len = 1/4            # one sixteenth note as measured in quarter notes
-    ice_tray = []
+    cube = None
     if vel and pitch is not None:                # ignore notes with velocity 0
         cube = [pitch, time, note_len, vel]
-        ice_tray.append(cube)
+    return cube
+
+
+def default_freezer(pitch, vel, time, s, t):
+    note_len = 1/4
+    ice_tray = []
+    cube = make_cube(pitch, time, note_len, vel)
     time += note_len
+    if cube is not None:
+        ice_tray.append(cube)
     return ice_tray, time
 
 

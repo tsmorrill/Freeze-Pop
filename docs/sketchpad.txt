@@ -3,13 +3,13 @@ section = [phrase1, phrase2, ...]
 track = [section1, section2, ...]
 song = [track1, track2, ...]
 
-* add decorators.py
-* add phrases.py
-* add quantize(float, chord, passing_tones=None)
 * add examples
 
+* decorators.py
+ - figure out how to make this import correctly
+
 * freezers.py
- - add make_note(pitch, vel, note_length=1/4)
+ - freezer decorator
  - add staccato freezer
  - add legato freezer
  - add ratchet freezer
@@ -17,8 +17,10 @@ song = [track1, track2, ...]
  - add echo freezer
  - add triplet freezer
 
-* develop generators.py
+* generators.py
  - add float_to_CC(x)
+ - quantize(float, chord)
+ - quantize_passing(float, chord, passing_tones)
  - convert old functions to output velocity
  - improve fractioning by applying Chicken McNugget theorem
  - add tree-based pitch-to-rhythm assignment
@@ -28,11 +30,16 @@ song = [track1, track2, ...]
    . context specific dithering
  - research FFT techniques
 
+
+* phrases.py
+ - plain_hunt(phrase)
+
+ * random.py
+  - convert to numpy RNG
+  - add seeding
+  - add probability freezer
+
+
 * fork into a liveplay project
 
 * get a royalty free image of freezer pops
-
-* random.py
- - convert to numpy RNG
- - add seeding
- - add probability freezer
