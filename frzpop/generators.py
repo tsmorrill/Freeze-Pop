@@ -73,7 +73,7 @@ def make_logistic(x, r=3.56995):
 
 @p_gen
 def make_sweep(start, end, steps):
-    """Return a generator for a sweep."""
+    """Return a generator for a linear sweep."""
 
     m = (end - start)/(steps - 1)
     float_list = [start + m*i for i in range(steps)]
@@ -113,4 +113,4 @@ if __name__ == "__main__":
     steps = 8
     generator = make_sweep(start, end, steps)
     for i in range(12):
-        print(generator())
+        print(i, generator())
