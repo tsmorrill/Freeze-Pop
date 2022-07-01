@@ -9,13 +9,9 @@ song = [track1, track2, ...]
  - figure out how to make this import correctly
 
 * freezers.py
- - add make_freezer
- - add staccato freezer
- - add legato freezer
- - add ratchet freezer
- - add push/pull freezer
- - add echo freezer
- - add triplet freezer
+ - add make_ratchet_freezer
+ - add make_nudge_freezer
+ - add make_echo_freezer
 
 * generators.py
  - convert old functions to output velocity

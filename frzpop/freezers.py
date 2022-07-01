@@ -2,7 +2,7 @@ from datetime import datetime
 from midiutil import MIDIFile
 
 
-def make_cube(pitch, time, note_len=1/4, vel=80, t=0):
+def make_cube(pitch, time, note_len, vel, t):
     """Freeze callables and return a cube."""
     if callable(pitch):
         pitch = pitch(t)
@@ -14,14 +14,16 @@ def make_cube(pitch, time, note_len=1/4, vel=80, t=0):
     return cube
 
 
-def default_freezer(pitch, vel, time, s, t):
-    note_len = 1/4
-    ice_tray = []
-    cube = make_cube(pitch, time, note_len, vel)
-    time += note_len
-    if cube is not None:
-        ice_tray.append(cube)
-    return ice_tray, time
+def make_freezer(note_len=1/4, gate_multiplier=1):
+    def freezer(pitch, vel, time, s, t):
+        ice_tray = []
+        cube = make_cube(pitch, time*gate_multiplier, note_len, vel)
+        time += note_len
+        if cube is not None:
+            ice_tray.append(cube)
+        return ice_tray, time
+
+    return freezer
 
 
 def freeze(song, filename=None, combine_tracks=False):
@@ -29,9 +31,11 @@ def freeze(song, filename=None, combine_tracks=False):
     if combine_tracks:
         output_file.addTrackName(0, 0, "Combined Track")
 
+    default_freezer = make_freezer(note_len=1/4)        # tracks can share this
+
     for track_number, track in enumerate(song):
         if combine_tracks:
-            track_number = 0
+            track_number = 0           # just dump all the ice buckets together
 
         track_name = f"Track {track_number}"
         track_channel = 0
@@ -55,7 +59,7 @@ def freeze(song, filename=None, combine_tracks=False):
                     if type(note) is int:
                         pitch = note
                         vel = 80
-                        freezer = default_freezer
+                        freezer = None
                         note = [pitch, vel, freezer]
                     if freezer is None:
                         freezer = default_freezer
