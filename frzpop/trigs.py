@@ -1,4 +1,4 @@
-def Euclid(k, n):
+def euclid(k, n):
     """Return Euclidean rhythm of k True bools equally spaced
     in a list of n bools."""
 
