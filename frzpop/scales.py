@@ -11,27 +11,19 @@ notes = {"C":   0,
          "As": 10, "Bb": 10,
          "B":  11}
 
-intervals = {"major":      [0, 2, 4, 5, 7, 9, 11],
-             "ionian":     [0, 2, 4, 5, 7, 9, 11],
-             "dorian":     [0, 2, 3, 5, 7, 9, 10],
-             "phrygian":   [0, 1, 3, 5, 7, 8, 10],
-             "lydian":     [0, 2, 4, 6, 7, 9, 11],
-             "mixolydian": [0, 2, 4, 5, 7, 9, 10],
-             "aeolian":    [0, 2, 3, 5, 7, 8, 10],
-             "minor":      [0, 2, 3, 5, 7, 8, 10],
-             "locrian":    [0, 1, 3, 5, 6, 8, 10]}
 
-
-def make_oct_scale(root, type):
+def make_oct_scale(root, degree_list):
+    """Return a list of all MIDI note values which belong to the given
+    octave scale."""
     root %= 12
-    degrees = intervals[type]
-    degrees = [(root + degree) % 12 for degree in degrees]
-    all_octaves = [n for n in range(128) if n % 12 in degrees]
+    degree_list = [(root + degree) % 12 for degree in degree_list]
+    all_octaves = [n for n in range(128) if n % 12 in degree_list]
     return all_octaves
 
 
 def major(root):
-    return make_oct_scale(root, "major")
+    degree_list = [0, 2, 4, 5, 7, 9, 11]
+    return make_oct_scale(root, degree_list)
 
 
 def ionian(root):
@@ -39,23 +31,28 @@ def ionian(root):
 
 
 def dorian(root):
-    return make_oct_scale(root, "dorian")
+    degree_list = [0, 2, 3, 5, 7, 9, 10]
+    return make_oct_scale(root, degree_list)
 
 
 def phrygian(root):
-    return make_oct_scale(root, "phrygian")
+    degree_list = [0, 1, 3, 5, 7, 8, 10]
+    return make_oct_scale(root, degree_list)
 
 
 def lydian(root):
-    return make_oct_scale(root, "lydian")
+    degree_list = [0, 2, 4, 6, 7, 9, 11]
+    return make_oct_scale(root, degree_list)
 
 
 def mixolydian(root):
-    return make_oct_scale(root, "mixolydian")
+    degree_list = [0, 2, 4, 5, 7, 9, 10]
+    return make_oct_scale(root, degree_list)
 
 
 def minor(root):
-    return make_oct_scale(root, "minor")
+    degree_list = [0, 2, 3, 5, 7, 8, 10]
+    return make_oct_scale(root, degree_list)
 
 
 def aeolian(root):
@@ -63,7 +60,8 @@ def aeolian(root):
 
 
 def locrian(root):
-    return make_oct_scale(root, "locrian")
+    degree_list = [0, 1, 3, 5, 6, 8, 10]
+    return make_oct_scale(root, degree_list)
 
 
 if __name__ == "__main__":

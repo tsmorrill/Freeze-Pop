@@ -45,7 +45,6 @@ TO DO
  - add numpy dependency
 
 * scales.py
- - move interval definitions to individual functions
  - add Messiaen's modes
 
  * random.py
