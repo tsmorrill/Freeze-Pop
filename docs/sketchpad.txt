@@ -4,9 +4,14 @@ track = [section1, section2, ...]
 song = [track1, track2, ...]
 
 * add examples
+ - expressive hi hat
+ - logistic melody
+ - plain hunt
+ - polyrhythm
+ - trap hi hat
 
 * decorators.py
- - figure out how to make this import correctly
+ - figure out how to make this import correctly; submodule?
 
 * freezers.py
  - add make_ratchet_freezer
@@ -21,17 +26,21 @@ song = [track1, track2, ...]
    . ornamentation via tiered chord note/neighbor note/chromatic note generation
  - add more dithering patterns
    . context specific dithering
- - research FFT techniques
-
 
 * phrases.py
- - plain_hunt(phrase)
+ - research method ringing techniques
+ - research FFT techniques
+
+* scales.py
+ - move interval definitions to individual functions
+ - add Messiaen's modes
 
  * random.py
   - convert to numpy RNG
   - add seeding
-  - add probability freezer
-
+  - add make_prob_freezer
+  - add make_random_phrase
+  - add make_random_generator
 
 * quantize.py
  - add quantize_passing(float, chord, passing_tones)
