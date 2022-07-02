@@ -63,6 +63,8 @@ def freeze_song(song, filename=None, combine_tracks=False):
                         vel = 80
                         freezer = None
                         note = [pitch, vel, freezer]
+
+                    pitch, vel, freezer = note
                     if freezer is None:
                         freezer = default_freezer
                     ice_tray, time = freezer(pitch, vel, time, s, t)
