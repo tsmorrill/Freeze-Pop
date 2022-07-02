@@ -3,10 +3,16 @@ section = [phrase1, phrase2, ...]
 track = [section1, section2, ...]
 song = [track1, track2, ...]
 
+
+To upload to PyPi:
+1) update version number
+2) run """twine upload dist/*"""
+
+TO DO
+
 * add examples
  - expressive hi hat
  - logistic melody
- - plain hunt
  - polyrhythm
  - trap hi hat
 
@@ -14,6 +20,7 @@ song = [track1, track2, ...]
  - figure out how to make this import correctly; submodule?
 
 * freezers.py
+ - make_freezer should use fractions according to user expectations
  - allow custom track names
  - add make_ratchet_freezer
  - add make_echo_freezer
