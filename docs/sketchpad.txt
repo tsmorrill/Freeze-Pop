@@ -32,6 +32,9 @@ song = [track1, track2, ...]
  - research method ringing techniques
  - research FFT techniques
 
+# setup.cfg
+ - add numpy dependency
+
 * scales.py
  - move interval definitions to individual functions
  - add Messiaen's modes

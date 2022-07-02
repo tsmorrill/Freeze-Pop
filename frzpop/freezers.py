@@ -4,13 +4,16 @@ from midiutil import MIDIFile
 
 def make_cube(pitch, time, note_len, vel, t):
     """Freeze callables and return a cube."""
+    frozen_pitch = pitch
     if callable(pitch):
-        pitch = pitch(t)
+        frozen_pitch = pitch(t)
+    frozen_vel = vel
     if callable(vel):
-        vel = vel(t)
+        frozen_vel = vel(t)
+
     cube = None
-    if vel and pitch is not None:                # ignore notes with velocity 0
-        cube = [pitch, time, note_len, vel]
+    if frozen_vel and frozen_pitch is not None:           # no cube if vel == 0
+        cube = [frozen_pitch, time, note_len, frozen_vel]
     return cube
 
 
@@ -69,8 +72,8 @@ def freeze_song(song, filename=None, combine_tracks=False):
                         freezer = default_freezer
                     ice_tray, time = freezer(pitch, vel, time, s, t)
                     ice_bucket.extend(ice_tray)
-                t += 1
-            s += 1
+                    t += 1
+                s += 1
 
     for cube in ice_bucket:
         pitch, time, note_len, vel = cube
