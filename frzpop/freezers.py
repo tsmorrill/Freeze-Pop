@@ -105,12 +105,11 @@ def freeze_phrase(phrase, name=None):
 
 
 if __name__ == "__main__":
-    test_phrase = [[60,   92, None],
-                   [62,   92, None],
-                   [64,   92, None],
-                   [65,    0, None],
-                   [67,   88, None],
-                   [69,  127, None],
-                   [72,   92, None],
-                   [None, 72, None]]
-    freeze_phrase(test_phrase, name="test")
+    # print the names of functions to import in __init__.py
+    dir_list = dir()
+    dir_list = [val for val in dir_list if val[0] != "_"]
+    import_list = ["MIDIFile", "datetime"]
+    for val in import_list:
+        dir_list.remove(val)
+    dir_string = ", ".join(dir_list)
+    print(dir_string)
