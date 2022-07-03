@@ -3,7 +3,7 @@ from frzpop.notes import C4, D4, E4, F4, G4, A4, B4, C5
 from frzpop.dynamics import f
 from frzpop.phrases import make_plain_hunt
 
-eighth = frzpop.freezers.make_freezer(note_len=1/2)
+eighth = frzpop.freezers.make_freezer(note_len=1/8)
 
 init_phrase = [[C5, f, eighth],
                [B4, f, eighth],

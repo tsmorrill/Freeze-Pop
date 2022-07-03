@@ -17,7 +17,9 @@ def make_cube(pitch, time, note_len, vel, t):
     return cube
 
 
-def make_freezer(note_len=1/4, gate=1, nudge=0):
+def make_freezer(note_len=1/16, gate=1, nudge=0):
+    note_len *= 4                     # midiutil measures time in quarter notes
+
     def freezer(pitch, vel, time, s, t):
         ice_tray = []
         cube_time = time + nudge         # push cube off-grid and maintain time
@@ -36,7 +38,7 @@ def freeze_song(song, filename=None, combine_tracks=False):
     if combine_tracks:
         output_file.addTrackName(0, 0, "Combined Track")
 
-    default_freezer = make_freezer(note_len=1/4)        # tracks can share this
+    default_freezer = make_freezer(note_len=1/16)        # tracks can share this
 
     for track_number, track in enumerate(song):
         if combine_tracks:
