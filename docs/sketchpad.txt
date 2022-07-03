@@ -37,7 +37,10 @@ TO DO
    . context specific dithering
 
 * phrases.py
+ - add rotate(phrase)
+ - add interleave(section)
  - research method ringing techniques
+  . plain bob minor
  - research FFT techniques
 
 # setup.cfg
@@ -47,12 +50,13 @@ TO DO
 * scales.py
  - add Messiaen's modes
 
- * random.py
+ * stochastic.py
   - convert to numpy RNG
   - add seeding
   - add make_prob_freezer
   - add make_random_phrase
   - add make_random_generator
+  - move functions to more appropriate files and give this the decorators.py treatment
 
 * quantize.py
  - add quantize_passing(float, chord, passing_tones)
