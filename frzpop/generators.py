@@ -167,6 +167,17 @@ def mix(*generators):                            # don't override sum() builtin
 
 
 @p_gen
+def threshold(generator, threshold):
+    while True:
+        yield int(generator() > threshold)
+
+
+def pulse(steps, duty=0.5):
+    generator = sweep(1, 0, steps)
+    return threshold(generator, duty)
+
+
+@p_gen
 def attenuate(generator, mult, offset=0):
     while True:
         yield mult*generator() + offset
@@ -177,8 +188,6 @@ def offset(generator, offset):
 
 
 if __name__ == "__main__":
-    lime = circle_map(0, 1/3, 1)
-    raspberry = sine(6)
-    blend = mix(lime, raspberry)
-    for i in range(10):
-        print(blend())
+    apple = pulse(7)
+    for i in range(12):
+        print(apple())

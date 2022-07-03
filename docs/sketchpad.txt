@@ -58,6 +58,9 @@ TO DO
   - add make_random_generator
   - move functions to more appropriate files and give this the decorators.py treatment
 
+* trigs.py
+ - combine with generators.py
+
 * quantize.py
  - add quantize_passing(float, chord, passing_tones)
 
