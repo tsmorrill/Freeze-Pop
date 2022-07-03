@@ -15,7 +15,7 @@ def p_gen(gen):
 
 @p_gen
 def circle_map(x_0, omega, coupling):
-    """Return a generator for the standard circle map."""
+    """Generate the standard circle map."""
     tau = 2*pi
     tau_inv = 1/tau
 
@@ -29,7 +29,7 @@ def circle_map(x_0, omega, coupling):
 
 @p_gen
 def duffing(x_0, y_0, a=2.75, b=0.2):
-    """Return a generator for the Duffing map."""
+    """Generate the Duffing map."""
     x, y = x_0, x_0
 
     while True:
@@ -39,7 +39,7 @@ def duffing(x_0, y_0, a=2.75, b=0.2):
 
 @p_gen
 def gingerbread(x_0, y_0, a=1, b=1):
-    """Return a generator for the Gingerbreadman map."""
+    """Generate the Gingerbreadman map."""
     x, y = x_0, y_0
 
     while True:
@@ -49,7 +49,7 @@ def gingerbread(x_0, y_0, a=1, b=1):
 
 @p_gen
 def henon(x_0, y_0, a=1.4, b=0.3):
-    """Return a generator for the Henon map."""
+    """Generate the Henon map."""
     x, y = x_0, y_0
 
     while True:
@@ -59,7 +59,7 @@ def henon(x_0, y_0, a=1.4, b=0.3):
 
 @p_gen
 def lfsr(n_0):
-    """Return a generator for a linear feedback shift register."""
+    """Generate a linear feedback shift register."""
     n = n_0
     n += int(n == 0)                                    # don't initialize on 0
     while True:
@@ -70,7 +70,7 @@ def lfsr(n_0):
 
 @p_gen
 def logistic(x_0, r=3.56995):
-    """Return a generator for the logistic map."""
+    """Generate the logistic map."""
     x = x_0
 
     while True:
@@ -79,7 +79,7 @@ def logistic(x_0, r=3.56995):
 
 
 def sweep(start, end, steps):
-    """Return a generator for a linear sweep."""
+    """Generate a linear sweep."""
     step = (end - start)/steps
     vals = [start + step*i for i in range(steps)]
 
@@ -96,7 +96,7 @@ def saw(steps):
 
 @p_gen
 def tent(x_0, m=1.5):
-    """Return a generator for the tent map."""
+    """Generate the tent map."""
     x = x_0
 
     while True:
@@ -106,7 +106,7 @@ def tent(x_0, m=1.5):
 
 @p_gen
 def xshift(n_0):
-    """Return a generator for an xor shift pseudorandom number generator."""
+    """Generate an xor shift pseudorandom number generator."""
     n = n_0
     len = 16
     modulus = 1 << len
@@ -144,7 +144,7 @@ def clip(generator, min, max):
 
 @p_gen
 def interleave(*generators):
-    """Retrun a generator that cycles through the input list of generators."""
+    """Cycle through the outputs of generators."""
     if generators:
         length = len(generators)
         i = 0
