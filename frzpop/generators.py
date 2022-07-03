@@ -14,8 +14,9 @@ def p_gen(gen):
 
 
 @p_gen
-def make_circle_map(x, omega, coupling):
+def make_circle_map(x_0, omega, coupling):
     """Return a generator for the circle map."""
+    x = x_0
     tau = 2*pi
     tau_inv = 1/tau
 
@@ -26,8 +27,9 @@ def make_circle_map(x, omega, coupling):
 
 
 @p_gen
-def make_duffing(x, y, a=2.75, b=0.2):
+def make_duffing(x_0, y_0, a=2.75, b=0.2):
     """Return a generator for the Duffing map."""
+    x, y = x_0, x_0
 
     while True:
         yield x
@@ -35,8 +37,9 @@ def make_duffing(x, y, a=2.75, b=0.2):
 
 
 @p_gen
-def make_gingerbread(x, y, a=1, b=1):
+def make_gingerbread(x_0, y_0, a=1, b=1):
     """Return a generator for the Gingerbreadman map."""
+    x, y = x_0, y_0
 
     while True:
         yield x
@@ -44,8 +47,9 @@ def make_gingerbread(x, y, a=1, b=1):
 
 
 @p_gen
-def make_henon(x, y, a=1.4, b=0.3):
+def make_henon(x_0, y_0, a=1.4, b=0.3):
     """Return a generator for the Henon map."""
+    x, y = x_0, y_0
 
     while True:
         yield x
@@ -53,8 +57,9 @@ def make_henon(x, y, a=1.4, b=0.3):
 
 
 @p_gen
-def make_lfsr(n):
+def make_lfsr(n_0):
     """Return a generator for a linear feedback shift register."""
+    n = n_0
     n += int(n == 0)                                    # don't initialize on 0
     while True:
         yield n
@@ -63,8 +68,9 @@ def make_lfsr(n):
 
 
 @p_gen
-def make_logistic(x, r=3.56995):
+def make_logistic(x_0, r=3.56995):
     """Return a generator for the logistic map."""
+    x = x_0
 
     while True:
         yield x
@@ -86,8 +92,9 @@ def make_sweep(start, end, steps):
 
 
 @p_gen
-def make_tent(x, m=1.5):
+def make_tent(x_0, m=1.5):
     """Return a generator for the tent map."""
+    x = x_0
 
     while True:
         yield x
@@ -95,8 +102,9 @@ def make_tent(x, m=1.5):
 
 
 @p_gen
-def make_xor_shift(n):
+def make_xor_shift(n_0):
     """Return a generator for an xor shift pseudorandom number generator."""
+    n = n_0
     len = 16
     modulus = 1 << len
     while True:
@@ -107,10 +115,55 @@ def make_xor_shift(n):
         n %= modulus
 
 
+@p_gen
+def from_list(list):
+    if list:
+        length = len(list)
+        i = 0
+        while True:
+            yield list[i]
+            i += 1
+            i %= length
+    yield 0
+
+
+def sine(steps, offset=0):
+    step = 2*pi/steps
+    vals = [sin(step*i + offset) for i in range(steps)]
+    return from_list(vals)
+
+
+@p_gen
+def clip(generator, min, max):
+    while True:
+        yield max(min, min(generator(), max))
+
+
+@p_gen
+def interleave(*generators):
+    """Retrun a generator that cycles through the input list of generators."""
+    if generators:
+        length = len(generators)
+        i = 0
+        while True:
+            yield generators[i]()
+            i += 1
+            i %= length
+    while True:
+        yield 0
+
+
+@p_gen
+def stretch(generator, mult, offset=0):
+    while True:
+        yield mult*generator() + offset
+
+
+def offset(generator, offset):
+    return stretch(generator, mult=1, offset=offset)
+
+
 if __name__ == "__main__":
-    start = 1
-    end = 2
-    steps = 8
-    generator = make_sweep(start, end, steps)
-    for i in range(12):
-        print(i, generator())
+    generator = offset(sine(8), 1)
+    for i in range(10):
+        print(generator())
