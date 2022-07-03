@@ -144,7 +144,7 @@ def clip(generator, min, max):
 
 @p_gen
 def interleave(*generators):
-    """Cycle through the outputs of generators."""
+    """Cycle through the outputs of the given generators."""
     if generators:
         length = len(generators)
         i = 0
@@ -167,24 +167,32 @@ def mix(*generators):                            # don't override sum() builtin
 
 
 @p_gen
-def threshold(generator, threshold):
+def is_over(generator, threshold):
     while True:
         yield int(generator() > threshold)
 
 
 def pulse(steps, duty=0.5):
     generator = sweep(1, 0, steps)
-    return threshold(generator, duty)
+    return is_over(generator, duty)
 
 
 @p_gen
-def attenuate(generator, mult, offset=0):
+def attenuvert(generator, mult, offset=0):
     while True:
         yield mult*generator() + offset
 
 
 def offset(generator, offset):
-    return attenuate(generator, mult=1, offset=offset)
+    return attenuvert(generator, mult=1, offset=offset)
+
+
+@p_gen
+def skip(generator, batches):
+    while True:
+        yield generator()
+        for _ in range(batches - 1):
+            generator()
 
 
 if __name__ == "__main__":
