@@ -33,18 +33,24 @@ def make_freezer(note_len=1/16, gate=1, nudge=0):
     return freezer
 
 
-def freeze_song(song, filename=None, combine_tracks=False):
+def freeze_song(song, filename=None, track_names=None, combine_tracks=False):
+    if filename is None:
+        dt = datetime.now()
+        filename = dt.strftime("%Y-%m-%d_%H%M%S")
+
     output_file = MIDIFile()
     if combine_tracks:
-        output_file.addTrackName(0, 0, "Combined Track")
+        output_file.addTrackName(0, 0, filename)
 
-    default_freezer = make_freezer(note_len=1/16)        # tracks can share this
+    default_freezer = make_freezer(note_len=1/16)       # tracks can share this
 
     for track_number, track in enumerate(song):
         if combine_tracks:
             track_number = 0           # just dump all the ice buckets together
 
         track_name = f"Track {track_number}"
+        if track_names:
+            track_name = track_name[track_number]
         track_channel = 0
 
         time = 0
@@ -82,9 +88,6 @@ def freeze_song(song, filename=None, combine_tracks=False):
         output_file.addNote(track_number, track_channel,
                             pitch, time, note_len, vel)
 
-    if filename is None:
-        dt = datetime.now()
-        filename = dt.strftime("%Y-%m-%d_%H%M%S")
     filename = f"{filename}.mid"
     with open(filename, 'wb') as outf:
         output_file.writeFile(outf)
@@ -93,7 +96,7 @@ def freeze_song(song, filename=None, combine_tracks=False):
 
 def freeze_track(track, name=None):
     song = [track]
-    freeze_song(song, name)
+    freeze_song(song, filename=name, track_names=[name])
 
 
 def freeze_section(section, name=None):
@@ -107,11 +110,8 @@ def freeze_phrase(phrase, name=None):
 
 
 if __name__ == "__main__":
-    # print the names of functions to import in __init__.py
-    dir_list = dir()
-    dir_list = [val for val in dir_list if val[0] != "_"]
-    import_list = ["MIDIFile", "datetime"]
-    for val in import_list:
-        dir_list.remove(val)
-    dir_string = ", ".join(dir_list)
-    print(dir_string)
+    names = [name for name in dir() if not name.startswith("_")]
+    imports = ["MIDIFile", "datetime"]
+    for name in imports:
+        names.remove(name)
+    print(", ".join(names))

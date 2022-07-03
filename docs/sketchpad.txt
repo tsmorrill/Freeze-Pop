@@ -21,7 +21,6 @@ TO DO
  - figure out how to make this import correctly; submodule?
 
 * freezers.py
- - allow custom track names
  - add make_ratchet_freezer
  - add make_echo_freezer
  - add make_conditional_freezer
