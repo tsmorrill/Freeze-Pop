@@ -1,8 +1,8 @@
-* fix examples
+* fix extant examples
  - get strum.py working as intended
  - update all other examples to 0.1.4 compatibility
 
-* add examples
+* add new examples
  - expressive hi hat
  - polyrhythm
  - trap hi hat
