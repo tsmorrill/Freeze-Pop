@@ -167,13 +167,13 @@ def mix(*generators):                            # don't override sum() builtin
 
 
 @p_gen
-def stretch(generator, mult, offset=0):
+def attenuate(generator, mult, offset=0):
     while True:
         yield mult*generator() + offset
 
 
 def offset(generator, offset):
-    return stretch(generator, mult=1, offset=offset)
+    return attenuate(generator, mult=1, offset=offset)
 
 
 if __name__ == "__main__":
