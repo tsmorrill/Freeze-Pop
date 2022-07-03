@@ -177,8 +177,8 @@ def offset(generator, offset):
 
 
 if __name__ == "__main__":
-    salt = circle_map(0, 1/3, 1)
-    pepper = sine(6)
-    blend = mix(salt, pepper)
+    lime = circle_map(0, 1/3, 1)
+    raspberry = sine(6)
+    blend = mix(lime, raspberry)
     for i in range(10):
         print(blend())
