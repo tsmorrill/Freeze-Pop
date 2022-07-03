@@ -6,15 +6,17 @@ def float_to_CC(x):
     return floor(x)
 
 
-def make_quantizer(note_list):
+def make_quantizer(notes):
     """Return a quantizer function."""
-    note_list.sort()
-    min_note, max_note = min(note_list), max(note_list)
+    notes.sort()
+    min_note, max_note = min(notes), max(notes)
 
     def quantizer(x):
         x = max(x, min_note)
 
-        pairs = zip(note_list[:-1], note_list[1:])
+        *head, _ = notes
+        _, *tail = notes
+        pairs = zip(head, tail)
         for a, b in pairs:
             if a <= x < b:
                 midpoint = (a + b)/2
