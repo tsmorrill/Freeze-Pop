@@ -1,0 +1,4 @@
+phrase = [note1, note2, ...]
+section = [phrase1, phrase2, ...]
+track = [section1, section2, ...]
+song = [track1, track2, ...]

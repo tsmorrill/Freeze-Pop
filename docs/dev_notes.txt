@@ -1,0 +1,4 @@
+To upload to PyPi:
+1) update version number
+2) run command "python3 -m build"
+3) run command "twine upload dist/*"
