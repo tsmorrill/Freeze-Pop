@@ -6,30 +6,42 @@ def float_to_CC(x):
     return floor(x)
 
 
-def make_quantizer(notes):
-    """Return a quantizer function."""
+def quantizer(notes):
+    """Make a quantizer function."""
     notes.sort()
     min_note, max_note = min(notes), max(notes)
 
-    def quantizer(x):
-        x = max(x, min_note)
+    def func(x):
+        if callable(x):
+            val = next(x())
+        else:
+            val = x
+
+        val = max(val, min_note)
 
         *head, _ = notes
         _, *tail = notes
         pairs = zip(head, tail)
         for a, b in pairs:
-            if a <= x < b:
+            if a <= val < b:
                 midpoint = (a + b)/2
-                x = a + (b - a)*int(x > midpoint)
-                return x
+                val = a + (b - a)*int(val > midpoint)
+                return val
 
         return max_note
-    return quantizer
+    return func
 
 
 if __name__ == "__main__":
+    def foo(*args):
+        x = 40
+        while True:
+            yield x
+            x *= 2
+    print(type(foo))
+    print(foo)
+    print(foo())
     chord = [60, 64, 67]
-    quantizer = make_quantizer(chord)
-    for x in range(59, 69):
-        x += 0.1
-        print(x, quantizer(x))
+    Cmaj = quantizer(chord)
+    for _ in range(8):
+        print(Cmaj(foo))

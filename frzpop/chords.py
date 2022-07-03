@@ -24,5 +24,4 @@ def minor(root):
 
 if __name__ == "__main__":
     chord = minor(11)
-    for i in range(0, len(chord), 3):
-        print(chord[i:i+3])
+    print(chord)
