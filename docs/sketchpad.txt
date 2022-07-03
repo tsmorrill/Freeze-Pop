@@ -27,14 +27,7 @@ TO DO
  - add make_conditional_freezer
 
 * generators.py
- - add some structure for making generators out of existing generators
- - convert old functions to output velocity
- - improve fractioning by applying Chicken McNugget theorem
- - add tree-based pitch-to-rhythm assignment
- - process notes in decreasing order of stress?
-   . ornamentation via tiered chord note/neighbor note/chromatic note generation
- - add more dithering patterns
-   . context specific dithering
+ - come up with better name for from_list
 
 * phrases.py
  - add rotate(phrase)
@@ -42,6 +35,12 @@ TO DO
  - research method ringing techniques
   . plain bob minor
  - research FFT techniques
+ - add tree-based pitch-to-rhythm assignment
+ - process notes in decreasing order of stress?
+   . ornamentation via tiered chord note/neighbor note/chromatic note generation
+ - add more dithering patterns
+   . context specific dithering
+
 
 # setup.cfg
  - add PyPi description
@@ -54,6 +53,7 @@ TO DO
   - convert to numpy RNG
   - add seeding
   - add make_prob_freezer
+   . call make_conditional_freezer
   - add make_random_phrase
   - add make_random_generator
   - move functions to more appropriate files and give this the decorators.py treatment
