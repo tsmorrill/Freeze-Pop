@@ -21,13 +21,13 @@ TO DO
  - figure out how to make this import correctly; submodule?
 
 * freezers.py
- - make_freezer should use fractions according to user expectations
  - allow custom track names
  - add make_ratchet_freezer
  - add make_echo_freezer
  - add make_conditional_freezer
 
 * generators.py
+ - add some structure for making generators out of existing generators
  - convert old functions to output velocity
  - improve fractioning by applying Chicken McNugget theorem
  - add tree-based pitch-to-rhythm assignment
