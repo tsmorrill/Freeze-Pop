@@ -14,11 +14,12 @@ def p_gen(gen):
 
 
 @p_gen
-def make_circle_map(x_0, omega, coupling):
-    """Return a generator for the circle map."""
-    x = x_0
+def circle_map(x_0, omega, coupling):
+    """Return a generator for the standard circle map."""
     tau = 2*pi
     tau_inv = 1/tau
+
+    x = float(x_0) % 1
 
     while True:
         yield x
@@ -27,7 +28,7 @@ def make_circle_map(x_0, omega, coupling):
 
 
 @p_gen
-def make_duffing(x_0, y_0, a=2.75, b=0.2):
+def duffing(x_0, y_0, a=2.75, b=0.2):
     """Return a generator for the Duffing map."""
     x, y = x_0, x_0
 
@@ -37,7 +38,7 @@ def make_duffing(x_0, y_0, a=2.75, b=0.2):
 
 
 @p_gen
-def make_gingerbread(x_0, y_0, a=1, b=1):
+def gingerbread(x_0, y_0, a=1, b=1):
     """Return a generator for the Gingerbreadman map."""
     x, y = x_0, y_0
 
@@ -47,7 +48,7 @@ def make_gingerbread(x_0, y_0, a=1, b=1):
 
 
 @p_gen
-def make_henon(x_0, y_0, a=1.4, b=0.3):
+def henon(x_0, y_0, a=1.4, b=0.3):
     """Return a generator for the Henon map."""
     x, y = x_0, y_0
 
@@ -57,7 +58,7 @@ def make_henon(x_0, y_0, a=1.4, b=0.3):
 
 
 @p_gen
-def make_lfsr(n_0):
+def lfsr(n_0):
     """Return a generator for a linear feedback shift register."""
     n = n_0
     n += int(n == 0)                                    # don't initialize on 0
@@ -68,7 +69,7 @@ def make_lfsr(n_0):
 
 
 @p_gen
-def make_logistic(x_0, r=3.56995):
+def logistic(x_0, r=3.56995):
     """Return a generator for the logistic map."""
     x = x_0
 
@@ -77,22 +78,24 @@ def make_logistic(x_0, r=3.56995):
         x = r*x*(1-x)
 
 
-@p_gen
-def make_sweep(start, end, steps):
+def sweep(start, end, steps):
     """Return a generator for a linear sweep."""
+    step = (end - start)/steps
+    vals = [start + step*i for i in range(steps)]
 
-    m = (end - start)/(steps - 1)
-    float_list = [start + m*i for i in range(steps)]
+    return from_list(vals)
 
-    i = 0
-    while True:
-        yield float_list[i]
-        i += 1
-        i %= steps
+
+def ramp(steps):
+    return sweep(start=0, end=1, steps=steps)
+
+
+def saw(steps):
+    return sweep(start=1, end=0, steps=steps)
 
 
 @p_gen
-def make_tent(x_0, m=1.5):
+def tent(x_0, m=1.5):
     """Return a generator for the tent map."""
     x = x_0
 
@@ -102,7 +105,7 @@ def make_tent(x_0, m=1.5):
 
 
 @p_gen
-def make_xor_shift(n_0):
+def xshift(n_0):
     """Return a generator for an xor shift pseudorandom number generator."""
     n = n_0
     len = 16
@@ -124,7 +127,7 @@ def from_list(list):
             yield list[i]
             i += 1
             i %= length
-    yield 0
+    yield None
 
 
 def sine(steps, offset=0):
@@ -150,7 +153,17 @@ def interleave(*generators):
             i += 1
             i %= length
     while True:
-        yield 0
+        yield None
+
+
+@p_gen
+def mix(*generators):                            # don't override sum() builtin
+    length = len(generators)
+    if generators:
+        while True:
+            yield sum(generators[i]() for i in range(length))
+    while True:
+        yield None
 
 
 @p_gen
@@ -164,6 +177,8 @@ def offset(generator, offset):
 
 
 if __name__ == "__main__":
-    generator = offset(sine(8), 1)
+    salt = circle_map(0, 1/3, 1)
+    pepper = sine(6)
+    blend = mix(salt, pepper)
     for i in range(10):
-        print(generator())
+        print(blend())
