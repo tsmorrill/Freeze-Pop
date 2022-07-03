@@ -1,3 +1,7 @@
+* fix examples
+ - get strum.py working as intended
+ - update all other examples to 0.1.4 compatibility
+
 * add examples
  - expressive hi hat
  - polyrhythm
@@ -10,16 +14,15 @@
  - figure out how to make this import correctly; submodule?
 
 * freezers.py
- - add make_ratchet_freezer
- - add make_echo_freezer
- - add make_conditional_freezer
+ - add ratchet_freezer
+ - add echo_freezer
+ - add conditional_freezer
 
 * generators.py
  - come up with better name for from_list
 
 * phrases.py
  - add rotate(phrase)
- - add interleave(section)
  - research method ringing techniques
   . plain bob minor
  - research FFT techniques
@@ -29,10 +32,10 @@
  - add more dithering patterns
    . context specific dithering
 
-
 # setup.cfg
  - add PyPi description
  - add numpy dependency
+  . or just drop it
 
 * scales.py
  - add Messiaen's modes
@@ -40,11 +43,11 @@
  * stochastic.py
   - convert to numpy RNG
   - add seeding
-  - add make_prob_freezer
-   . call make_conditional_freezer
-  - add make_random_phrase
-  - add make_random_generator
-  - move functions to more appropriate files and give this the decorators.py treatment
+  - add prob_freezer
+   . call conditional_freezer
+  - add random_phrase
+  - add random_generator
+  - move functions to more appropriate script files and give this the decorators.py treatment
 
 * trigs.py
  - combine with generators.py
@@ -52,7 +55,7 @@
 * quantize.py
  - refactor quantizer to be a generator.
  - add quantize_passing(float, chord, passing_tones)
-  . this is just interleave from generators.py
+  . this is just interleave from generators.py applied to two quantizers
 
 * fork into a liveplay project?
 
