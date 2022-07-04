@@ -18,6 +18,7 @@
  - add conditional_freezer
 
 * generators.py
+ - uniform handling of generators defined by mathematical functions
  - come up with better name for from_list
 
 * phrases.py
