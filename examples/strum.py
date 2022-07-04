@@ -7,24 +7,15 @@ from frzpop.quantize import quantizer
 A = 69
 Astrum = quantizer(major(A))
 
-print(major(A))
+sweep1 = sweep(40, 70, 16)
+sweep2 = sweep(45, 80, 16)
+sweep3 = sweep(35, 75, 16)
+sweep4 = sweep(30, 85, 16)
 
-sweep1 = sweep(60, 70, 16)
-sweep2 = sweep(65, 80, 16)
-sweep3 = sweep(55, 75, 16)
-sweep4 = sweep(40, 85, 16)
-
-contour1 = [sweep1() for _ in range(16)]
-contour2 = [sweep2() for _ in range(16)]
-contour3 = [sweep3() for _ in range(16)]
-contour4 = [sweep4() for _ in range(16)]
-
-print(contour1)
-
-bar1 = [[Astrum(val), f, None] for val in contour1]
-bar2 = [[Astrum(val), f, None] for val in contour2]
-bar3 = [[Astrum(val), f, None] for val in contour3]
-bar4 = [[Astrum(val), f, None] for val in contour4]
+bar1 = [[Astrum(sweep1()), f, None] for _ in range(16)]
+bar2 = [[Astrum(sweep2()), f, None] for _ in range(16)]
+bar3 = [[Astrum(sweep3()), f, None] for _ in range(16)]
+bar4 = [[Astrum(sweep4()), f, None] for _ in range(16)]
 
 section = [bar1, bar2, bar3, bar4]
 
