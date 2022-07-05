@@ -1,5 +1,6 @@
 * fork into a liveplay project?
 * get a royalty free image of freezer pops
+* add note definitions for 19edo
 
 ===============================================================================
 
