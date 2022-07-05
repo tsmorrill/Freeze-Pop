@@ -1,8 +1,40 @@
 from additives import list_reader, state_machine, sip_water, rng
-from math import sin, pi
+from math import sin, pi, pow
 
 
 # undecorated machines and their derivatives
+
+
+def contour(iter, init=None, smoothing=1, seed=None, truncate=-1):
+    """Generate a random contour via midpoint displacement."""
+
+    noise = rng(seed=seed)
+    if init is None:
+        vals = [noise(), noise()]
+
+    for i in range(iter):
+        new_vals = []
+
+        *head, _ = vals
+        _, *tail = vals
+        pairs = zip(head, tail)
+
+        for a, b in pairs:
+            new_vals.append(a)
+            midpoint = (a + b)/2
+            displacement = (2*noise() - 1) * pow(2, -smoothing*(i + 1))
+            new_vals.append(midpoint + displacement)
+        new_vals.append(vals[-1])
+        vals = new_vals
+
+    vals = vals[:truncate]
+
+    offset = min(vals)
+    vals = [val + offset for val in vals]
+    multiplier = 1/max(vals)
+    vals = [multiplier * val for val in vals]
+
+    return list_reader(vals)
 
 
 def euclid(k, n):
@@ -130,17 +162,17 @@ def logistic(x_0, r=3.56995):
 
 
 @state_machine
-def pfsr(n=0, len=8, prob=0.5, seed=None):
+def pfsr(n=0b10101010, len=8, prob=0.5, seed=None):
     """Return a generator for a probabalistic feedback shift register."""
-    modulus = 1 << len
-    n %= modulus
+    mask = (2 << len) - 1
+    n &= mask
     noise = rng(seed=seed)
 
     while True:
         yield n
         bit = n & 1
         n >>= 1
-        if noise() < prob:
+        if prob == 1 or noise() < prob:
             bit = 1 - bit
         n += bit << (len-1)
 
@@ -174,25 +206,28 @@ def xshift(n_0):
 
 @state_machine
 def clip(machine, min, max):
+    instance = machine()
     while True:
-        yield max(min, min(machine(), max))
+        yield max(min, min(instance(), max))
 
 
 @state_machine
 def is_over(machine, threshold):
+    instance = machine()
     while True:
-        yield int(machine() > threshold)
+        yield int(instance() > threshold)
 
 
 def pulse(steps, duty=0.5):
-    machine = sweep(1, 0, steps)
-    return is_over(machine, duty)
+    instance = sweep(1, 0, steps)
+    return is_over(instance, duty)
 
 
 @state_machine
 def attenuvert(machine, mult, offset=0):
+    instance = machine()
     while True:
-        yield mult*machine() + offset
+        yield mult*instance() + offset
 
 
 def offset(machine, offset): return attenuvert(machine, mult=1, offset=offset)
@@ -200,10 +235,11 @@ def offset(machine, offset): return attenuvert(machine, mult=1, offset=offset)
 
 @state_machine
 def skip(machine, batches):
+    instance = machine()
     while True:
-        yield machine()
+        yield instance()
         for _ in range(batches - 1):
-            machine()
+            instance()
 
 
 # machines which wrap multiple other machines
@@ -215,24 +251,25 @@ def interleave(*machines):
     if not machines:
         raise ValueError("interleave requires a nonempty list of machines.")
     length = len(machines)
+    instances = [machine() for machine in machines]
     i = 0
     while True:
-        yield machines[i]()
+        yield instances[i]()
         i += 1
         i %= length
 
 
 @state_machine
 def mix(*machines):                             # don't colide names with sum()
-    length = len(machines)
     if not machines:
         raise ValueError("mix requires a nonempty list of machines.")
+    instances = [machine() for machine in machines]
     while True:
-        yield sum(machines[i]() for i in range(length))
+        yield sum(instance() for instance in instances)
 
 
 if __name__ == "__main__":
     sip_water()
     machine = pfsr()
     for _ in range(16):
-        print(bin(machine()))
+        print("{:08b}".format(machine()))

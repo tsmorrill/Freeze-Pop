@@ -8,7 +8,7 @@
 # setup.cfg
  - add PyPi metadata
 
-* /examples
+* /examples/
  - update all examples to 0.1.4 compatibility
   . or at least comment them by version number
  - add new examples
@@ -42,7 +42,7 @@
   . this is actually a different kind of thing than the machines. maybe a game?
  - add list_reader_random
  - add random_walk, random_walk_2d
- - rename generators.py -> machines.py
+ - bring back 2d heightmaps
 
 * phrases.py
  - consider rename phrases.py -> shuffle.py

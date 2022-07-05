@@ -1,20 +1,19 @@
-def guido_phrase(lyric_string, scale=None):
-    """Return a phrase. Probabilistically assign pitches to text using method
-    of Guido d'Arezzo."""
-    lyric_string = lyric_string.upper()
-    vowels = [char for char in lyric_string if char in "AEIOU"]
+def guido(lyric, gamut=None, seed=None):
+    """Generate text-to-pitches method of Guido d'Arezzo using randomness."""
+    lyric = lyric.upper()
+    vowels = [char for char in lyric if char in "AEIOU"]
 
-    if scale is None:                                    # use d'Arezzo's scale
-        scale = [55, 57, 59, 60, 62,         # list indices will be taken mod 5
+    if gamut is None:                     # historical origin of the word gamut
+        gamut = [55, 57, 59, 60, 62,         # list indices will be taken mod 5
                  64, 65, 67, 69, 71,
                  72, 74, 76, 77, 79,
                  81]
 
-    note_assignment = {"A": scale[0::5],
-                       "E": scale[1::5],
-                       "I": scale[2::5],
-                       "O": scale[3::5],
-                       "U": scale[4::5]}
+    note_assignment = {"A": gamut[0::5],
+                       "E": gamut[1::5],
+                       "I": gamut[2::5],
+                       "O": gamut[3::5],
+                       "U": gamut[4::5]}
 
     def weigh(potential_notes, prev_note):
         if prev_note is None:
@@ -23,38 +22,16 @@ def guido_phrase(lyric_string, scale=None):
                    for note in potential_notes]
         return weights
 
-    phrase = []
+    notes = []
     prev_note = None
+    noise = rng(seed)
+
+    # not sure how to implement next block this way
 
     for char in vowels:
         potential_notes = note_assignment[char]
         weights = weigh(potential_notes, prev_note)
         new_note = random.choices(potential_notes, weights, k=1)[0]
-        phrase.append(new_note)
+        notes.append(new_note)
         prev_note = new_note
-    return phrase
-
-
-def midpoint_displace(iter, smoothing, seed, init):
-    """Create 2^iter + 1 linear heightmap via midpoint displacement.
-    """
-    if init is None:
-        random.seed(seed + "init")
-        heightmap = np.array([random.random(), random.random()])
-    else:
-        heightmap = init
-
-    random.seed(seed + "iterate")
-    for i in range(iter):
-        temp_list = []
-        for j in range(2**i):
-            temp_list.append(heightmap[j])
-            temp_list.append((heightmap[j]+heightmap[j+1])/2
-                             + random.uniform(-1, 1)*2**(-smoothing*(i+1)))
-        temp_list.append(heightmap[-1])
-        heightmap = np.array(temp_list)
-
-    # normalize
-    heightmap += heightmap.min()
-    heightmap /= heightmap.max()
-    return(heightmap)
+    return list_reader(notes)
