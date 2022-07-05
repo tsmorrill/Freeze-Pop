@@ -32,6 +32,7 @@
 
 * generators.py
  - add grid machine, accepts controls "up", "down", "left", "right"
+  . this is actually a different kind of thing than the machines. maybe a game?
  - rename generators.py -> machines.py
   . refactor guido or split to different file
 

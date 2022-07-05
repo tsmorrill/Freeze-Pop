@@ -127,7 +127,7 @@ def sine(steps, offset=0):
     return list_reader(vals)
 
 
-# machines which wrap one other machine and their derivatives
+# machines which wrap one other machines, and their derivatives
 
 
 @state_machine
@@ -183,7 +183,7 @@ def interleave(*machines):
 
 
 @state_machine
-def mix(*machines):                            # don't override sum() builtin
+def mix(*machines):                             # don't colide names with sum()
     length = len(machines)
     if machines:
         while True:

@@ -1,15 +1,20 @@
-def make_oct_scale(root, degree_list):
+def oct_scale(root, intervals):
     """Return a list of all MIDI note values which belong to the given
     octave scale."""
     root %= 12
-    degree_list = [(root + degree) % 12 for degree in degree_list]
-    all_octaves = [n for n in range(128) if n % 12 in degree_list]
+    chromatics = [root]
+    for interval in intervals:
+        chromatics.append(chromatics[-1] + interval)
+    all_octaves = [n for n in range(128) if n % 12 in chromatics]
     return all_octaves
 
 
+# diatonic modes in the usual order
+
+
 def major(root):
-    degree_list = [0, 2, 4, 5, 7, 9, 11]
-    return make_oct_scale(root, degree_list)
+    intervals = [2, 2, 1, 2, 2, 2, 1]
+    return oct_scale(root, intervals)
 
 
 def ionian(root):
@@ -17,28 +22,28 @@ def ionian(root):
 
 
 def dorian(root):
-    degree_list = [0, 2, 3, 5, 7, 9, 10]
-    return make_oct_scale(root, degree_list)
+    intervals = [2, 1, 2, 2, 2, 1, 2]
+    return oct_scale(root, intervals)
 
 
 def phrygian(root):
-    degree_list = [0, 1, 3, 5, 7, 8, 10]
-    return make_oct_scale(root, degree_list)
+    intervals = [1, 2, 2, 2, 1, 2, 2]
+    return oct_scale(root, intervals)
 
 
 def lydian(root):
-    degree_list = [0, 2, 4, 6, 7, 9, 11]
-    return make_oct_scale(root, degree_list)
+    intervals = [2, 2, 2, 1, 2, 2, 1]
+    return oct_scale(root, intervals)
 
 
 def mixolydian(root):
-    degree_list = [0, 2, 4, 5, 7, 9, 10]
-    return make_oct_scale(root, degree_list)
+    intervals = [2, 2, 1, 2, 2, 1, 2]
+    return oct_scale(root, intervals)
 
 
 def minor(root):
-    degree_list = [0, 2, 3, 5, 7, 8, 10]
-    return make_oct_scale(root, degree_list)
+    intervals = [2, 1, 2, 2, 1, 2, 2]
+    return oct_scale(root, intervals)
 
 
 def aeolian(root):
@@ -46,11 +51,11 @@ def aeolian(root):
 
 
 def locrian(root):
-    degree_list = [0, 1, 3, 5, 6, 8, 10]
-    return make_oct_scale(root, degree_list)
+    intervals = [1, 2, 2, 1, 2, 2, 2]
+    return oct_scale(root, intervals)
 
 
 if __name__ == "__main__":
-    scale = minor(11)
+    scale = major(60)
     for i in range(0, len(scale), 7):
         print(scale[i:i+8])
