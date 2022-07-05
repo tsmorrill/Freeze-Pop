@@ -2,6 +2,9 @@ from additives import state_machine, water
 from math import sin, pi
 
 
+# base machines and their derivatives
+
+
 @state_machine
 def circle_map(x_0, omega, coupling):
     """Generate the standard circle map."""
@@ -58,6 +61,18 @@ def lfsr(n_0):
 
 
 @state_machine
+def list_reader(list):
+    if list:
+        length = len(list)
+        i = 0
+        while True:
+            yield list[i]
+            i += 1
+            i %= length
+    yield 0
+
+
+@state_machine
 def logistic(x_0, r=3.56995):
     """Generate the logistic map."""
     x = x_0
@@ -68,11 +83,10 @@ def logistic(x_0, r=3.56995):
 
 
 def sweep(start, end, steps):
-    """Generate a linear sweep."""
     step = (end - start)/steps
     vals = [start + step*i for i in range(steps)]
 
-    return from_list(vals)
+    return list_reader(vals)
 
 
 def ramp(steps):
@@ -107,81 +121,75 @@ def xshift(n_0):
         n %= modulus
 
 
-@state_machine
-def list_reader(list):
-    if list:
-        length = len(list)
-        i = 0
-        while True:
-            yield list[i]
-            i += 1
-            i %= length
-    yield None
-
-
 def sine(steps, offset=0):
     step = 2*pi/steps
     vals = [sin(step*i + offset) for i in range(steps)]
-    return from_list(vals)
+    return list_reader(vals)
+
+
+# machines which wrap one other machine and their derivatives
 
 
 @state_machine
-def clip(generator, min, max):
+def clip(machine, min, max):
     while True:
-        yield max(min, min(generator(), max))
+        yield max(min, min(machine(), max))
 
 
 @state_machine
-def interleave(*generators):
-    """Cycle through the outputs of the given generators."""
-    if generators:
-        length = len(generators)
-        i = 0
-        while True:
-            yield generators[i]()
-            i += 1
-            i %= length
+def is_over(machine, threshold):
     while True:
-        yield None
-
-
-@state_machine
-def mix(*generators):                            # don't override sum() builtin
-    length = len(generators)
-    if generators:
-        while True:
-            yield sum(generators[i]() for i in range(length))
-    while True:
-        yield None
-
-
-@state_machine
-def is_over(generator, threshold):
-    while True:
-        yield int(generator() > threshold)
+        yield int(machine() > threshold)
 
 
 def pulse(steps, duty=0.5):
-    generator = sweep(1, 0, steps)
-    return is_over(generator, duty)
+    machine = sweep(1, 0, steps)
+    return is_over(machine, duty)
 
 
 @state_machine
-def attenuvert(generator, mult, offset=0):
+def attenuvert(machine, mult, offset=0):
     while True:
-        yield mult*generator() + offset
+        yield mult*machine() + offset
 
 
-def offset(generator, offset):
-    return attenuvert(generator, mult=1, offset=offset)
+def offset(machine, offset):
+    return attenuvert(machine, mult=1, offset=offset)
 
 
 @state_machine
-def skip(generator, batches):
+def skip(machine, batches):
     while True:
-        yield generator()
+        yield machine()
         for _ in range(batches - 1):
-            generator()
+            machine()
+
+
+# machines which wrap multiple other machines
+
+
+@state_machine
+def interleave(*machines):
+    """Cycle through the outputs of the given machines."""
+    if machines:
+        length = len(machines)
+        i = 0
+        while True:
+            yield machines[i]()
+            i += 1
+            i %= length
+    while True:
+        yield 0
+
+
+@state_machine
+def mix(*machines):                            # don't override sum() builtin
+    length = len(machines)
+    if machines:
+        while True:
+            yield sum(machines[i]() for i in range(length))
+    while True:
+        yield 0
 
 
 if __name__ == "__main__":
