@@ -1,6 +1,6 @@
 * freezers can input s and t, but notes and vels should be state machines
-* fork into a liveplay project?
 * get a royalty free image of freezer pops
+* fork into a liveplay project?
 * add note definitions for 19edo
 
 ===============================================================================
@@ -40,7 +40,7 @@
   . prob freezer is a kind of conditional freezer
  - consider adding a freezer decorator
 
-* generators.py
+* machines.py
  - add grid machine, accepts controls "up", "down", "left", "right"
   . this is actually a different kind of thing than the machines. maybe a game?
  - add list_reader_random
@@ -67,9 +67,5 @@
  * stochastic.py
   - delete stochastic.py
    . move functions to more appropriate script files
-
-* trigs.py
- - output 0, 1 instead of False, True
- - combine with generators.py
 
 * quantize.py
