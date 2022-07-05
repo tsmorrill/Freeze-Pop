@@ -33,7 +33,8 @@
 * generators.py
  - uniform handling of generators defined by mathematical functions
  - rename from_list -> list_reader
- - consider renaming to state_machines.py
+ - add grid machine, accepts controls "up", "down", "left", "right"
+ - consider renaming to machines.py
 
 * phrases.py
  - add rotate(phrase)
