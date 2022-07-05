@@ -1,16 +1,7 @@
-def p_gen(gen):
-    """Wrap a parameterized generator in a function call."""
-
-    def wrapper(*args, **kwargs):
-        generator = gen(*args, **kwargs)
-
-        def func(*args):
-            return next(generator)
-        return(func)
-    return wrapper
+from additives import state_machine
 
 
-@p_gen
+@state_machine
 def make_plain_hunt(phrase):
     """Return a phrase generator which outputs plain hunt method
     permutations of phrase."""
