@@ -34,10 +34,10 @@
  - rename make_freezer -> freezer
   . this broke something last time
   . also rename make_cube -> cube
- - add ratchet_freezer
- - add echo_freezer
- - add conditional_freezer
-  . prob_freezer is a kind of conditional freezer
+ - add ratchet freezer
+ - add echo freezer
+ - add conditional freezer
+  . prob freezer is a kind of conditional freezer
  - consider adding a freezer decorator
 
 * generators.py
