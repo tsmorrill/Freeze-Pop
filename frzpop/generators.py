@@ -5,6 +5,34 @@ from math import sin, pi
 # undecorated machines and their derivatives
 
 
+def euclid(k, n):
+    """Generate pattern of k 1's equally spaced between (n-k) 0's."""
+
+    if k == n:
+        trigs = [1 for _ in range(n)]
+    else:
+        trigs = []
+        old_res, new_res = -k % n, 0
+
+        for _ in range(n):
+            trigs.append(int(old_res > new_res))
+            old_res, new_res = new_res, (new_res + k) % n
+
+    return list_reader(trigs)
+
+
+def fractioning(a, b):
+    """Generate Schillinger's fractioning of a and b."""
+
+    if a < b:
+        raise ValueError("b cannot exceed a")
+    trigs = [0 for t in range(a*a)]
+    for i in range(a - b + 1):
+        for j in range(a):
+            trigs[i*a + j*b] = 1
+    return list_reader(trigs)
+
+
 def sweep(start, end, steps):
     jump = (end - start)/steps
     vals = [start + jump*i for i in range(steps)]
@@ -16,6 +44,13 @@ def ramp(steps): return sweep(start=0, end=1, steps=steps)
 
 
 def saw(steps): return sweep(start=1, end=0, steps=steps)
+
+
+def resultant(a, b):
+    """Generate Schillinger's resultant of a and b."""
+
+    trigs = [(t % a == 0) or (t % b == 0) for t in range(a*b)]
+    return list_reader(trigs)
 
 
 def sine(steps, offset=0):
