@@ -1,8 +1,12 @@
+* freezers can take s and t, but notes and vels should be state machines
 * fork into a liveplay project?
 * get a royalty free image of freezer pops
 * add note definitions for 19edo
 
 ===============================================================================
+
+# setup.cfg
+ - add PyPi metadata
 
 * /examples
  - update all examples to 0.1.4 compatibility
@@ -13,16 +17,22 @@
   . trap hi hat
 
 * /additives/additives.py
- - update the rest of the scripts
+ - update the rest of the scripts to import state_machine and rng
 
 * __init__.py
  - refactor import structure
 
+* chords.py
+ - refactor to match scales.py
+ - add seventh chords
+ - add ninth chords
+ - add augmented chords
+
 * dynamics.py
- - refactor
+ - refactor as state machines
 
 * freezers.py
- - rename make_freezer -> freeezer without breaking anything
+ - rename make_freezer -> freezer without breaking anything
   . also make_cube -> cube
  - add ratchet_freezer
  - add echo_freezer
@@ -33,10 +43,13 @@
 * generators.py
  - add grid machine, accepts controls "up", "down", "left", "right"
   . this is actually a different kind of thing than the machines. maybe a game?
+ - add list_reader_random
+ - add random_walk, random_walk_2d
  - rename generators.py -> machines.py
   . refactor guido or split to different file
 
 * phrases.py
+ - consider rename phrases.py -> shuffle.py
  - add rotate(phrase)
  - research method ringing techniques
   . plain bob minor
@@ -47,18 +60,13 @@
  - add more dithering patterns
    . context specific dithering
 
-# setup.cfg
- - add PyPi description
-
 * scales.py
- - add Messiaen's modes
+ - add some more scales
+  . try not to get carried away
 
  * stochastic.py
   - delete stochastic.py
-   . move functions to more appropriate script files and give this the decorators.py treatment
-   . add todo.txt entries to other subheadings
-  - add random_phrase
-  - add random_generator
+   . move functions to more appropriate script files
 
 * trigs.py
  - output 0, 1 instead of False, True
