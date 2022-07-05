@@ -1,27 +1,50 @@
-def make_chord(root, degree_list):
-    """Return a list of all MIDI note values which belong to the given
-    chord."""
+def chord(root, intervals):
+    """Return a list of all MIDI note values which belong to the chord
+    specified by root and intervals."""
     root %= 12
-    degree_list = [(root + degree) % 12 for degree in degree_list]
-    all_octaves = [n for n in range(128) if n % 12 in degree_list]
+    chromatics = [root]
+    for interval in intervals:
+        chromatics.append(chromatics[-1] + interval)
+    all_octaves = [n for n in range(128) if n % 12 in chromatics]
     return all_octaves
 
 
 def major(root):
-    degree_list = [0, 4, 7]
-    return make_chord(root, degree_list)
-
-
-def dom7(root):
-    degree_list = [0, 4, 7, 10]
-    return make_chord(root, degree_list)
+    intervals = [0, 4, 3]
+    return chord(root,  intervals)
 
 
 def minor(root):
-    degree_list = [0, 3, 7]
-    return make_chord(root, degree_list)
+    intervals = [0, 3, 4]
+    return chord(root,  intervals)
+
+
+def dim(root):
+    intervals = [0, 3, 3]
+    return chord(root,  intervals)
+
+
+def aug(root):
+    intervals = [0, 5, 2]
+    return chord(root, intervals)
+
+
+def maj7(root):
+    intervals = [0, 4, 3, 4]
+    return chord(root,  intervals)
+
+
+def dom7(root):
+    intervals = [0, 4, 3, 3]
+    return chord(root,  intervals)
+
+
+def min7(root):
+    intervals = [0, 3, 4, 3]
+    return chord(root,  intervals)
 
 
 if __name__ == "__main__":
-    chord = minor(11)
-    print(chord)
+    c7 = min7(60)
+    for i in range(0, len(c7), 4):
+        print(c7[i:i+4])

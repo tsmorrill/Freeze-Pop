@@ -1,20 +1,4 @@
-import numpy as np
-import random
-
-
-def p_gen(gen):
-    """Wrap a parameterized generator in a function call."""
-
-    def wrapper(*args, **kwargs):
-        generator = gen(*args, **kwargs)
-
-        def func(*args):
-            return next(generator)
-        return(func)
-    return wrapper
-
-
-def make_guido_phrase(lyric_string, scale=None):
+def guido_phrase(lyric_string, scale=None):
     """Return a phrase. Probabilistically assign pitches to text using method
     of Guido d'Arezzo."""
     lyric_string = lyric_string.upper()
@@ -51,7 +35,7 @@ def make_guido_phrase(lyric_string, scale=None):
     return phrase
 
 
-def make_midpoint_displace(iter, smoothing, seed, init):
+def midpoint_displace(iter, smoothing, seed, init):
     """Create 2^iter + 1 linear heightmap via midpoint displacement.
     """
     if init is None:
@@ -74,19 +58,3 @@ def make_midpoint_displace(iter, smoothing, seed, init):
     heightmap += heightmap.min()
     heightmap /= heightmap.max()
     return(heightmap)
-
-
-@p_gen
-def make_pfsr(n, len=8, prob=0.5):
-    """Return a generator for a probabalistic feedback shift register."""
-    modulus = 1 << len
-    n %= modulus
-
-    while True:
-        yield n
-        bit = n & 1
-        n >>= 1
-        if random.uniform(0, 1) < prob:
-            bit = 1 - bit
-        bit <<= len-1
-        n += bit

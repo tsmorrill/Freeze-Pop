@@ -23,10 +23,7 @@
  - refactor import structure
 
 * chords.py
- - refactor to match scales.py
- - add seventh chords
  - add ninth chords
- - add augmented chords
 
 * dynamics.py
 
@@ -46,7 +43,6 @@
  - add list_reader_random
  - add random_walk, random_walk_2d
  - rename generators.py -> machines.py
-  . refactor guido or split to different file
 
 * phrases.py
  - consider rename phrases.py -> shuffle.py

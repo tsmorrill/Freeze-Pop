@@ -1,6 +1,6 @@
 def oct_scale(root, intervals):
-    """Return a list of all MIDI note values which belong to the given
-    octave scale."""
+    """Return a list of all MIDI note values which belong to the chord
+    specified by root and intervals."""
     root %= 12
     chromatics = [root]
     for interval in intervals:
@@ -81,6 +81,6 @@ def messiaen(root, mode):
 
 
 if __name__ == "__main__":
-    scale = major(60)
-    for i in range(0, len(scale), 7):
-        print(scale[i:i+8])
+    C = major(60)
+    for i in range(0, len(C), 7):
+        print(C[i:i+8])

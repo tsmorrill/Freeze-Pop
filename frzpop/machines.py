@@ -1,4 +1,4 @@
-from additives import list_reader, state_machine, sip_water
+from additives import list_reader, state_machine, sip_water, rng
 from math import sin, pi
 
 
@@ -130,6 +130,22 @@ def logistic(x_0, r=3.56995):
 
 
 @state_machine
+def pfsr(n=0, len=8, prob=0.5, seed=None):
+    """Return a generator for a probabalistic feedback shift register."""
+    modulus = 1 << len
+    n %= modulus
+    noise = rng(seed=seed)
+
+    while True:
+        yield n
+        bit = n & 1
+        n >>= 1
+        if noise() < prob:
+            bit = 1 - bit
+        n += bit << (len-1)
+
+
+@state_machine
 def tent(x_0, m=1.5):
     """Generate the tent map."""
     x = x_0
@@ -219,6 +235,6 @@ def mix(*machines):                             # don't colide names with sum()
 
 if __name__ == "__main__":
     sip_water()
-    machine = sine(7)
-    for _ in range(10):
-        print(machine())
+    machine = pfsr()
+    for _ in range(16):
+        print(bin(machine()))
