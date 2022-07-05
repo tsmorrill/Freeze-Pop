@@ -211,26 +211,24 @@ def skip(machine, batches):
 
 @state_machine
 def interleave(*machines):
-    """Cycle through the outputs of the given machines."""
-    if machines:
-        length = len(machines)
-        i = 0
-        while True:
-            yield machines[i]()
-            i += 1
-            i %= length
+    """Cycle through the outputs of the input machines."""
+    if not machines:
+        raise ValueError("interleave requires a nonempty list of machines.")
+    length = len(machines)
+    i = 0
     while True:
-        yield 0
+        yield machines[i]()
+        i += 1
+        i %= length
 
 
 @state_machine
 def mix(*machines):                             # don't colide names with sum()
     length = len(machines)
-    if machines:
-        while True:
-            yield sum(machines[i]() for i in range(length))
+    if not machines:
+        raise ValueError("mix requires a nonempty list of machines.")
     while True:
-        yield 0
+        yield sum(machines[i]() for i in range(length))
 
 
 if __name__ == "__main__":
