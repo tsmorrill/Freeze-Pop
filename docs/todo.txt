@@ -1,26 +1,38 @@
-* fix extant examples
- - update all examples to 0.1.4 compatibility
+* fork into a liveplay project?
+* get a royalty free image of freezer pops
 
-* add new examples
- - polyrhythm
- - trap hi hat
+===============================================================================
+
+* /examples
+ - update all examples to 0.1.4 compatibility
+  . or at least comment them by version number
+ - add new examples
+  . passing tones quantization
+  . polyrhythm
+  . trap hi hat
+
+* /additives/additives.py
+ - rename p_gen -> state_machine
+ - move xshift here
+ - update the rest of the scripts
 
 * __init__.py
  - add explicit imports from all the script files
 
-* additives/additives.py
- - rename p_gen -> state_machine
- - move xshift here
- - update the rest of the scripts
+* dynamics.py
+ - refactor
 
 * freezers.py
  - add ratchet_freezer
  - add echo_freezer
  - add conditional_freezer
+  . prob_freezer is a kind of conditional freezer
+ - consider adding a freezer decorator
 
 * generators.py
  - uniform handling of generators defined by mathematical functions
  - come up with better name for from_list
+ - consider renaming to state_machines.py
 
 * phrases.py
  - add rotate(phrase)
@@ -35,29 +47,19 @@
 
 # setup.cfg
  - add PyPi description
- - add numpy dependency
-  . or just drop it
 
 * scales.py
  - add Messiaen's modes
 
  * stochastic.py
-  - move functions to more appropriate script files and give this the decorators.py treatment
+  - delete stochastic.py
+   . move functions to more appropriate script files and give this the decorators.py treatment
    . add todo.txt entries to other subheadings
-  - add seeding
-  - add prob_freezer
-   . call conditional_freezer
   - add random_phrase
   - add random_generator
 
 * trigs.py
+ - output 0, 1 instead of False, True
  - combine with generators.py
 
 * quantize.py
- - refactor quantizer to be a generator.
- - add quantize_passing(float, chord, passing_tones)
-  . this is just interleave from generators.py applied to two quantizers
-
-* fork into a liveplay project?
-
-* get a royalty free image of freezer pops
