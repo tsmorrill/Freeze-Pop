@@ -13,8 +13,6 @@
   . trap hi hat
 
 * /additives/additives.py
- - rename p_gen -> state_machine
- - move xshift here
  - update the rest of the scripts
 
 * __init__.py

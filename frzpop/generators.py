@@ -1,8 +1,8 @@
-from additives import p_gen, water
+from additives import state_machine, water
 from math import sin, pi
 
 
-@p_gen
+@state_machine
 def circle_map(x_0, omega, coupling):
     """Generate the standard circle map."""
     tau = 2*pi
@@ -16,7 +16,7 @@ def circle_map(x_0, omega, coupling):
         x %= 1
 
 
-@p_gen
+@state_machine
 def duffing(x_0, y_0, a=2.75, b=0.2):
     """Generate the Duffing map."""
     x, y = x_0, x_0
@@ -26,7 +26,7 @@ def duffing(x_0, y_0, a=2.75, b=0.2):
         x, y = y, -b*x + a*y - y**3
 
 
-@p_gen
+@state_machine
 def gingerbread(x_0, y_0, a=1, b=1):
     """Generate the Gingerbreadman map."""
     x, y = x_0, y_0
@@ -36,7 +36,7 @@ def gingerbread(x_0, y_0, a=1, b=1):
         x, y = 1 - a*y + b*abs(x), x
 
 
-@p_gen
+@state_machine
 def henon(x_0, y_0, a=1.4, b=0.3):
     """Generate the Henon map."""
     x, y = x_0, y_0
@@ -46,7 +46,7 @@ def henon(x_0, y_0, a=1.4, b=0.3):
         x, y = 1 - a*x**2 + y, b*x
 
 
-@p_gen
+@state_machine
 def lfsr(n_0):
     """Generate a linear feedback shift register."""
     n = n_0
@@ -57,7 +57,7 @@ def lfsr(n_0):
         n = (n >> 1) | (bit << 15)
 
 
-@p_gen
+@state_machine
 def logistic(x_0, r=3.56995):
     """Generate the logistic map."""
     x = x_0
@@ -83,7 +83,7 @@ def saw(steps):
     return sweep(start=1, end=0, steps=steps)
 
 
-@p_gen
+@state_machine
 def tent(x_0, m=1.5):
     """Generate the tent map."""
     x = x_0
@@ -93,7 +93,7 @@ def tent(x_0, m=1.5):
         x = m*min(x, 1-x)
 
 
-@p_gen
+@state_machine
 def xshift(n_0):
     """Generate an xor shift pseudorandom number generator."""
     n = n_0
@@ -107,7 +107,7 @@ def xshift(n_0):
         n %= modulus
 
 
-@p_gen
+@state_machine
 def from_list(list):
     if list:
         length = len(list)
@@ -125,13 +125,13 @@ def sine(steps, offset=0):
     return from_list(vals)
 
 
-@p_gen
+@state_machine
 def clip(generator, min, max):
     while True:
         yield max(min, min(generator(), max))
 
 
-@p_gen
+@state_machine
 def interleave(*generators):
     """Cycle through the outputs of the given generators."""
     if generators:
@@ -145,7 +145,7 @@ def interleave(*generators):
         yield None
 
 
-@p_gen
+@state_machine
 def mix(*generators):                            # don't override sum() builtin
     length = len(generators)
     if generators:
@@ -155,7 +155,7 @@ def mix(*generators):                            # don't override sum() builtin
         yield None
 
 
-@p_gen
+@state_machine
 def is_over(generator, threshold):
     while True:
         yield int(generator() > threshold)
@@ -166,7 +166,7 @@ def pulse(steps, duty=0.5):
     return is_over(generator, duty)
 
 
-@p_gen
+@state_machine
 def attenuvert(generator, mult, offset=0):
     while True:
         yield mult*generator() + offset
@@ -176,7 +176,7 @@ def offset(generator, offset):
     return attenuvert(generator, mult=1, offset=offset)
 
 
-@p_gen
+@state_machine
 def skip(generator, batches):
     while True:
         yield generator()

@@ -2,7 +2,7 @@ def water():
     print("Refreshing!")
 
 
-def p_gen(gen):
+def state_machine(gen):
     """Wrap a parameterized generator in a function call."""
 
     def wrapper(*args, **kwargs):
