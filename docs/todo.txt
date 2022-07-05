@@ -16,7 +16,7 @@
  - update the rest of the scripts
 
 * __init__.py
- - add explicit imports from all the script files
+ - refactor import structure
 
 * dynamics.py
  - refactor
@@ -32,7 +32,8 @@
  - uniform handling of generators defined by mathematical functions
  - rename from_list -> list_reader
  - add grid machine, accepts controls "up", "down", "left", "right"
- - consider renaming to machines.py
+ - rename generators.py -> machines.py
+  . refactor guido or split to different file
 
 * phrases.py
  - add rotate(phrase)
