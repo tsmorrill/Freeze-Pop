@@ -1,16 +1,5 @@
+from additives import p_gen, water
 from math import sin, pi
-
-
-def p_gen(gen):
-    """Wrap a parameterized generator in a function call."""
-
-    def wrapper(*args, **kwargs):
-        generator = gen(*args, **kwargs)
-
-        def func(*args):
-            return next(generator)
-        return(func)
-    return wrapper
 
 
 @p_gen
@@ -196,6 +185,4 @@ def skip(generator, batches):
 
 
 if __name__ == "__main__":
-    apple = pulse(7)
-    for i in range(12):
-        print(apple())
+    water()

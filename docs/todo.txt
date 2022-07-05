@@ -2,15 +2,16 @@
  - update all examples to 0.1.4 compatibility
 
 * add new examples
- - expressive hi hat
  - polyrhythm
  - trap hi hat
 
 * __init__.py
  - add explicit imports from all the script files
 
-* decorators.py
- - figure out how to make this import correctly; submodule?
+* additives/additives.py
+ - rename p_gen -> state_machine
+ - move xshift here
+ - update the rest of the scripts
 
 * freezers.py
  - add ratchet_freezer
@@ -41,13 +42,13 @@
  - add Messiaen's modes
 
  * stochastic.py
-  - convert to numpy RNG
+  - move functions to more appropriate script files and give this the decorators.py treatment
+   . add todo.txt entries to other subheadings
   - add seeding
   - add prob_freezer
    . call conditional_freezer
   - add random_phrase
   - add random_generator
-  - move functions to more appropriate script files and give this the decorators.py treatment
 
 * trigs.py
  - combine with generators.py
