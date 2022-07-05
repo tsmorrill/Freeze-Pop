@@ -22,6 +22,8 @@
  - refactor
 
 * freezers.py
+ - rename make_freezer -> freeezer without breaking anything
+  . also make_cube -> cube
  - add ratchet_freezer
  - add echo_freezer
  - add conditional_freezer
