@@ -108,7 +108,7 @@ def xshift(n_0):
 
 
 @state_machine
-def from_list(list):
+def list_reader(list):
     if list:
         length = len(list)
         i = 0

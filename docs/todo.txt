@@ -31,7 +31,6 @@
  - consider adding a freezer decorator
 
 * generators.py
- - rename from_list -> list_reader
  - add grid machine, accepts controls "up", "down", "left", "right"
  - rename generators.py -> machines.py
   . refactor guido or split to different file
