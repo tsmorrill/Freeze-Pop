@@ -1,8 +1,9 @@
 from random import Random
 
 
-def water():
-    print("Refreshing!")
+def sip_water():
+    """Check that import is working"""
+    print("Sipped a glass of water. Refreshing!")
 
 
 def state_machine(gen):
@@ -17,6 +18,21 @@ def state_machine(gen):
     return wrapper
 
 
+# simple state machines
+
+
+@state_machine
+def list_reader(list):
+    if list:
+        length = len(list)
+        i = 0
+        while True:
+            yield list[i]
+            i += 1
+            i %= length
+    yield 0
+
+
 @state_machine
 def rng(seed=None):
     rng = Random(seed)
@@ -26,8 +42,8 @@ def rng(seed=None):
 
 
 if __name__ == "__main__":
-    rng1 = rng(1019)
-    rng2 = rng(1019)
-
-    print(rng1(), rng1(), rng1(), rng1())
-    print(rng2(), rng2(), rng2(), rng2())
+    names = [name for name in dir() if not name.startswith("_")]
+    imports = ['Random']
+    for name in imports:
+        names.remove(name)
+    print(", ".join(names))

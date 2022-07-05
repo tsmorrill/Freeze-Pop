@@ -1,8 +1,30 @@
-from additives import state_machine, water
+from additives import list_reader, state_machine, sip_water
 from math import sin, pi
 
 
-# base machines and their derivatives
+# undecorated machines and their derivatives
+
+
+def sweep(start, end, steps):
+    jump = (end - start)/steps
+    vals = [start + jump*i for i in range(steps)]
+
+    return list_reader(vals)
+
+
+def ramp(steps): return sweep(start=0, end=1, steps=steps)
+
+
+def saw(steps): return sweep(start=1, end=0, steps=steps)
+
+
+def sine(steps, offset=0):
+    step = 2*pi/steps
+    vals = [sin(step*i + offset) for i in range(steps)]
+    return list_reader(vals)
+
+
+# simple decorated machines and their derivatives
 
 
 @state_machine
@@ -50,26 +72,16 @@ def henon(x_0, y_0, a=1.4, b=0.3):
 
 
 @state_machine
-def lfsr(n_0):
-    """Generate a linear feedback shift register."""
-    n = n_0
+def lfsr(n_0=1):
+    """Generate a 16-bit linear feedback shift register."""
+    modulus = 1 << 16
+    n = n_0 % modulus
     n += int(n == 0)                                    # don't initialize on 0
     while True:
         yield n
         bit = (n ^ (n >> 1) ^ (n >> 3) ^ (n >> 12)) & 1
         n = (n >> 1) | (bit << 15)
-
-
-@state_machine
-def list_reader(list):
-    if list:
-        length = len(list)
-        i = 0
-        while True:
-            yield list[i]
-            i += 1
-            i %= length
-    yield 0
+        n %= modulus
 
 
 @state_machine
@@ -80,21 +92,6 @@ def logistic(x_0, r=3.56995):
     while True:
         yield x
         x = r*x*(1-x)
-
-
-def sweep(start, end, steps):
-    step = (end - start)/steps
-    vals = [start + step*i for i in range(steps)]
-
-    return list_reader(vals)
-
-
-def ramp(steps):
-    return sweep(start=0, end=1, steps=steps)
-
-
-def saw(steps):
-    return sweep(start=1, end=0, steps=steps)
 
 
 @state_machine
@@ -121,13 +118,7 @@ def xshift(n_0):
         n %= modulus
 
 
-def sine(steps, offset=0):
-    step = 2*pi/steps
-    vals = [sin(step*i + offset) for i in range(steps)]
-    return list_reader(vals)
-
-
-# machines which wrap one other machines, and their derivatives
+# machines which input other machines, and their derivatives
 
 
 @state_machine
@@ -153,8 +144,7 @@ def attenuvert(machine, mult, offset=0):
         yield mult*machine() + offset
 
 
-def offset(machine, offset):
-    return attenuvert(machine, mult=1, offset=offset)
+def offset(machine, offset): return attenuvert(machine, mult=1, offset=offset)
 
 
 @state_machine
@@ -193,4 +183,7 @@ def mix(*machines):                             # don't colide names with sum()
 
 
 if __name__ == "__main__":
-    water()
+    sip_water()
+    machine = sine(7)
+    for _ in range(10):
+        print(machine())

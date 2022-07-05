@@ -1,43 +1,47 @@
-def expressive(func):
-    # stress pattern of 16th notes in common time
-    stresses = [7, -1, 3, -5, 5, -3, 1, -7, 6, -2, 2, -6, 4, -4, 0, -8]
-
-    def wrap(t):
-        # add current stress to velocity
-        t %= 16
-        val = func() + stresses[t]
-        val = max(0, min(val, 127))
-        return val
-    return wrap
+from additives import list_reader, rng, state_machine, sip_water
+from math import floor
 
 
-@expressive
-def ppp(): return(8)                                          # 0 < ppp < 15
+def emphasize_16ths(center_vel):
+    # curiously identical to ordered dithering numerators
+    stress_16ths = [7, -1, 3, -5, 5, -3, 1, -7, 6, -2, 2, -6, 4, -4, 0, -8]
+    vels = [center_vel + stress for stress in stress_16ths]
+    return list_reader(vels)
 
 
-@expressive
-def pp(): return(24)                                          # 16 < pp < 31
+def ppp(): return(emphasize_16ths(8))                         # 0 <= ppp <=  15
 
 
-@expressive
-def p(): return(40)                                           # 32 < p < 47
+def pp(): return(emphasize_16ths(24))                        # 16 <= pp  <=  31
 
 
-@expressive
-def mp(): return(56)                                          # 48 < mp < 63
+def p(): return(emphasize_16ths(40))                         # 32 <= p   <=  47
 
 
-@expressive
-def mf(): return(72)                                          # 64 < mf < 79
+def mp(): return(emphasize_16ths(56))                        # 48 <= mp  <=  63
 
 
-@expressive
-def f(): return(88)                                           # 80 < f < 95
+def mf(): return(emphasize_16ths(72))                        # 64 <= mf  <=  79
 
 
-@expressive
-def ff(): return(104)                                         # 96 < ff < 111
+def f(): return(emphasize_16ths(88))                         # 80 <= f   <=  95
 
 
-@expressive
-def fff(): return(120)                                        # 112 < fff < 127
+def ff(): return(emphasize_16ths(104))                       # 96 <= ff  <= 111
+
+
+def fff(): return(emphasize_16ths(120))                     # 112 <= fff <= 127
+
+
+@state_machine
+def random_vel(min, max, seed=None):
+    noise = rng(seed)
+    while True:
+        yield floor(min + (max - min + 1)*noise())
+
+
+if __name__ == "__main__":
+    sip_water()
+    machine = mf()
+    for _ in range(16):
+        print(machine())
