@@ -1,3 +1,5 @@
+# written using Freeze Pop v 0.1.3
+
 import frzpop
 from frzpop.chords import dom7
 from frzpop.generators import make_logistic

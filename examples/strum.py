@@ -1,3 +1,5 @@
+# written using Freeze Pop v 0.1.4
+
 import frzpop
 from frzpop.scales import major
 from frzpop.dynamics import f

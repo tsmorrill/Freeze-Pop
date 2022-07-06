@@ -10,7 +10,6 @@
 
 * /examples/
  - update all examples to 0.1.4 compatibility
-  . or at least comment them by version number
  - add new examples
   . passing tones quantization
   . polyrhythm
@@ -35,6 +34,7 @@
  - add echo freezer
  - add conditional freezer
   . prob freezer is a kind of conditional freezer
+  . maybe not...
  - consider adding a freezer decorator
 
 * machines.py
@@ -61,7 +61,6 @@
   . try not to get carried away
 
  * stochastic.py
-  - delete stochastic.py
-   . move functions to more appropriate script files
+  - finish guido refactor then move to machines.py
 
 * quantize.py
