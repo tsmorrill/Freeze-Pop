@@ -14,13 +14,13 @@ agenda by subdirectory and filename:
  * /examples/
    - update all examples to 0.1.4 compatibility
    - add new examples
-    . passing tones quantization
-    . polyrhythm
-    . trap hi hat
+     . passing tones quantization
+     . polyrhythm
+     . trap hi hat
 
  * /additives/
    - import Random
-     . add to __init__.py
+      . add to __init__.py
    - add random_reader(list)
 
  * __init__.py
@@ -33,36 +33,45 @@ agenda by subdirectory and filename:
 
  * freezers.py
    - rename make_freezer -> freezer
-    . this broke something last time
-    . also rename make_cube -> cube
+     . this broke something last time
+     . also rename make_cube -> cube
    - add ratchet freezer
    - add echo freezer
    - add conditional freezer
-    . prob freezer is a kind of conditional freezer
-    . maybe not...
+     . prob freezer is a kind of conditional freezer
+     . maybe not...
    - consider adding a freezer decorator
 
  * machines.py
    - add grid machine, accepts controls "up", "down", "left", "right"
-    . this is actually a different kind of thing than the machines. maybe a game?
+     . this is actually a different kind of thing than the machines. maybe a game?
    - bring back 2d heightmaps
 
  * shuffle.py
    - add rotate(phrase)
    - add random_walk, random_walk_2d
    - research method ringing techniques
-    . plain bob minor
+     . plain bob minor
    - research FFT techniques
    - add tree-based pitch-to-rhythm assignment
    - process notes in decreasing order of stress?
-     . ornamentation via tiered chord note/neighbor note/chromatic note generation
+      . ornamentation via tiered chord note/neighbor note/chromatic note generation
    - add more dithering patterns
-     . context specific dithering
+      . context specific dithering
 
  * scales.py
-   - add some more scales
-    . try not to get carried away
+   - add pentatonic scales
+     . major
+     . minor
+     . Japanese
+   - add "scale pairs"
+     . harmonic minor
+     . flamenco mode
+     . name isn't right, find who came up with the generalization
+
+
  * stochastic.py
    - finish guido refactor then move to machines.py
 
  * quantize.py
+   - add second order quantizer, ie two different scales depending on change sign
