@@ -3,4 +3,3 @@ How to upload to PyPi:
 1) increment version to next minor revision number
 2) run command "python3 -m build"
 3) run command "twine upload dist/*"
-4) increment version  to next micro revision number
