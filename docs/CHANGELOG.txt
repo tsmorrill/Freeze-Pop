@@ -1,0 +1,36 @@
+2022-06-06: v0.2.0
+
+ * Refactored most of the scripts and their naming conventions.
+   - Removed all class definitions and rewrote most functions accordingly.
+   - Removed passive voice from function names.
+   - frzpop.generators is now frzpop.machines
+   - frzpop.patterns is now frzpop.shuffle
+   - frzpop.chords and frzpop.scales now both measure intervals between
+     consecutive notes instead of always referencing the root.
+   - frzpop.trigs is now subsumed into frzpop.machines
+ * Added functions for direct freezing of phrases and sections.
+ * Added ability to name the tracks of the output file.
+ * Freezing a note still calls vel if vel is callable, but does not pass it the
+   t counter.
+ * Added "additives" submodule for organizing code shared between scripts.
+   - p_gen decorator is now state_machine
+   - state_machines do not accept any arguments
+   - list_reader and rng are state machines available for all scripts
+ * Added machines
+   - attenuvert, automaton, clip, contour, interleave, is_over, offset, mix,
+     pulse, ramp, saw, sine, skip, sweep
+ * Running freezers.py as a script prints a list of its defined names. This is
+   intended to facilitate making further changes to the import list in
+   __init__.py.
+ * Broke frzpop.stochastic, will remove in a future version.
+ * Bugfixes.
+
+
+2022-06-02: v0.1.2
+
+ * Revised erratic code flow.
+ * Added some simple functions.
+
+2022-05-15: v0.0.1
+
+ * First publication to PyPI.
