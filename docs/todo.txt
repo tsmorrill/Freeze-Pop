@@ -1,65 +1,68 @@
-* freezers can input s and t, but notes and vels should be state machines
-* get a royalty free image of freezer pops
-* fork into a liveplay project?
-* add note definitions for 19edo
+loose agenda:
 
-===============================================================================
+ * develop automated tests using the dunder clause in freezers.py
+ * check if each script should be importing more from additives
+ * get a royalty free image of freezer pops
+ * add note definitions for 19edo
+ * fork into a liveplay project?
 
-# setup.cfg
- - add PyPi metadata
+agenda by subdirectory and filename:
 
-* /examples/
- - update all examples to 0.1.4 compatibility
- - add new examples
-  . passing tones quantization
-  . polyrhythm
-  . trap hi hat
+ * setup.cfg
+   - add PyPi metadata
 
-* /additives/additives.py
- - add random_reader(list)
- - update the rest of the scripts to import state_machine and rng
+ * /examples/
+   - update all examples to 0.1.4 compatibility
+   - add new examples
+    . passing tones quantization
+    . polyrhythm
+    . trap hi hat
 
-* __init__.py
- - refactor import structure
+ * /additives/
+   - import Random
+     . add to __init__.py
+   - add random_reader(list)
 
-* chords.py
- - add ninth chords
+ * __init__.py
+   - refactor import structure
 
-* dynamics.py
+ * chords.py
+   - add ninth chords
 
-* freezers.py
- - rename make_freezer -> freezer
-  . this broke something last time
-  . also rename make_cube -> cube
- - add ratchet freezer
- - add echo freezer
- - add conditional freezer
-  . prob freezer is a kind of conditional freezer
-  . maybe not...
- - consider adding a freezer decorator
+ * dynamics.py
 
-* machines.py
- - add grid machine, accepts controls "up", "down", "left", "right"
-  . this is actually a different kind of thing than the machines. maybe a game?
- - bring back 2d heightmaps
+ * freezers.py
+   - rename make_freezer -> freezer
+    . this broke something last time
+    . also rename make_cube -> cube
+   - add ratchet freezer
+   - add echo freezer
+   - add conditional freezer
+    . prob freezer is a kind of conditional freezer
+    . maybe not...
+   - consider adding a freezer decorator
 
-* shuffle.py
- - add rotate(phrase)
- - add random_walk, random_walk_2d
- - research method ringing techniques
-  . plain bob minor
- - research FFT techniques
- - add tree-based pitch-to-rhythm assignment
- - process notes in decreasing order of stress?
-   . ornamentation via tiered chord note/neighbor note/chromatic note generation
- - add more dithering patterns
-   . context specific dithering
+ * machines.py
+   - add grid machine, accepts controls "up", "down", "left", "right"
+    . this is actually a different kind of thing than the machines. maybe a game?
+   - bring back 2d heightmaps
 
-* scales.py
- - add some more scales
-  . try not to get carried away
+ * shuffle.py
+   - add rotate(phrase)
+   - add random_walk, random_walk_2d
+   - research method ringing techniques
+    . plain bob minor
+   - research FFT techniques
+   - add tree-based pitch-to-rhythm assignment
+   - process notes in decreasing order of stress?
+     . ornamentation via tiered chord note/neighbor note/chromatic note generation
+   - add more dithering patterns
+     . context specific dithering
 
+ * scales.py
+   - add some more scales
+    . try not to get carried away
  * stochastic.py
-  - finish guido refactor then move to machines.py
+   - finish guido refactor then move to machines.py
 
-* quantize.py
+ * quantize.py
