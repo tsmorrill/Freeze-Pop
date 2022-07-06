@@ -12,8 +12,9 @@ def state_machine(gen):
     def wrapper(*args, **kwargs):
         generator = gen(*args, **kwargs)
 
-        def func(*args):
+        def func():
             return next(generator)
+
         return(func)
     return wrapper
 

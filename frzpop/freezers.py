@@ -6,10 +6,10 @@ def make_cube(pitch, time, note_len, vel, t):
     """Freeze callables and return a cube."""
     frozen_pitch = pitch
     if callable(pitch):
-        frozen_pitch = pitch(t)
+        frozen_pitch = pitch()
     frozen_vel = vel
     if callable(vel):
-        frozen_vel = vel(t)
+        frozen_vel = vel()
 
     cube = None
     if frozen_vel and frozen_pitch is not None:           # no cube if vel == 0
