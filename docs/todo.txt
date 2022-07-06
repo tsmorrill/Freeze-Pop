@@ -16,6 +16,7 @@
   . trap hi hat
 
 * /additives/additives.py
+ - add random_reader(list)
  - update the rest of the scripts to import state_machine and rng
 
 * __init__.py
@@ -40,13 +41,11 @@
 * machines.py
  - add grid machine, accepts controls "up", "down", "left", "right"
   . this is actually a different kind of thing than the machines. maybe a game?
- - add list_reader_random
- - add random_walk, random_walk_2d
  - bring back 2d heightmaps
 
-* phrases.py
- - consider rename phrases.py -> shuffle.py
+* shuffle.py
  - add rotate(phrase)
+ - add random_walk, random_walk_2d
  - research method ringing techniques
   . plain bob minor
  - research FFT techniques
