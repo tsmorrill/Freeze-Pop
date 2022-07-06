@@ -96,7 +96,7 @@ def sine(steps, offset=0):
 
 @state_machine
 def automaton(row_0=None, rule=30, seed=None):
-    """Generate elementary cellular automaton with wraparound."""
+    """Generate an elementary cellular automaton with wraparound."""
     if row_0 is None:
         row_0 = [int(i == 0) for i in range(8)]
     row = row_0
