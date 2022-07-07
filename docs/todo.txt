@@ -19,14 +19,17 @@ agenda by subdirectory and filename:
      . trap hi hat
 
  * /additives/
+   - add gamut
    - import Random
       . add to __init__.py
-   - add random_reader(list)
+   - add bogo(list)
+   - add choose(list)
 
  * __init__.py
    - refactor import structure
 
  * chords.py
+   - call gamut from additives
    - add ninth chords
 
  * dynamics.py
@@ -61,6 +64,7 @@ agenda by subdirectory and filename:
       . context specific dithering
 
  * scales.py
+   - call gamut from additives
    - add pentatonic scales
      . major
      . minor
