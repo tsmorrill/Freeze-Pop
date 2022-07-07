@@ -6,7 +6,7 @@ NEXT CHANGELOG:
    - choose_from
    - gamut
  * renamed additives:
-   - list_reaster -> next_in
+   - list_reader -> next_in
  * fixed guido
  * added count_vowels
  * removed frzpop.stochastic
