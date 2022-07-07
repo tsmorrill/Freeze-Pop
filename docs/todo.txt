@@ -3,6 +3,7 @@ NEXT CHANGELOG:
 
 LOOSE ITEMS:
 
+ * submodule imports are all wrong. Fix immediately.
 
  * develop automated tests using the dunder clause in freezers.py
  * check if each script should be importing more from additives
@@ -40,6 +41,7 @@ ITEMS BY DIRECTORY/FILENAME:
  * dynamics.py
 
  * freezers.py
+   - output file tracks are named incorrectly
    - rename make_freezer -> freezer
      . this broke something last time
      . also rename make_cube -> cube
