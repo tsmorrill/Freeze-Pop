@@ -3,6 +3,7 @@ loose agenda:
  * develop automated tests using the dunder clause in freezers.py
  * check if each script should be importing more from additives
  * consider adding type hints and using mypy
+ * consider using black
  * get a royalty free image of freezer pops
  * add note definitions for 19edo
  * fork into a liveplay project?

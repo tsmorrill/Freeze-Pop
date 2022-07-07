@@ -1,47 +1,39 @@
-def chord(root, intervals):
-    """Return a list of all MIDI note values which belong to the chord
-    specified by root and intervals."""
-    root %= 12
-    chromatics = [root]
-    for interval in intervals:
-        chromatics.append(chromatics[-1] + interval)
-    all_octaves = [n for n in range(128) if n % 12 in chromatics]
-    return all_octaves
+from additives import gamut
 
 
 def major(root):
     intervals = [0, 4, 3]
-    return chord(root,  intervals)
+    return gamut(root,  intervals)
 
 
 def minor(root):
     intervals = [0, 3, 4]
-    return chord(root,  intervals)
+    return gamut(root,  intervals)
 
 
 def dim(root):
     intervals = [0, 3, 3]
-    return chord(root,  intervals)
+    return gamut(root,  intervals)
 
 
 def aug(root):
     intervals = [0, 5, 2]
-    return chord(root, intervals)
+    return gamut(root, intervals)
 
 
 def maj7(root):
     intervals = [0, 4, 3, 4]
-    return chord(root,  intervals)
+    return gamut(root,  intervals)
 
 
 def dom7(root):
     intervals = [0, 4, 3, 3]
-    return chord(root,  intervals)
+    return gamut(root,  intervals)
 
 
 def min7(root):
     intervals = [0, 3, 4, 3]
-    return chord(root,  intervals)
+    return gamut(root,  intervals)
 
 
 if __name__ == "__main__":

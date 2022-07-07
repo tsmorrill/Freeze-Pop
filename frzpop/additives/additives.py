@@ -1,6 +1,17 @@
 from random import Random
 
 
+def gamut(root: int, intervals: list) -> list:
+    """Return a list of all MIDI note values which belong to the chord
+    specified by root and intervals."""
+    root %= 12
+    chromatics = [root]
+    for interval in intervals:
+        chromatics.append(chromatics[-1] + interval)
+    all_octaves = [n for n in range(128) if n % 12 in chromatics]
+    return all_octaves
+
+
 def sip_water():
     """Check that import is working"""
     print("Sipped a glass of water. Refreshing!")
