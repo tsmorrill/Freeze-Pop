@@ -12,18 +12,18 @@ def make_cube(pitch, time, note_len, vel, t):
         frozen_vel = vel()
 
     cube = None
-    if frozen_vel and frozen_pitch is not None:           # no cube if vel == 0
+    if frozen_vel and frozen_pitch is not None:  # no cube if vel == 0
         cube = [frozen_pitch, time, note_len, frozen_vel]
     return cube
 
 
-def make_freezer(note_len=1/16, gate=1, nudge=0):
-    note_len *= 4                     # midiutil measures time in quarter notes
+def make_freezer(note_len=1 / 16, gate=1, nudge=0):
+    note_len *= 4  # midiutil measures time in quarter notes
 
     def freezer(pitch, vel, time, s, t):
         ice_tray = []
-        cube_time = time + nudge         # push cube off-grid and maintain time
-        cube_len = note_len * gate       # adjust cube length and maintain time
+        cube_time = time + nudge  # push cube off-grid and maintain time
+        cube_len = note_len * gate  # adjust cube length and maintain time
         cube = make_cube(pitch, cube_time, cube_len, vel, t)
         time += note_len
         if cube is not None:
@@ -42,11 +42,11 @@ def freeze_song(song, filename=None, track_names=None, combine_tracks=False):
     if combine_tracks:
         output_file.addTrackName(0, 0, filename)
 
-    default_freezer = make_freezer(note_len=1/16)       # tracks can share this
+    default_freezer = make_freezer(note_len=1 / 16)  # tracks can share this
 
     for track_number, track in enumerate(song):
         if combine_tracks:
-            track_number = 0           # just dump all the ice buckets together
+            track_number = 0  # just dump all the ice buckets together
 
         track_name = f"Track {track_number}"
         if track_names:
@@ -59,12 +59,12 @@ def freeze_song(song, filename=None, track_names=None, combine_tracks=False):
         ice_bucket = []
 
         for section in track:
-            s = 0                                              # phrase counter
+            s = 0  # phrase counter
 
             for phrase in section:
                 if callable(phrase):
                     phrase = phrase(s)
-                t = 0                                            # note counter
+                t = 0  # note counter
 
                 for note in phrase:
                     if note is None:
@@ -85,11 +85,10 @@ def freeze_song(song, filename=None, track_names=None, combine_tracks=False):
 
     for cube in ice_bucket:
         pitch, time, note_len, vel = cube
-        output_file.addNote(track_number, track_channel,
-                            pitch, time, note_len, vel)
+        output_file.addNote(track_number, track_channel, pitch, time, note_len, vel)
 
     filename = f"{filename}.mid"
-    with open(filename, 'wb') as outf:
+    with open(filename, "wb") as outf:
         output_file.writeFile(outf)
         print(f"Wrote to file {filename}.")
 

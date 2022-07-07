@@ -8,14 +8,14 @@ def plain_hunt(row):
     row_copy = row.copy()
 
     pairs_count = length // 2
-    period = 2*length
+    period = 2 * length
 
     rows = [row_copy]
     for t in range(period - 1):
         t_mod_2 = t % 2
         pairs_adjust = t_mod_2 * (1 - l_mod_2)  # don't adjust if length is odd
         for n in range(pairs_count - pairs_adjust):
-            index = 2*n + t_mod_2
+            index = 2 * n + t_mod_2
             row[index], row[index + 1] = row[index + 1], row[index]
         row_copy = row.copy()
         rows.append(row_copy)

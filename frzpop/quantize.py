@@ -9,7 +9,9 @@ def p_gen(gen):
 
         def func(*args):
             return next(generator)
-        return(func)
+
+        return func
+
     return wrapper
 
 
@@ -36,8 +38,8 @@ def quantizer(notes):
         pairs = zip(head, tail)
         for a, b in pairs:
             if a <= val < b:
-                midpoint = (a + b)/2
-                val = a + (b - a)*int(val > midpoint)
+                midpoint = (a + b) / 2
+                val = a + (b - a) * int(val > midpoint)
                 return val
 
         return max_note
@@ -46,6 +48,7 @@ def quantizer(notes):
 
 
 if __name__ == "__main__":
+
     @p_gen
     def spam(*args):
         x = 55

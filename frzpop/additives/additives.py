@@ -26,7 +26,8 @@ def state_machine(gen):
         def func():
             return next(generator)
 
-        return(func)
+        return func
+
     return wrapper
 
 

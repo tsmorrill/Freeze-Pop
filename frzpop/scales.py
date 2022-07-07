@@ -61,13 +61,15 @@ def blues(root):
 
 def messiaen(root, mode):
     """Generate one of Messiaen's modes of limited transposition."""
-    modes = [[2, 2, 2, 2, 2, 2],
-             [1, 2, 1, 2, 1, 2, 1, 2],
-             [2, 1, 1, 2, 1, 1, 2, 1, 1],
-             [1, 1, 3, 1, 1, 1, 3, 1],
-             [1, 4, 1, 1, 4, 1],
-             [2, 2, 1, 1, 2, 2, 1, 1],
-             [1, 1, 1, 2, 1, 1, 1, 1, 2, 1]]
+    modes = [
+        [2, 2, 2, 2, 2, 2],
+        [1, 2, 1, 2, 1, 2, 1, 2],
+        [2, 1, 1, 2, 1, 1, 2, 1, 1],
+        [1, 1, 3, 1, 1, 1, 3, 1],
+        [1, 4, 1, 1, 4, 1],
+        [2, 2, 1, 1, 2, 2, 1, 1],
+        [1, 1, 1, 2, 1, 1, 1, 1, 2, 1],
+    ]
     intervals = modes[mode - 1]
     return gamut(root, intervals)
 
@@ -75,4 +77,4 @@ def messiaen(root, mode):
 if __name__ == "__main__":
     C = major(60)
     for i in range(0, len(C), 7):
-        print(C[i:i+8])
+        print(C[i : i + 8])

@@ -21,8 +21,8 @@ def contour(iter, init=None, smoothing=1, seed=None, truncate=-1):
 
         for a, b in pairs:
             new_vals.append(a)
-            midpoint = (a + b)/2
-            displacement = (2*noise() - 1) * pow(2, -smoothing*(i + 1))
+            midpoint = (a + b) / 2
+            displacement = (2 * noise() - 1) * pow(2, -smoothing * (i + 1))
             new_vals.append(midpoint + displacement)
         new_vals.append(vals[-1])
         vals = new_vals
@@ -31,7 +31,7 @@ def contour(iter, init=None, smoothing=1, seed=None, truncate=-1):
 
     offset = min(vals)
     vals = [val + offset for val in vals]
-    multiplier = 1/max(vals)
+    multiplier = 1 / max(vals)
     vals = [multiplier * val for val in vals]
 
     return next_in(vals)
@@ -58,44 +58,46 @@ def fractioning(a, b):
 
     if a < b:
         raise ValueError("b cannot exceed a")
-    trigs = [0 for t in range(a*a)]
+    trigs = [0 for t in range(a * a)]
     for i in range(a - b + 1):
         for j in range(a):
-            trigs[i*a + j*b] = 1
+            trigs[i * a + j * b] = 1
     return next_in(trigs)
 
 
 def sweep(start, end, steps):
-    jump = (end - start)/steps
-    vals = [start + jump*i for i in range(steps)]
+    jump = (end - start) / steps
+    vals = [start + jump * i for i in range(steps)]
 
     return next_in(vals)
 
 
-def ramp(steps): return sweep(start=0, end=1, steps=steps)
+def ramp(steps):
+    return sweep(start=0, end=1, steps=steps)
 
 
-def saw(steps): return sweep(start=1, end=0, steps=steps)
+def saw(steps):
+    return sweep(start=1, end=0, steps=steps)
 
 
 def resultant(a, b):
     """Generate Schillinger's resultant of a and b."""
 
-    trigs = [(t % a == 0) or (t % b == 0) for t in range(a*b)]
+    trigs = [(t % a == 0) or (t % b == 0) for t in range(a * b)]
     trigs = [int(trig) for trig in trigs]
     return next_in(trigs)
 
 
 def sine_fixed(length, offset=0):
-    step = 2*pi/length
-    vals = [sin(step*i + offset) for i in range(length)]
+    step = 2 * pi / length
+    vals = [sin(step * i + offset) for i in range(length)]
     return next_in(vals)
 
 
 @state_machine
 def sine_free(wavelength, offset=0):
     x = offset
-    step = 2*pi/wavelength
+    step = 2 * pi / wavelength
     while True:
         return sin(x)
         x += step
@@ -125,7 +127,7 @@ def automaton(row_0=None, rule=30, seed=None):
             center = row[index]
             right = row[(index + 1) % len(row)]
 
-            return 4*left + 2*center + right
+            return 4 * left + 2 * center + right
 
         new_row = []
 
@@ -143,14 +145,14 @@ def automaton(row_0=None, rule=30, seed=None):
 @state_machine
 def circle_map(x_0, omega, coupling):
     """Generate the standard circle map."""
-    tau = 2*pi
-    tau_inv = 1/tau
+    tau = 2 * pi
+    tau_inv = 1 / tau
 
     x = float(x_0) % 1
 
     while True:
         yield x
-        x = x + omega + tau_inv*sin(tau*x)
+        x = x + omega + tau_inv * sin(tau * x)
         x %= 1
 
 
@@ -161,7 +163,7 @@ def duffing(x_0, y_0, a=2.75, b=0.2):
 
     while True:
         yield x
-        x, y = y, -b*x + a*y - y**3
+        x, y = y, -b * x + a * y - y**3
 
 
 @state_machine
@@ -171,7 +173,7 @@ def gingerbread(x_0, y_0, a=1, b=1):
 
     while True:
         yield x
-        x, y = 1 - a*y + b*abs(x), x
+        x, y = 1 - a * y + b * abs(x), x
 
 
 def guido(lyric, gamut=None, seed=None):
@@ -179,22 +181,40 @@ def guido(lyric, gamut=None, seed=None):
     vowels = [char for char in lyric.upper() if char in "AEIOU"]
 
     if gamut is None:
-        gamut = [55, 57, 59, 60, 62,         # list indices will be taken mod 5
-                 64, 65, 67, 69, 71,
-                 72, 74, 76, 77, 79,
-                 81]
+        gamut = [
+            55,
+            57,
+            59,
+            60,
+            62,
+            64,
+            65,
+            67,
+            69,
+            71,
+            72,
+            74,
+            76,
+            77,
+            79,
+            81,
+        ]
 
-    note_assignment = {"A": gamut[0::5],
-                       "E": gamut[1::5],
-                       "I": gamut[2::5],
-                       "O": gamut[3::5],
-                       "U": gamut[4::5]}
+    note_assignment = {
+        "A": gamut[0::5],
+        "E": gamut[1::5],
+        "I": gamut[2::5],
+        "O": gamut[3::5],
+        "U": gamut[4::5],
+    }
 
     def weigh(potential_notes, prev_note):
         if prev_note is None:
             return [1 for note in potential_notes]
-        weights = [1/max(abs(note - prev_note), 1/2)      # avoid division by 0
-                   for note in potential_notes]
+        weights = [
+            1 / max(abs(note - prev_note), 1 / 2)  # avoid division by 0
+            for note in potential_notes
+        ]
         return weights
 
     notes = []
@@ -223,7 +243,7 @@ def henon(x_0, y_0, a=1.4, b=0.3):
 
     while True:
         yield x
-        x, y = 1 - a*x**2 + y, b*x
+        x, y = 1 - a * x**2 + y, b * x
 
 
 @state_machine
@@ -231,7 +251,7 @@ def lfsr(n_0=1):
     """Generate a 16-bit linear feedback shift register."""
     modulus = 1 << 16
     n = n_0 % modulus
-    n += int(n == 0)                                    # don't initialize on 0
+    n += int(n == 0)  # don't initialize on 0
     while True:
         yield n
         bit = (n ^ (n >> 1) ^ (n >> 3) ^ (n >> 12)) & 1
@@ -246,7 +266,7 @@ def logistic(x_0, r=3.56995):
 
     while True:
         yield x
-        x = r*x*(1-x)
+        x = r * x * (1 - x)
 
 
 @state_machine
@@ -262,7 +282,7 @@ def pfsr(n=0b10101010, len=8, prob=0.5, seed=None):
         n >>= 1
         if prob == 1 or noise() < prob:
             bit = 1 - bit
-        n += bit << (len-1)
+        n += bit << (len - 1)
 
 
 @state_machine
@@ -272,7 +292,7 @@ def tent(x_0, m=1.5):
 
     while True:
         yield x
-        x = m*min(x, 1-x)
+        x = m * min(x, 1 - x)
 
 
 @state_machine
@@ -315,10 +335,11 @@ def pulse(steps, duty=0.5):
 def attenuvert(machine, mult, offset=0):
     instance = machine()
     while True:
-        yield mult*instance() + offset
+        yield mult * instance() + offset
 
 
-def offset(machine, offset): return attenuvert(machine, mult=1, offset=offset)
+def offset(machine, offset):
+    return attenuvert(machine, mult=1, offset=offset)
 
 
 @state_machine
@@ -348,7 +369,7 @@ def interleave(*machines):
 
 
 @state_machine
-def mix(*machines):                             # don't colide names with sum()
+def mix(*machines):  # don't colide names with sum()
     if not machines:
         raise ValueError("mix requires a nonempty list of machines.")
     instances = [machine() for machine in machines]
