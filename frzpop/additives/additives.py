@@ -34,6 +34,17 @@ def state_machine(gen):
 
 
 @state_machine
+def bogo(init: list, seed=None) -> list:
+    """Generate a random permutation of list."""
+    permutation = init.copy()
+
+    rng = Random(seed)
+    while True:
+        yield permutation
+        rng.shuffle(permutation)
+
+
+@state_machine
 def list_reader(list):
     if list:
         length = len(list)
@@ -59,3 +70,8 @@ if __name__ == "__main__":
     for name in imports:
         names.remove(name)
     print(", ".join(names))
+
+    test = list(range(5))
+    machine = bogo(test)
+    for _ in range(5):
+        print(machine())

@@ -21,11 +21,8 @@ agenda by subdirectory and filename:
      . trap hi hat
 
  * /additives/
-   - add gamut
    - import Random
       . add to __init__.py
-   - add bogo(list)
-   - add choose(list)
 
  * __init__.py
    - refactor import structure
