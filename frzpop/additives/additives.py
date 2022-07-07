@@ -45,6 +45,16 @@ def bogo(init: list, seed=None) -> list:
 
 
 @state_machine
+def choose_from(choices: list, seed=None):
+    if not choices:
+        raise ValueError("choices must be a non-empty list.")
+    rng = Random(seed)
+
+    while True:
+        yield rng.choice(choices)
+
+
+@state_machine
 def list_reader(list):
     if list:
         length = len(list)
@@ -66,12 +76,12 @@ def rng(seed=None):
 
 if __name__ == "__main__":
     names = [name for name in dir() if not name.startswith("_")]
-    imports = ['Random']
+    imports = []
     for name in imports:
         names.remove(name)
     print(", ".join(names))
 
-    test = list(range(5))
-    machine = bogo(test)
+    test = []
+    machine = choose_from(test)
     for _ in range(5):
         print(machine())
