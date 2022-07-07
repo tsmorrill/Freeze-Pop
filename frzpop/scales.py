@@ -1,8 +1,8 @@
 from additives import gamut
 
 
-# interval between penultimate scale degree and root is not necessary, but
-# included below for legibility
+# interval between penultimate scale degree and root is not necessary using
+# gamut, but included below for legibility
 
 
 # diatonic modes in the usual order
