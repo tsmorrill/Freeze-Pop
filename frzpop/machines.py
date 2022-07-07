@@ -1,4 +1,4 @@
-from additives import list_reader, state_machine, sip_water, Random, rng
+from additives import next_in, state_machine, sip_water, Random, rng
 from math import sin, pi, pow
 
 
@@ -34,7 +34,7 @@ def contour(iter, init=None, smoothing=1, seed=None, truncate=-1):
     multiplier = 1/max(vals)
     vals = [multiplier * val for val in vals]
 
-    return list_reader(vals)
+    return next_in(vals)
 
 
 def euclid(k, n):
@@ -50,7 +50,7 @@ def euclid(k, n):
             trigs.append(int(old_res > new_res))
             old_res, new_res = new_res, (new_res + k) % n
 
-    return list_reader(trigs)
+    return next_in(trigs)
 
 
 def fractioning(a, b):
@@ -62,14 +62,14 @@ def fractioning(a, b):
     for i in range(a - b + 1):
         for j in range(a):
             trigs[i*a + j*b] = 1
-    return list_reader(trigs)
+    return next_in(trigs)
 
 
 def sweep(start, end, steps):
     jump = (end - start)/steps
     vals = [start + jump*i for i in range(steps)]
 
-    return list_reader(vals)
+    return next_in(vals)
 
 
 def ramp(steps): return sweep(start=0, end=1, steps=steps)
@@ -82,13 +82,14 @@ def resultant(a, b):
     """Generate Schillinger's resultant of a and b."""
 
     trigs = [(t % a == 0) or (t % b == 0) for t in range(a*b)]
-    return list_reader(trigs)
+    trigs = [int(trig) for trig in trigs]
+    return next_in(trigs)
 
 
 def sine(steps, offset=0):
     step = 2*pi/steps
     vals = [sin(step*i + offset) for i in range(steps)]
-    return list_reader(vals)
+    return next_in(vals)
 
 
 # simple decorated machines and their derivatives
@@ -199,7 +200,7 @@ def guido(lyric, gamut=None, seed=None):
         new_note = rng.choices(potential_notes, weights, k=1)[0]
         notes.append(new_note)
         prev_note = new_note
-    return list_reader(notes)
+    return next_in(notes)
 
 
 @state_machine

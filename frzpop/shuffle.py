@@ -1,4 +1,4 @@
-from additives import list_reader, sip_water
+from additives import next_in, sip_water
 
 
 def plain_hunt(row):
@@ -20,7 +20,7 @@ def plain_hunt(row):
         row_copy = row.copy()
         rows.append(row_copy)
 
-    return list_reader(rows)
+    return next_in(rows)
 
 
 if __name__ == "__main__":

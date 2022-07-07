@@ -1,4 +1,4 @@
-from additives import list_reader, rng, state_machine, sip_water
+from additives import next_in, rng, state_machine, sip_water
 from math import floor
 
 
@@ -6,7 +6,7 @@ def emphasize_16ths(center_vel):
     # curiously identical to ordered dithering numerators
     stress_16ths = [7, -1, 3, -5, 5, -3, 1, -7, 6, -2, 2, -6, 4, -4, 0, -8]
     vels = [center_vel + stress for stress in stress_16ths]
-    return list_reader(vels)
+    return next_in(vels)
 
 
 def ppp(): return(emphasize_16ths(8))                         # 0 <= ppp <=  15

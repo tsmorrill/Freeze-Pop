@@ -55,7 +55,7 @@ def choose_from(choices: list, seed=None):
 
 
 @state_machine
-def list_reader(list):
+def next_in(list):
     if list:
         length = len(list)
         i = 0
@@ -81,7 +81,7 @@ if __name__ == "__main__":
         names.remove(name)
     print(", ".join(names))
 
-    test = []
+    test = list(range(4))
     machine = choose_from(test)
     for _ in range(5):
         print(machine())
