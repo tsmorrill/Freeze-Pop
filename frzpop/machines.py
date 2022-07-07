@@ -176,8 +176,7 @@ def gingerbread(x_0, y_0, a=1, b=1):
 
 def guido(lyric, gamut=None, seed=None):
     """Generate text-to-pitches method of Guido d'Arezzo using randomness."""
-    lyric = lyric.upper()
-    vowels = [char for char in lyric if char in "AEIOU"]
+    vowels = [char for char in lyric.upper() if char in "AEIOU"]
 
     if gamut is None:
         gamut = [55, 57, 59, 60, 62,         # list indices will be taken mod 5
@@ -210,6 +209,11 @@ def guido(lyric, gamut=None, seed=None):
         notes.append(new_note)
         prev_note = new_note
     return next_in(notes)
+
+
+def count_vowels(lyric):
+    vowels = [char for char in lyric.upper() if char in "AEIOU"]
+    return len(vowels)
 
 
 @state_machine
@@ -355,8 +359,8 @@ def mix(*machines):                             # don't colide names with sum()
 if __name__ == "__main__":
     sip_water()
 
-    lyric = "Are we not men?"
+    lyric = "Are we not men? We are DEVO!"
     lyric = lyric.upper()
     setting = guido(lyric)
-    notes = [setting() for char in lyric if char in "AEIOU"]
+    notes = [setting() for _ in range(count_vowels(lyric))]
     print(notes)

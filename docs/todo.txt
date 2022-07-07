@@ -60,7 +60,6 @@ ITEMS BY DIRECTORY/FILENAME:
    - consider adding a freezer decorator
 
  * machines.py
-   - add sine_irrational
    - add grid machine, accepts controls "up", "down", "left", "right"
      . this is actually a different kind of thing than the machines. maybe a game?
    - bring back 2d heightmaps
@@ -78,7 +77,6 @@ ITEMS BY DIRECTORY/FILENAME:
       . context specific dithering
 
  * scales.py
-   - call gamut from additives
    - add pentatonic scales
      . major
      . minor
@@ -88,10 +86,6 @@ ITEMS BY DIRECTORY/FILENAME:
      . flamenco mode
      . name isn't right, find who came up with the generalization
 
-
- * stochastic.py
-   - add count_vowels
-   - finish guido refactor then move to machines.py
 
  * quantize.py
    - add second order quantizer, ie two different scales depending on change sign
