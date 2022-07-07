@@ -55,15 +55,15 @@ def choose_from(choices: list, seed=None):
 
 
 @state_machine
-def next_in(list):
-    if list:
-        length = len(list)
-        i = 0
-        while True:
-            yield list[i]
-            i += 1
-            i %= length
-    yield 0
+def next_in(queue: list):
+    if not queue:
+        raise ValueError("queue must be a non-empty list.")
+    length = len(queue)
+    i = 0
+    while True:
+        yield queue[i]
+        i += 1
+        i %= length
 
 
 @state_machine

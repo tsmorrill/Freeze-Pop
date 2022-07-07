@@ -1,4 +1,18 @@
-loose agenda:
+NEXT CHANGELOG:
+
+ * split sine machine into sine_fixed and sine_free
+ * new additives:
+   - bogo
+   - choose_from
+   - gamut
+ * renamed additives:
+   - list_reaster -> next_in
+ * fixed guido
+ * removed frzpop.stochastic
+
+
+LOOSE ITEMS:
+
 
  * develop automated tests using the dunder clause in freezers.py
  * check if each script should be importing more from additives
@@ -8,7 +22,9 @@ loose agenda:
  * add note definitions for 19edo
  * fork into a liveplay project?
 
-agenda by subdirectory and filename:
+
+ITEMS BY DIRECTORY/FILENAME:
+
 
  * setup.cfg
    - add PyPI metadata
@@ -21,14 +37,13 @@ agenda by subdirectory and filename:
      . trap hi hat
 
  * /additives/
-   - import Random
-      . add to __init__.py
+   - maybe just move guido here
+   - next_in -> next_up
 
  * __init__.py
    - refactor import structure
 
  * chords.py
-   - call gamut from additives
    - add ninth chords
 
  * dynamics.py

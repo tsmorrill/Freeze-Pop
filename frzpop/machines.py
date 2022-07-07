@@ -86,10 +86,19 @@ def resultant(a, b):
     return next_in(trigs)
 
 
-def sine(steps, offset=0):
-    step = 2*pi/steps
-    vals = [sin(step*i + offset) for i in range(steps)]
+def sine_fixed(length, offset=0):
+    step = 2*pi/length
+    vals = [sin(step*i + offset) for i in range(length)]
     return next_in(vals)
+
+
+@state_machine
+def sine_free(wavelength, offset=0):
+    x = offset
+    step = 2*pi/wavelength
+    while True:
+        return sin(x)
+        x += step
 
 
 # simple decorated machines and their derivatives
