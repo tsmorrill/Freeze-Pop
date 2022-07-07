@@ -76,6 +76,7 @@ agenda by subdirectory and filename:
 
 
  * stochastic.py
+   - add count_vowels
    - finish guido refactor then move to machines.py
 
  * quantize.py
