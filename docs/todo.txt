@@ -40,6 +40,7 @@ ITEMS BY DIRECTORY/FILENAME:
  * /additives/
    - maybe just move guido here
    - next_in -> next_up
+   - import simple machines into machines.py for user availability
 
  * __init__.py
    - refactor import structure
