@@ -1,16 +1,5 @@
 NEXT CHANGELOG:
 
- * split sine machine into sine_fixed and sine_free
- * new additives:
-   - bogo
-   - choose_from
-   - gamut
- * renamed additives:
-   - list_reader -> next_in
- * fixed guido
- * added count_vowels
- * removed frzpop.stochastic
-
 
 LOOSE ITEMS:
 

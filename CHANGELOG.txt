@@ -1,4 +1,19 @@
-2022-06-06: v0.2.0
+2022-07-07: v0.3.0
+
+* split sine machine into sine_fixed and sine_free
+* new additives:
+  - bogo
+  - choose_from
+  - gamut
+* renamed additives:
+  - list_reader -> next_in
+* fixed guido
+* added count_vowels
+* removed frzpop.stochastic
+* added README.md
+* corrected dates in CHANGELOG.txt
+
+2022-07-06: v0.2.0
 
  * Refactored most of the scripts and their naming conventions.
    - Removed all class definitions and rewrote most functions accordingly.
@@ -26,7 +41,7 @@
  * Bugfixes.
 
 
-2022-06-02: v0.1.2
+2022-07-02: v0.1.2
 
  * Revised erratic code flow.
  * Added some simple functions.
