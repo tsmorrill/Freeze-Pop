@@ -9,7 +9,7 @@ loose agenda:
 agenda by subdirectory and filename:
 
  * setup.cfg
-   - add PyPi metadata
+   - add PyPI metadata
 
  * /examples/
    - update all examples to 0.1.4 compatibility
@@ -43,6 +43,7 @@ agenda by subdirectory and filename:
    - consider adding a freezer decorator
 
  * machines.py
+   - add sine_irrational
    - add grid machine, accepts controls "up", "down", "left", "right"
      . this is actually a different kind of thing than the machines. maybe a game?
    - bring back 2d heightmaps
