@@ -10,7 +10,7 @@
 * fixed guido
 * added count_vowels
 * removed frzpop.stochastic
-* added README.md
+* updated README.md
 * corrected dates in CHANGELOG.txt
 
 2022-07-06: v0.2.0

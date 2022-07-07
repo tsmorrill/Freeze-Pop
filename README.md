@@ -1,67 +1,35 @@
 # Freeze Pop
 Generate MIDI files with tracker-inspired methods.
 
-## Installation
-
-Run
-```
-pip install frzpop
-```
-or run
-```
-pip install .
-```
-from inside the project directory.
-
 ## Objects
 
+### State Machines
+
+A state machine is a function which is called without any input. These are analogous to function generators and sequencers in modular synthesis. They can be chained together to form more complicated structure, such as a sequential switch. The syntax is a little tricky; consult the examples on GitHub.
+
+Most things in Freeze Pop can actually be state machines, so long as the given state machine outputs the correct kind of object when it is called, usually an integer from 0-127 inclusive. Many of the built-in state machines are based on mathematical systems, and output floating point numbers. The quantize state machine is very useful for working with these.
+
 ### Songs
-A song is a list of tracks.
+A song is a list of tracks, which correspond to the tracks of a MIDI file.
 
 ### Tracks
-A track is a list of sections.
+A track is a list of sections. They are analogous to chains in most tracker programs.
 
 ### Sections
-A section is  a list of phrases.
+A section is a list of phrases.
 
 ### Phrases
-A phrase is either a list of notes, or a function of the form
-```
-phrase(s)
-```
-which outputs a list of notes. Here, s is the index of the phrase in its section at the time it is frozen.
+A phrase is a list of notes.
 
 ### Notes
-A note is either an integer from 0-127 inclusive, a tuple of the form (pitch, vel, freezer), a function of the form
-```
-note(t)
-```
-which outputs a tuple of the form (pitch, vel, freezer). Here, t is the index of the note in its phrase at the time it is frozen. A note which is an integer is automatically converted into the tuple [pitch, 80, default_freezer].
+A note is a triple of the form (pitch, vel, freezer). Writing a single integer instead of a triple will generate the default vel and freezer options. Writing None generates a rest instead.
 
 ### Pitches
 
-A pitch either is an integer from 0-127 inclusive, or a function of the form
-```
-pitch(t)
-```
-which outputs an integer from 0-127 inclusive. Here, t is the index of the note in its phrase at the time it is frozen. These are handled according to the MIDI standard.
+A pitch an integer from 0-127 inclusive. These correspond to the standard MIDI note values. Import convenient aliases for these values from frzpop.notes.
 
 ### Velocities
-A velocity is either an integer from 0-127 inclusive, or a function of the form
-```
-vel(t)
-```
-which outputs an integer from 0-127 inclusive. Here, t is the index of the note in its phrase at the time it is frozen. These are handled according to the MIDI standard. In particular, notes with velocity zero are treated as rests.
+A velocity is an integer from 0-127 inclusive. These correspond to the standard MIDI note values. A velocity of zero will not generate any note events.
 
 ### Freezers
-A freezer is a function of the form
-```
-freezer(pitch, vel, time, s, t)
-```
-which outputs a tuple (ice_tray, time). Here, t is the index of the note in its phrase, and s is the index of the phrase in its section at the time they are frozen. Freezers are used similarly to commands in tracker programs.
-
-### Ice Trays
-An ice tray is a list of cubes.
-
-### Cubes
-A cube is a list of the form [pitch, time, note_len, vel]. They are used to place MIDI notes into a MIDI file.
+A freezer is description of how to process an abstract note into one or more note events in a MIDI file. Freezers are used similarly to commands in tracker programs.
