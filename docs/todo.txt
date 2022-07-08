@@ -5,9 +5,9 @@ LOOSE ITEMS:
 
  * develop automated tests using the dunder clause in freezers.py
  * check if each script should be importing more from additives
- * consider adding type hints and using mypy
  * get a royalty free image of freezer pops
  * add note definitions for 19edo
+ * figure out what types mypy wants state_machine to output
  * fork into a liveplay project?
 
 
@@ -35,7 +35,6 @@ ITEMS BY DIRECTORY/FILENAME:
  * dynamics.py
 
  * freezers.py
-   - output file tracks are named incorrectly
    - rename make_freezer -> freezer
      . this broke something last time
      . also rename make_cube -> cube
