@@ -1,8 +1,11 @@
 from datetime import datetime
 from midiutil import MIDIFile
+from typing import Callable, Optional
 
 
-def make_cube(pitch, time, note_len, vel, t):
+def make_cube(
+    pitch: int, time: int, note_len: int, vel: int, t: int
+) -> Optional[tuple]:
     """Freeze callables and return a cube."""
     frozen_pitch = pitch
     if callable(pitch):
@@ -13,11 +16,13 @@ def make_cube(pitch, time, note_len, vel, t):
 
     cube = None
     if frozen_vel and frozen_pitch is not None:  # no cube if vel == 0
-        cube = [frozen_pitch, time, note_len, frozen_vel]
+        cube = (frozen_pitch, time, note_len, frozen_vel)
     return cube
 
 
-def make_freezer(note_len=1 / 16, gate=1, nudge=0):
+def make_freezer(
+    note_len: float = 1 / 16, gate: float = 1, nudge: float = 0
+) -> Callable:
     note_len *= 4  # midiutil measures time in quarter notes
 
     def freezer(pitch, vel, time, s, t):
@@ -33,7 +38,12 @@ def make_freezer(note_len=1 / 16, gate=1, nudge=0):
     return freezer
 
 
-def freeze_song(song, filename=None, track_names=None, combine_tracks=False):
+def freeze_song(
+    song: list,
+    filename: Optional[str] = None,
+    track_names: Optional[list] = None,
+    combine_tracks: bool = False,
+):
     if filename is None:
         dt = datetime.now()
         filename = dt.strftime("%Y-%m-%d_%H%M%S")
@@ -93,17 +103,17 @@ def freeze_song(song, filename=None, track_names=None, combine_tracks=False):
         print(f"Wrote to file {filename}.")
 
 
-def freeze_track(track, name=None):
+def freeze_track(track: list, name: Optional[str] = None):
     song = [track]
     freeze_song(song, filename=name, track_names=[name])
 
 
-def freeze_section(section, name=None):
+def freeze_section(section: list, name: Optional[str] = None):
     track = [section]
     freeze_track(track, name)
 
 
-def freeze_phrase(phrase, name=None):
+def freeze_phrase(phrase: list, name: Optional[str] = None):
     section = [phrase]
     freeze_section(section, name)
 
