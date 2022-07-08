@@ -4,7 +4,7 @@ next_in = additives.next_in
 sip_water = additives.sip_water
 
 
-def plain_hunt(row):
+def plain_hunt(row: list):
     """Genterate plain hunt method permutations of row."""
     length = len(row)
     l_mod_2 = length % 2
