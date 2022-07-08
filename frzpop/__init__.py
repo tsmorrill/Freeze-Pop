@@ -1,3 +1,11 @@
-from additives import state_machine
-from .freezers import freeze_phrase, freeze_section, freeze_song, freeze_track
-from .freezers import make_freezer
+from frzpop import (
+    additives,
+    chords,
+    dynamics,
+    freezers,
+    machines,
+    notes,
+    quantize,
+    scales,
+    shuffle,
+)

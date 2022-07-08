@@ -1,7 +1,8 @@
 How to upload to PyPi:
 
 1) increment version to next minor revision number
-2) run command "python3 -m build"
-3) run command "twine check dist/frzpop.x.y.z*"
-4) run command "twine upload dist/frzpop.x.y.z*"
-5) run command "pip3 install frzpop --upgrade"
+2) run command "black frzpop"
+3) run command "python3 -m build"
+4) run command "twine check dist/frzpop.x.y.z*"
+5) run command "twine upload dist/frzpop.x.y.z*"
+6) run command "pip3 install frzpop --upgrade"

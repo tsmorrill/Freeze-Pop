@@ -1,5 +1,11 @@
-from additives import next_in, state_machine, sip_water, Random, rng
+from frzpop import additives
 from math import sin, pi, pow
+
+next_in = additives.next_in
+state_machine = additives.state_machine
+sip_water = additives.sip_water
+Random = additives.Random
+rng = additives.rng
 
 
 # undecorated machines and their derivatives

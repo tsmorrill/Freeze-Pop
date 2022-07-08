@@ -1,4 +1,6 @@
-from additives import gamut
+from frzpop import additives
+
+gamut = additives.gamut
 
 
 # interval between penultimate scale degree and root is not necessary using

@@ -1,4 +1,6 @@
-from additives import gamut
+from frzpop import additives
+
+gamut = additives.gamut
 
 
 def major(root):

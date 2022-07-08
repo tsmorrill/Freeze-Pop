@@ -3,12 +3,9 @@ NEXT CHANGELOG:
 
 LOOSE ITEMS:
 
- * submodule imports are all wrong. Fix immediately.
-
  * develop automated tests using the dunder clause in freezers.py
  * check if each script should be importing more from additives
  * consider adding type hints and using mypy
- * consider using black
  * get a royalty free image of freezer pops
  * add note definitions for 19edo
  * fork into a liveplay project?
@@ -18,7 +15,6 @@ ITEMS BY DIRECTORY/FILENAME:
 
 
  * setup.cfg
-   - add PyPI metadata
 
  * /examples/
    - update all examples to 0.1.4 compatibility
@@ -27,13 +23,11 @@ ITEMS BY DIRECTORY/FILENAME:
      . polyrhythm
      . trap hi hat
 
- * /additives/
-   - maybe just move guido here
+ * additives.py
    - next_in -> next_up
    - import simple machines into machines.py for user availability
 
  * __init__.py
-   - refactor import structure
 
  * chords.py
    - add ninth chords

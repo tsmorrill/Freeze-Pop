@@ -1,5 +1,11 @@
-from additives import next_in, rng, state_machine, sip_water
+from frzpop import additives
 from math import floor
+
+
+next_in = additives.next_in
+rng = additives.rng
+state_machine = additives.state_machine
+sip_water = additives.sip_water
 
 
 def emphasize_16ths(center_vel):

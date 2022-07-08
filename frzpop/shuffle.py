@@ -1,4 +1,7 @@
-from additives import next_in, sip_water
+from frzpop import additives
+
+next_in = additives.next_in
+sip_water = additives.sip_water
 
 
 def plain_hunt(row):
