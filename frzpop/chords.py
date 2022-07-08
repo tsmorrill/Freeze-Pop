@@ -39,6 +39,10 @@ def min7(root: int) -> list:
 
 
 if __name__ == "__main__":
-    c7 = min7(60)
-    for i in range(0, len(c7), 4):
-        print(c7[i: i + 4])
+    names = [name for name in dir() if not name.startswith("_")]
+    imports: list = []
+    for name in imports:
+        names.remove(name)
+    print("Things to test:")
+    print(", ".join(names))
+    print()
