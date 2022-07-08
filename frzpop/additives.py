@@ -21,7 +21,7 @@ def sip_water():
 def state_machine(machine: Callable) -> Callable:
     """Wrap a parameterized generator in a function call."""
 
-    def wrapper(*args, **kwargs):
+    def wrapper(*args, **kwargs) -> Callable:
         instance = machine(*args, **kwargs)
 
         def func():
