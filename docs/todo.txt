@@ -17,11 +17,14 @@ ITEMS BY DIRECTORY/FILENAME:
  * setup.cfg
 
  * /examples/
-   - update all examples to 0.1.4 compatibility
    - add new examples
+     . metrical feet
+     . rhythmic modes
      . passing tones quantization
      . polyrhythm
      . trap hi hat
+   - update all examples to 0.3.1 compatibility
+
 
  * additives.py
    - next_in -> next_up
