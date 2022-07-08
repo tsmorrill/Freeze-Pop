@@ -1,12 +1,13 @@
 from math import floor
+from typing import Callable
 
 
-def float_to_CC(x):
+def float_to_CC(x: float) -> int:
     x = max(0, min(x, 127))
     return floor(x)
 
 
-def quantizer(gamut):
+def quantizer(gamut: list) -> Callable:
     """Make a quantizer function."""
     min_note, max_note = min(gamut), max(gamut)
 

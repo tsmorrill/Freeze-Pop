@@ -10,45 +10,45 @@ gamut = additives.gamut
 # diatonic modes in the usual order
 
 
-def major(root):
+def major(root: int) -> list:
     intervals = [2, 2, 1, 2, 2, 2, 1]
     return gamut(root, intervals)
 
 
-def ionian(root):
+def ionian(root: int) -> list:
     return major(root)
 
 
-def dorian(root):
+def dorian(root: int) -> list:
     intervals = [2, 1, 2, 2, 2, 1, 2]
     return gamut(root, intervals)
 
 
-def phrygian(root):
+def phrygian(root: int) -> list:
     intervals = [1, 2, 2, 2, 1, 2, 2]
     return gamut(root, intervals)
 
 
-def lydian(root):
+def lydian(root: int) -> list:
     intervals = [2, 2, 2, 1, 2, 2, 1]
     return gamut(root, intervals)
 
 
-def mixolydian(root):
+def mixolydian(root: int) -> list:
     intervals = [2, 2, 1, 2, 2, 1, 2]
     return gamut(root, intervals)
 
 
-def minor(root):
+def minor(root: int) -> list:
     intervals = [2, 1, 2, 2, 1, 2, 2]
     return gamut(root, intervals)
 
 
-def aeolian(root):
+def aeolian(root: int) -> list:
     return minor(root)
 
 
-def locrian(root):
+def locrian(root: int) -> list:
     intervals = [1, 2, 2, 1, 2, 2, 2]
     return gamut(root, intervals)
 
@@ -56,12 +56,12 @@ def locrian(root):
 # other scales
 
 
-def blues(root):
+def blues(root: int) -> list:
     intervals = [3, 2, 1, 1, 3, 2]
     return gamut(root, intervals)
 
 
-def messiaen(root, mode):
+def messiaen(root: int, mode: int) -> list:
     """Generate one of Messiaen's modes of limited transposition."""
     modes = [
         [2, 2, 2, 2, 2, 2],
@@ -79,4 +79,4 @@ def messiaen(root, mode):
 if __name__ == "__main__":
     C = major(60)
     for i in range(0, len(C), 7):
-        print(C[i : i + 8])
+        print(C[i: i + 8])
