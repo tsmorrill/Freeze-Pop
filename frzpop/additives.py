@@ -18,10 +18,10 @@ def sip_water():
     print("Sipped a glass of water. Refreshing!")
 
 
-def state_machine(machine: Callable) -> Callable:
+def state_machine(machine: Callable):
     """Wrap a parameterized generator in a function call."""
 
-    def wrapper(*args, **kwargs) -> Callable:
+    def wrapper(*args, **kwargs):
         instance = machine(*args, **kwargs)
 
         def func():
