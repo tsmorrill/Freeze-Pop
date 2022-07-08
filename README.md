@@ -13,10 +13,10 @@ Most things in Freeze Pop can actually be state machines, so long as the given s
 A song is a list of tracks, which correspond to the tracks of a MIDI file.
 
 ### Tracks
-A track is a list of sections. They are analogous to chains in most tracker programs.
+A track is a list of sections.
 
 ### Sections
-A section is a list of phrases.
+A section is a list of phrases. They are analogous to chains in most tracker programs.
 
 ### Phrases
 A phrase is a list of notes.
