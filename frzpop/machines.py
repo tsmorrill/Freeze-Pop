@@ -1,5 +1,6 @@
 from frzpop import additives
 from math import sin, pi, pow
+from typing import Optional
 
 next_in = additives.next_in
 state_machine = additives.state_machine
@@ -11,7 +12,13 @@ rng = additives.rng
 # undecorated machines and their derivatives
 
 
-def contour(iter, init=None, smoothing=1, seed=None, truncate=-1):
+def contour(
+    iter: int,
+    init: Optional[list] = None,
+    smoothing: float = 1,
+    seed=None,
+    truncate: int = -1,
+):
     """Generate a random contour via midpoint displacement."""
 
     noise = rng(seed=seed)
@@ -43,7 +50,7 @@ def contour(iter, init=None, smoothing=1, seed=None, truncate=-1):
     return next_in(vals)
 
 
-def euclid(k, n):
+def euclid(k: int, n: int):
     """Generate pattern of k 1's equally spaced between (n-k) 0's."""
 
     if k == n:
@@ -59,7 +66,7 @@ def euclid(k, n):
     return next_in(trigs)
 
 
-def fractioning(a, b):
+def fractioning(a: int, b: int):
     """Generate Schillinger's fractioning of a and b."""
 
     if a < b:
@@ -71,37 +78,38 @@ def fractioning(a, b):
     return next_in(trigs)
 
 
-def sweep(start, end, steps):
+def sweep(start: float, end: float, steps: int):
     jump = (end - start) / steps
     vals = [start + jump * i for i in range(steps)]
 
     return next_in(vals)
 
 
-def ramp(steps):
+def ramp(steps: int):
     return sweep(start=0, end=1, steps=steps)
 
 
-def saw(steps):
+def saw(steps: int):
     return sweep(start=1, end=0, steps=steps)
 
 
-def resultant(a, b):
+def resultant(a: int, b: int):
     """Generate Schillinger's resultant of a and b."""
 
-    trigs = [(t % a == 0) or (t % b == 0) for t in range(a * b)]
-    trigs = [int(trig) for trig in trigs]
+    trigs = []
+    for t in range(a * b):
+        trigs.append(int((t % a == 0) or (t % b == 0)))
     return next_in(trigs)
 
 
-def sine_fixed(length, offset=0):
+def sine_fixed(length: int, offset: float = 0):
     step = 2 * pi / length
     vals = [sin(step * i + offset) for i in range(length)]
     return next_in(vals)
 
 
 @state_machine
-def sine_free(wavelength, offset=0):
+def sine_free(wavelength: float, offset: float = 0):
     x = offset
     step = 2 * pi / wavelength
     while True:
@@ -113,7 +121,7 @@ def sine_free(wavelength, offset=0):
 
 
 @state_machine
-def automaton(row_0=None, rule=30, seed=None):
+def automaton(row_0: list = None, rule: int = 30, seed=None):
     """Generate an elementary cellular automaton with wraparound."""
     if row_0 is None:
         row_0 = [int(i == 0) for i in range(8)]
@@ -127,7 +135,7 @@ def automaton(row_0=None, rule=30, seed=None):
 
     results = unpack(rule)
 
-    def iteration(row):
+    def iteration(row: list):
         def look_next_door(index, row):
             left = row[index - 1]
             center = row[index]
@@ -149,7 +157,7 @@ def automaton(row_0=None, rule=30, seed=None):
 
 
 @state_machine
-def circle_map(x_0, omega, coupling):
+def circle_map(x_0: float, omega: float, coupling: float):
     """Generate the standard circle map."""
     tau = 2 * pi
     tau_inv = 1 / tau
@@ -163,7 +171,7 @@ def circle_map(x_0, omega, coupling):
 
 
 @state_machine
-def duffing(x_0, y_0, a=2.75, b=0.2):
+def duffing(x_0: float, y_0: float, a: float = 2.75, b: float = 0.2):
     """Generate the Duffing map."""
     x, y = x_0, x_0
 
@@ -173,7 +181,7 @@ def duffing(x_0, y_0, a=2.75, b=0.2):
 
 
 @state_machine
-def gingerbread(x_0, y_0, a=1, b=1):
+def gingerbread(x_0: float, y_0: float, a: float = 1, b: float = 1):
     """Generate the Gingerbreadman map."""
     x, y = x_0, y_0
 
@@ -182,7 +190,7 @@ def gingerbread(x_0, y_0, a=1, b=1):
         x, y = 1 - a * y + b * abs(x), x
 
 
-def guido(lyric, gamut=None, seed=None):
+def guido(lyric: str, gamut: list = None, seed=None):
     """Generate text-to-pitches method of Guido d'Arezzo using randomness."""
     vowels = [char for char in lyric.upper() if char in "AEIOU"]
 
@@ -218,7 +226,7 @@ def guido(lyric, gamut=None, seed=None):
         if prev_note is None:
             return [1 for note in potential_notes]
         weights = [
-            1 / max(abs(note - prev_note), 1 / 2)  # avoid division by 0
+            1 / max(abs(note - prev_note), 1)  # avoid division by 0
             for note in potential_notes
         ]
         return weights
@@ -237,13 +245,13 @@ def guido(lyric, gamut=None, seed=None):
     return next_in(notes)
 
 
-def count_vowels(lyric):
+def count_vowels(lyric: str) -> int:
     vowels = [char for char in lyric.upper() if char in "AEIOU"]
     return len(vowels)
 
 
 @state_machine
-def henon(x_0, y_0, a=1.4, b=0.3):
+def henon(x_0: float, y_0: float, a: float = 1.4, b: float = 0.3):
     """Generate the Henon map."""
     x, y = x_0, y_0
 
@@ -253,7 +261,7 @@ def henon(x_0, y_0, a=1.4, b=0.3):
 
 
 @state_machine
-def lfsr(n_0=1):
+def lfsr(n_0: int = 1):
     """Generate a 16-bit linear feedback shift register."""
     modulus = 1 << 16
     n = n_0 % modulus
@@ -266,7 +274,7 @@ def lfsr(n_0=1):
 
 
 @state_machine
-def logistic(x_0, r=3.56995):
+def logistic(x_0: float, r: float = 3.56995):
     """Generate the logistic map."""
     x = x_0
 
@@ -276,7 +284,7 @@ def logistic(x_0, r=3.56995):
 
 
 @state_machine
-def pfsr(n=0b10101010, len=8, prob=0.5, seed=None):
+def pfsr(n: int = 0b10101010, len: int = 8, prob: float = 0.5, seed=None):
     """Return a generator for a probabalistic feedback shift register."""
     mask = (2 << len) - 1
     n &= mask
@@ -292,7 +300,7 @@ def pfsr(n=0b10101010, len=8, prob=0.5, seed=None):
 
 
 @state_machine
-def tent(x_0, m=1.5):
+def tent(x_0: float, m: float = 1.5):
     """Generate the tent map."""
     x = x_0
 
@@ -302,7 +310,7 @@ def tent(x_0, m=1.5):
 
 
 @state_machine
-def xshift(n_0):
+def xshift(n_0: int):
     """Generate an xor shift pseudorandom number generator."""
     n = n_0
     len = 16
@@ -319,37 +327,37 @@ def xshift(n_0):
 
 
 @state_machine
-def clip(machine, min, max):
+def clip(machine, lower: float, upper: float):
     instance = machine()
     while True:
-        yield max(min, min(instance(), max))
+        yield max(lower, min(instance(), upper))
 
 
 @state_machine
-def is_over(machine, threshold):
+def is_over(machine, threshold: float):
     instance = machine()
     while True:
         yield int(instance() > threshold)
 
 
-def pulse(steps, duty=0.5):
+def pulse(steps: int, duty: float = 0.5):
     instance = sweep(1, 0, steps)
     return is_over(instance, duty)
 
 
 @state_machine
-def attenuvert(machine, mult, offset=0):
+def attenuvert(machine, mult: float, offset: float = 0):
     instance = machine()
     while True:
         yield mult * instance() + offset
 
 
-def offset(machine, offset):
+def offset(machine, offset: float):
     return attenuvert(machine, mult=1, offset=offset)
 
 
 @state_machine
-def skip(machine, batches):
+def skip(machine, batches: int):
     instance = machine()
     while True:
         yield instance()
@@ -386,8 +394,5 @@ def mix(*machines):  # don't colide names with sum()
 if __name__ == "__main__":
     sip_water()
 
-    lyric = "Are we not men? We are DEVO!"
-    lyric = lyric.upper()
-    setting = guido(lyric)
-    notes = [setting() for _ in range(count_vowels(lyric))]
-    print(notes)
+    Schill = resultant(3, 4)
+    print(Schill(), Schill())
