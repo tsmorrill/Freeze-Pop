@@ -1,4 +1,5 @@
 from random import Random
+from typing import Callable, Generator
 
 
 def gamut(root: int, intervals: list) -> list:
@@ -17,14 +18,14 @@ def sip_water():
     print("Sipped a glass of water. Refreshing!")
 
 
-def state_machine(gen):
+def state_machine(machine: Callable) -> Callable:
     """Wrap a parameterized generator in a function call."""
 
     def wrapper(*args, **kwargs):
-        generator = gen(*args, **kwargs)
+        instance = machine(*args, **kwargs)
 
         def func():
-            return next(generator)
+            return next(instance)
 
         return func
 
@@ -35,7 +36,7 @@ def state_machine(gen):
 
 
 @state_machine
-def bogo(init: list, seed=None) -> list:
+def bogo(init: list, seed=None) -> Generator:
     """Generate a random permutation of list."""
     permutation = init.copy()
 
@@ -46,7 +47,7 @@ def bogo(init: list, seed=None) -> list:
 
 
 @state_machine
-def choose_from(choices: list, seed=None):
+def choose_from(choices: list, seed=None) -> Generator:
     if not choices:
         raise ValueError("choices must be a non-empty list.")
     rng = Random(seed)
@@ -56,7 +57,7 @@ def choose_from(choices: list, seed=None):
 
 
 @state_machine
-def next_in(queue: list):
+def next_in(queue: list) -> Generator:
     if not queue:
         raise ValueError("queue must be a non-empty list.")
     length = len(queue)
@@ -68,7 +69,7 @@ def next_in(queue: list):
 
 
 @state_machine
-def rng(seed=None):
+def rng(seed=None) -> Generator:
     rng = Random(seed)
 
     while True:
@@ -77,12 +78,9 @@ def rng(seed=None):
 
 if __name__ == "__main__":
     names = [name for name in dir() if not name.startswith("_")]
-    imports = []
+    imports: list = ["Callable", "Generator"]
     for name in imports:
         names.remove(name)
+    print("Things to test:")
     print(", ".join(names))
-
-    test = list(range(4))
-    machine = choose_from(test)
-    for _ in range(5):
-        print(machine())
+    print()
