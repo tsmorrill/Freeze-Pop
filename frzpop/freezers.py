@@ -42,30 +42,23 @@ def freeze_song(
     song: list,
     filename: Optional[str] = None,
     track_names: Optional[list] = None,
-    combine_tracks: bool = False,
 ):
     if filename is None:
         dt = datetime.now()
         filename = dt.strftime("%Y-%m-%d_%H%M%S")
 
     output_file = MIDIFile()
-    if combine_tracks:
-        output_file.addTrackName(0, 0, filename)
 
     default_freezer = make_freezer(note_len=1 / 16)  # tracks can share this
 
     for track_number, track in enumerate(song):
-        if combine_tracks:
-            track_number = 0  # just dump all the ice buckets together
-
         track_name = f"Track {track_number}"
         if track_names:
-            track_name = track_name[track_number]
+            track_name = track_names[track_number]
         track_channel = 0
 
         time = 0
-        if not combine_tracks:
-            output_file.addTrackName(track_number, time, track_name)
+        output_file.addTrackName(track_number, time, track_name)
         ice_bucket = []
 
         for section in track:
