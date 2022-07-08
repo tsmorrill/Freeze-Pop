@@ -1,5 +1,7 @@
 NEXT CHANGELOG:
 
+ * corrected list of requirements in setup.cfg
+
 
 LOOSE ITEMS:
 
