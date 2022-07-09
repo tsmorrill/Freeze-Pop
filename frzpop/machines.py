@@ -422,7 +422,7 @@ def skip(machine, batches: int):
             instance()
 
 
-# machines which wrap multiple other machines
+# machines which input multiple other machines
 
 
 @state_machine
