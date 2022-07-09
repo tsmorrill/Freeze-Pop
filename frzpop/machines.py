@@ -285,7 +285,17 @@ def logistic(x_0: float, r: float = 3.56995):
 
 
 @state_machine
-def muse(out_a, out_b, out_c, out_d, feed_w, feed_x, feed_y, feed_z, notes=None):
+def muse(
+    out_a: int,
+    out_b: int,
+    out_c: int,
+    out_d: int,
+    feed_w: int,
+    feed_x: int,
+    feed_y: int,
+    feed_z: int,
+    notes: Optional[list] = None,
+):
     """Emulate the Triadex Muse."""
     if (
         min(out_a, out_b, out_c, out_d, feed_w, feed_x, feed_y, feed_z) < 0
@@ -315,8 +325,12 @@ def muse(out_a, out_b, out_c, out_d, feed_w, feed_x, feed_y, feed_z, notes=None)
         yield notes[scale_degree % len(notes)]
 
         bit = (
-            all_taps[feed_w] + all_taps[feed_x] + all_taps[feed_y] + all_taps[feed_z]
-        ) % 2
+            all_taps[feed_w]
+            + all_taps[feed_x]
+            + all_taps[feed_y]
+            + all_taps[feed_z]
+        )
+        bit %= 2
 
         shift_register.insert(0, bit)
         shift_register.pop()
