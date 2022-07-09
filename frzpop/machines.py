@@ -295,6 +295,7 @@ def muse(
     feed_y: int,
     feed_z: int,
     notes: Optional[list] = None,
+    seed=None
 ):
     """Emulate the Triadex Muse."""
     if (
@@ -303,7 +304,7 @@ def muse(
     ):
         raise ValueError("tap locations must be integers from 0 to 39.")
 
-    noise = rng()
+    noise = rng(seed=seed)
     shift_register = [int(noise() > 0.5) for _ in range(31)]
     t = 0
 
