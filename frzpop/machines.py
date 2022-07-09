@@ -78,6 +78,67 @@ def fractioning(a: int, b: int):
     return next_in(trigs)
 
 
+def guido(lyric: str, gamut: list = None, seed=None):
+    """Generate text-to-pitches method of Guido d'Arezzo using weighted random
+    choices."""
+    vowels = [char for char in lyric.upper() if char in "AEIOU"]
+
+    if gamut is None:
+        gamut = [
+            55,
+            57,
+            59,
+            60,
+            62,
+            64,
+            65,
+            67,
+            69,
+            71,
+            72,
+            74,
+            76,
+            77,
+            79,
+            81,
+        ]
+
+    note_assignment = {
+        "A": gamut[0::5],
+        "E": gamut[1::5],
+        "I": gamut[2::5],
+        "O": gamut[3::5],
+        "U": gamut[4::5],
+    }
+
+    def weigh(potential_notes, prev_note):
+        if prev_note is None:
+            return [1 for note in potential_notes]
+        weights = [
+            1 / max(abs(note - prev_note), 1)  # avoid division by 0
+            for note in potential_notes
+        ]
+        return weights
+
+    notes = []
+    prev_note = None
+
+    rng = Random(seed)
+
+    for char in vowels:
+        potential_notes = note_assignment[char]
+        weights = weigh(potential_notes, prev_note)
+        new_note = rng.choices(potential_notes, weights, k=1)[0]
+        notes.append(new_note)
+        prev_note = new_note
+    return next_in(notes)
+
+
+def count_vowels(lyric: str) -> int:
+    vowels = [char for char in lyric.upper() if char in "AEIOU"]
+    return len(vowels)
+
+
 def sweep(start: float, end: float, steps: int):
     jump = (end - start) / steps
     vals = [start + jump * i for i in range(steps)]
@@ -190,66 +251,6 @@ def gingerbread(x_0: float, y_0: float, a: float = 1, b: float = 1):
         x, y = 1 - a * y + b * abs(x), x
 
 
-def guido(lyric: str, gamut: list = None, seed=None):
-    """Generate text-to-pitches method of Guido d'Arezzo using randomness."""
-    vowels = [char for char in lyric.upper() if char in "AEIOU"]
-
-    if gamut is None:
-        gamut = [
-            55,
-            57,
-            59,
-            60,
-            62,
-            64,
-            65,
-            67,
-            69,
-            71,
-            72,
-            74,
-            76,
-            77,
-            79,
-            81,
-        ]
-
-    note_assignment = {
-        "A": gamut[0::5],
-        "E": gamut[1::5],
-        "I": gamut[2::5],
-        "O": gamut[3::5],
-        "U": gamut[4::5],
-    }
-
-    def weigh(potential_notes, prev_note):
-        if prev_note is None:
-            return [1 for note in potential_notes]
-        weights = [
-            1 / max(abs(note - prev_note), 1)  # avoid division by 0
-            for note in potential_notes
-        ]
-        return weights
-
-    notes = []
-    prev_note = None
-
-    rng = Random(seed)
-
-    for char in vowels:
-        potential_notes = note_assignment[char]
-        weights = weigh(potential_notes, prev_note)
-        new_note = rng.choices(potential_notes, weights, k=1)[0]
-        notes.append(new_note)
-        prev_note = new_note
-    return next_in(notes)
-
-
-def count_vowels(lyric: str) -> int:
-    vowels = [char for char in lyric.upper() if char in "AEIOU"]
-    return len(vowels)
-
-
 @state_machine
 def henon(x_0: float, y_0: float, a: float = 1.4, b: float = 0.3):
     """Generate the Henon map."""
@@ -281,6 +282,48 @@ def logistic(x_0: float, r: float = 3.56995):
     while True:
         yield x
         x = r * x * (1 - x)
+
+
+@state_machine
+def muse(out_a, out_b, out_c, out_d, feed_w, feed_x, feed_y, feed_z, notes=None):
+    """Emulate the Triadex Muse."""
+    if (
+        min(out_a, out_b, out_c, out_d, feed_w, feed_x, feed_y, feed_z) < 0
+        or max(out_a, out_b, out_c, out_d, feed_w, feed_x, feed_y, feed_z) > 39
+    ):
+        raise ValueError("tap locations must be integers from 0 to 39.")
+
+    noise = rng()
+    shift_register = [int(noise() > 0.5) for _ in range(31)]
+    t = 0
+
+    if notes is None:
+        notes = [0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 24]
+
+    while True:
+        constant_taps = [0, 1]
+        bit_taps = [(t >> i) & 1 for i in range(5)]
+        tri_taps = [int(t % 6 > 2), int(t % 12 > 5)]
+        all_taps = constant_taps + shift_register + bit_taps + tri_taps
+
+        scale_degree = (
+            8 * all_taps[out_d]
+            + 4 * all_taps[out_c]
+            + 2 * all_taps[out_b]
+            + all_taps[out_a]
+        )
+        yield notes[scale_degree % len(notes)]
+
+        bit = (
+            all_taps[feed_w] + all_taps[feed_x]
+            + all_taps[feed_y] + all_taps[feed_z]
+        ) % 2
+
+        shift_register.insert(0, bit)
+        shift_register.pop()
+
+        t += 1
+        t %= 96
 
 
 @state_machine
