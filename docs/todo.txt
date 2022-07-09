@@ -1,5 +1,7 @@
 NEXT CHANGELOG:
 
+ * new machines
+   - muse
  * corrected list of requirements in setup.cfg
 
 
