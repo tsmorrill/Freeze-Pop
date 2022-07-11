@@ -3,16 +3,18 @@ from midiutil import MIDIFile
 from typing import Callable, Optional
 
 
-def chill(
-    pitch: Optional[int], time: int, note_len: float, vel: int
-) -> Optional[tuple]:
+def chill(pitch, time, note_len, vel) -> Optional[tuple]:
     """Freeze callables and return an icecube."""
     frozen_pitch = pitch
     if callable(pitch):
         frozen_pitch = pitch()
+    if frozen_pitch not in range(128) and frozen_pitch is not None:
+        raise ValueError("Pitch must be an integer from 0 to 127, or None.")
     frozen_vel = vel
     if callable(vel):
         frozen_vel = vel()
+    if frozen_vel not in range(128):
+        raise ValueError("Velocity must be an integer from 0 to 127.")
 
     is_rest = frozen_vel == 0 or frozen_pitch is None
     icecube = None if is_rest else (frozen_pitch, time, note_len, frozen_vel)
@@ -47,7 +49,7 @@ def freeze_song(
     output_file = MIDIFile()
 
     for track_int, track in enumerate(song):
-        if track_names:
+        if track_names is not None:
             track_name = track_names[track_int]
         else:
             track_name = f"Track {track_int}"
@@ -92,13 +94,11 @@ def freeze_song(
 
 
 def freeze_track(track: list, name: Optional[str] = None):
-    song = [track]
-    freeze_song(song, filename=name, track_names=[name])
+    freeze_song(song=[track], filename=name, track_names=[name])
 
 
 def freeze_section(section: list, name: Optional[str] = None):
-    track = [section]
-    freeze_track(track, name)
+    freeze_track(track=[section], name=name)
 
 
 def freeze_phrase(phrase: list, name: Optional[str] = None):
@@ -113,4 +113,4 @@ if __name__ == "__main__":
         names.remove(name)
     print(", ".join(names))
 
-    freeze_phrase([30], name="cherry")
+    freeze_phrase([None], name="test")
