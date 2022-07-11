@@ -1,11 +1,14 @@
 # written using Freeze Pop v 0.1.2
 
+from frzpop import dynamics
 from frzpop.freezers import freezer, freeze_section
 from frzpop.notes import C4, D4, E4, F4, G4, A4, B4, C5
-from frzpop.dynamics import f
 from frzpop.shuffle import plain_hunt
 
 eighth = freezer(note_len=1/8)
+
+f = dynamics.f
+print(f()(), f())
 
 init_phrase = [[C5, f, eighth],
                [B4, f, eighth],
