@@ -2,6 +2,7 @@ NEXT CHANGELOG:
 
  * new machines
    - muse
+ * added frzpop.feet
  * corrected list of requirements in setup.cfg
 
 
