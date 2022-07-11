@@ -2,7 +2,8 @@ NEXT CHANGELOG:
 
  * new machines
    - muse
- * renamed machines:
+ * renamed functions:
+   - make_cube -> chill
    - next_in -> next_up
  * added frzpop.feet
  * corrected list of requirements in setup.cfg
@@ -49,7 +50,6 @@ ITEMS BY DIRECTORY/FILENAME:
  * freezers.py
    - rename make_freezer -> freezer
      . this broke something last time
-     . also rename make_cube -> cube
    - add ratchet freezer
    - add echo freezer
    - add conditional freezer

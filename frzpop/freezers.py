@@ -3,10 +3,10 @@ from midiutil import MIDIFile
 from typing import Callable, Optional
 
 
-def make_cube(
-    pitch: int, time: int, note_len: int, vel: int, t: int
+def chill(
+    pitch: int, time: int, note_len: int, vel: int
 ) -> Optional[tuple]:
-    """Freeze callables and return a cube."""
+    """Freeze callables and return an icecube."""
     frozen_pitch = pitch
     if callable(pitch):
         frozen_pitch = pitch()
@@ -14,10 +14,9 @@ def make_cube(
     if callable(vel):
         frozen_vel = vel()
 
-    cube = None
-    if frozen_vel and frozen_pitch is not None:  # no cube if vel == 0
-        cube = (frozen_pitch, time, note_len, frozen_vel)
-    return cube
+    ignored = frozen_vel == 0 or frozen_pitch is None
+    icecube = None if ignored else (frozen_pitch, time, note_len, frozen_vel)
+    return icecube
 
 
 def make_freezer(
@@ -26,14 +25,13 @@ def make_freezer(
     note_len *= 4  # midiutil measures time in quarter notes
 
     def freezer(pitch, vel, time, s, t):
-        ice_tray = []
         cube_time = time + nudge  # push cube off-grid and maintain time
         cube_len = note_len * gate  # adjust cube length and maintain time
-        cube = make_cube(pitch, cube_time, cube_len, vel, t)
-        time += note_len
-        if cube is not None:
-            ice_tray.append(cube)
-        return ice_tray, time
+        icecube = chill(pitch, cube_time, cube_len, vel)
+        ice_tray = []
+        if icecube is not None:
+            ice_tray.append(icecube)
+        return ice_tray, time + note_len
 
     return freezer
 
@@ -113,7 +111,9 @@ def freeze_phrase(phrase: list, name: Optional[str] = None):
 
 if __name__ == "__main__":
     names = [name for name in dir() if not name.startswith("_")]
-    imports = ["MIDIFile", "datetime"]
+    imports = ["Callable", "datetime", "MIDIFile", "Optional"]
     for name in imports:
         names.remove(name)
     print(", ".join(names))
+
+    print(chill(pitch=None, time=0, note_len=1/4, vel=62))
