@@ -1,9 +1,9 @@
-# written using Freeze Pop v 0.1.4
+# written using Freeze Pop v 0.4.0
 
-import frzpop
+from frzpop.freezers import freeze_section
 from frzpop.scales import major
 from frzpop.dynamics import f
-from frzpop.generators import sweep
+from frzpop.machines import sweep
 from frzpop.quantize import quantizer
 
 A = 69
@@ -21,4 +21,4 @@ bar4 = [[A_maj(sweep4()), f, None] for _ in range(16)]
 
 section = [bar1, bar2, bar3, bar4]
 
-frzpop.freeze_section(section, name="strum")
+freeze_section(section)

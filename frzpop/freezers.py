@@ -46,15 +46,15 @@ def freeze_song(
 
     output_file = MIDIFile()
 
-    for track_number, track in enumerate(song):
+    for track_int, track in enumerate(song):
         if track_names:
-            track_name = track_names[track_number]
+            track_name = track_names[track_int]
         else:
-            track_name = f"Track {track_number}"
-        track_channel = 0
+            track_name = f"Track {track_int}"
 
         time = 0
-        output_file.addTrackName(track_number, time, track_name)
+        print(track_name)
+        output_file.addTrackName(track_int, time, track_name)
         ice_bucket = []
 
         for section in track:
@@ -62,7 +62,7 @@ def freeze_song(
 
             for phrase in section:
                 if callable(phrase):
-                    phrase = phrase(s)
+                    phrase = phrase()
                 t = 0  # note counter
 
                 for note in phrase:
@@ -82,7 +82,8 @@ def freeze_song(
 
     for cube in ice_bucket:
         pitch, time, note_len, vel = cube
-        output_file.addNote(track_number, track_channel, pitch, time, note_len, vel)
+        output_file.addNote(track=track_int, channel=0,
+                            pitch=pitch, time=time, duration=note_len, volume=vel)
 
     filename = f"{filename}.mid"
     with open(filename, "wb") as outf:
@@ -111,3 +112,5 @@ if __name__ == "__main__":
     for name in imports:
         names.remove(name)
     print(", ".join(names))
+
+    freeze_phrase([30], name="cherry")

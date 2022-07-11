@@ -1,11 +1,11 @@
 # written using Freeze Pop v 0.1.2
 
-import frzpop
+from frzpop.freezers import freezer, freeze_section
 from frzpop.notes import C4, D4, E4, F4, G4, A4, B4, C5
 from frzpop.dynamics import f
-from frzpop.phrases import make_plain_hunt
+from frzpop.shuffle import plain_hunt
 
-eighth = frzpop.freezers.make_freezer(note_len=1/8)
+eighth = freezer(note_len=1/8)
 
 init_phrase = [[C5, f, eighth],
                [B4, f, eighth],
@@ -15,8 +15,8 @@ init_phrase = [[C5, f, eighth],
                [E4, f, eighth],
                [D4, f, eighth],
                [C4, f, eighth]]
-phrase_generator = make_plain_hunt(init_phrase)
+machine = plain_hunt(init_phrase)
 
-section = [phrase_generator for _ in range(16)]
+section = [machine for _ in range(16)]
 
-frzpop.freeze_section(section, name="plain_hunt")
+freeze_section(section, name="plain_hunt")
