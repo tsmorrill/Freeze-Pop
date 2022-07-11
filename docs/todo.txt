@@ -12,6 +12,9 @@ NEXT CHANGELOG:
 
 LOOSE ITEMS:
 
+ * dynamics.py is still broken. Fix it.
+   - and check everything in machines that uses next_up
+
  * develop automated tests using the dunder clause in freezers.py
  * check if each script should be importing more from additives
  * get a royalty free image of freezer pops
