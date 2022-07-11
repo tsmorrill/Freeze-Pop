@@ -14,8 +14,8 @@ def chill(
     if callable(vel):
         frozen_vel = vel()
 
-    ignored = frozen_vel == 0 or frozen_pitch is None
-    icecube = None if ignored else (frozen_pitch, time, note_len, frozen_vel)
+    is_rest = frozen_vel == 0 or frozen_pitch is None
+    icecube = None if is_rest else (frozen_pitch, time, note_len, frozen_vel)
     return icecube
 
 
@@ -47,9 +47,10 @@ def freeze_song(
     output_file = MIDIFile()
 
     for track_number, track in enumerate(song):
-        track_name = f"Track {track_number}"
         if track_names:
             track_name = track_names[track_number]
+        else:
+            track_name = f"Track {track_number}"
         track_channel = 0
 
         time = 0
