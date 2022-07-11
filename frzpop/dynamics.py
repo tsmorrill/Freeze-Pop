@@ -9,7 +9,6 @@ sip_water = additives.sip_water
 
 
 def emphasize_16ths(center_vel: int):
-    # curiously, identical to ordered dithering numerators
     stress_16ths = [7, -1, 3, -5, 5, -3, 1, -7, 6, -2, 2, -6, 4, -4, 0, -8]
     vels = [center_vel + stress for stress in stress_16ths]
     i = 0
