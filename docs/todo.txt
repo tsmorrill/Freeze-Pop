@@ -4,6 +4,7 @@ NEXT CHANGELOG:
    - muse
  * renamed functions:
    - make_cube -> chill
+   - make_freezer -> freezer
    - next_in -> next_up
  * added frzpop.feet
  * corrected list of requirements in setup.cfg

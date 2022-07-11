@@ -19,12 +19,13 @@ def chill(
     return icecube
 
 
-def make_freezer(
+def freezer(
     note_len: float = 1 / 16, gate: float = 1, nudge: float = 0
 ) -> Callable:
+    """Create a freezer function."""
     note_len *= 4  # midiutil measures time in quarter notes
 
-    def freezer(pitch, vel, time, s, t):
+    def freezer_func(pitch, vel, time, s, t):
         cube_time = time + nudge  # push cube off-grid and maintain time
         cube_len = note_len * gate  # adjust cube length and maintain time
         icecube = chill(pitch, cube_time, cube_len, vel)
@@ -33,7 +34,7 @@ def make_freezer(
             ice_tray.append(icecube)
         return ice_tray, time + note_len
 
-    return freezer
+    return freezer_func
 
 
 def freeze_song(
@@ -46,8 +47,6 @@ def freeze_song(
         filename = dt.strftime("%Y-%m-%d_%H%M%S")
 
     output_file = MIDIFile()
-
-    default_freezer = make_freezer(note_len=1 / 16)  # tracks can share this
 
     for track_number, track in enumerate(song):
         track_name = f"Track {track_number}"
@@ -76,9 +75,8 @@ def freeze_song(
                         freezer = None
                         note = [pitch, vel, freezer]
 
-                    pitch, vel, freezer = note
-                    if freezer is None:
-                        freezer = default_freezer
+                    pitch, vel, freezer_func = note
+                    freezer_func = freezer_func if freezer_func is not None else freezer()
                     ice_tray, time = freezer(pitch, vel, time, s, t)
                     ice_bucket.extend(ice_tray)
                     t += 1
