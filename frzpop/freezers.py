@@ -19,9 +19,7 @@ def chill(
     return icecube
 
 
-def freezer(
-    note_len: float = 1 / 16, gate: float = 1, nudge: float = 0
-) -> Callable:
+def freezer(note_len: float = 1 / 16, gate: float = 1, nudge: float = 0) -> Callable:
     """Create a freezer function."""
     note_len *= 4  # midiutil measures time in quarter notes
 
@@ -113,4 +111,4 @@ if __name__ == "__main__":
         names.remove(name)
     print(", ".join(names))
 
-    print(chill(pitch=None, time=0, note_len=1/4, vel=62))
+    print(chill(pitch=None, time=0, note_len=1 / 4, vel=62))

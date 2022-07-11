@@ -295,7 +295,7 @@ def muse(
     feed_y: int,
     feed_z: int,
     notes: Optional[list] = None,
-    seed=None
+    seed=None,
 ):
     """Emulate the Triadex Muse."""
     if (
@@ -325,12 +325,7 @@ def muse(
         )
         yield notes[scale_degree % len(notes)]
 
-        bit = (
-            all_taps[feed_w]
-            + all_taps[feed_x]
-            + all_taps[feed_y]
-            + all_taps[feed_z]
-        )
+        bit = all_taps[feed_w] + all_taps[feed_x] + all_taps[feed_y] + all_taps[feed_z]
         bit %= 2
 
         shift_register.insert(0, bit)
