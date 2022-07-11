@@ -1,0 +1,13 @@
+pyrrhus = [0, 0]
+iamb = [0, 1]
+trochee = [1, 0]
+spondee = [1, 1]
+
+tricrach = [0, 0, 0]
+dactyl = [0, 1, 1]
+amphibrach = [0, 1, 0]
+anapest = [0, 0, 1]
+bacchius = [0, 1, 1]
+cretic = [1, 0, 1]
+antibacchius = [1, 1, 0]
+molossus = [1, 1, 1]
