@@ -4,7 +4,7 @@ from typing import Callable, Optional
 
 
 def chill(
-    pitch: int, time: int, note_len: int, vel: int
+    pitch: Optional[int], time: int, note_len: float, vel: int
 ) -> Optional[tuple]:
     """Freeze callables and return an icecube."""
     frozen_pitch = pitch
@@ -68,16 +68,15 @@ def freeze_song(
 
                 for note in phrase:
                     if note is None:
-                        note = [None, 0, None]
+                        note = [None, 0, freezer()]
                     if type(note) is int:
                         pitch = note
-                        vel = 80
-                        freezer = None
-                        note = [pitch, vel, freezer]
+                        note = [pitch, 80, freezer()]
 
                     pitch, vel, freezer_func = note
-                    freezer_func = freezer_func if freezer_func is not None else freezer()
-                    ice_tray, time = freezer(pitch, vel, time, s, t)
+                    if freezer_func is None:
+                        freezer_func = freezer()
+                    ice_tray, time = freezer_func(pitch, vel, time, s, t)
                     ice_bucket.extend(ice_tray)
                     t += 1
                 s += 1
