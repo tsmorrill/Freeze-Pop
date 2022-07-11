@@ -2,7 +2,7 @@ from frzpop import additives
 from math import sin, pi, pow
 from typing import Optional
 
-next_in = additives.next_in
+next_up = additives.next_up
 state_machine = additives.state_machine
 sip_water = additives.sip_water
 Random = additives.Random
@@ -47,7 +47,7 @@ def contour(
     multiplier = 1 / max(vals)
     vals = [multiplier * val for val in vals]
 
-    return next_in(vals)
+    return next_up(vals)
 
 
 def euclid(k: int, n: int):
@@ -63,7 +63,7 @@ def euclid(k: int, n: int):
             trigs.append(int(old_res > new_res))
             old_res, new_res = new_res, (new_res + k) % n
 
-    return next_in(trigs)
+    return next_up(trigs)
 
 
 def fractioning(a: int, b: int):
@@ -75,7 +75,7 @@ def fractioning(a: int, b: int):
     for i in range(a - b + 1):
         for j in range(a):
             trigs[i * a + j * b] = 1
-    return next_in(trigs)
+    return next_up(trigs)
 
 
 def guido(lyric: str, gamut: list = None, seed=None):
@@ -131,7 +131,7 @@ def guido(lyric: str, gamut: list = None, seed=None):
         new_note = rng.choices(potential_notes, weights, k=1)[0]
         notes.append(new_note)
         prev_note = new_note
-    return next_in(notes)
+    return next_up(notes)
 
 
 def count_vowels(lyric: str) -> int:
@@ -143,7 +143,7 @@ def sweep(start: float, end: float, steps: int):
     jump = (end - start) / steps
     vals = [start + jump * i for i in range(steps)]
 
-    return next_in(vals)
+    return next_up(vals)
 
 
 def ramp(steps: int):
@@ -160,13 +160,13 @@ def resultant(a: int, b: int):
     trigs = []
     for t in range(a * b):
         trigs.append(int((t % a == 0) or (t % b == 0)))
-    return next_in(trigs)
+    return next_up(trigs)
 
 
 def sine_fixed(length: int, offset: float = 0):
     step = 2 * pi / length
     vals = [sin(step * i + offset) for i in range(length)]
-    return next_in(vals)
+    return next_up(vals)
 
 
 @state_machine

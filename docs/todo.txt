@@ -2,6 +2,8 @@ NEXT CHANGELOG:
 
  * new machines
    - muse
+ * renamed machines:
+   - next_in -> next_up
  * added frzpop.feet
  * corrected list of requirements in setup.cfg
 
@@ -41,6 +43,8 @@ ITEMS BY DIRECTORY/FILENAME:
    - add ninth chords
 
  * dynamics.py
+
+ * feet.py
 
  * freezers.py
    - rename make_freezer -> freezer

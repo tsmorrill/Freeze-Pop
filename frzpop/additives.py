@@ -57,7 +57,7 @@ def choose_from(choices: list, seed=None) -> Generator:
 
 
 @state_machine
-def next_in(queue: list) -> Generator:
+def next_up(queue: list) -> Generator:
     if not queue:
         raise ValueError("queue must be a non-empty list.")
     length = len(queue)

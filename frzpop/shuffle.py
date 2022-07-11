@@ -1,6 +1,6 @@
 from frzpop import additives
 
-next_in = additives.next_in
+next_up = additives.next_up
 sip_water = additives.sip_water
 
 
@@ -23,7 +23,7 @@ def plain_hunt(row: list):
         row_copy = row.copy()
         rows.append(row_copy)
 
-    return next_in(rows)
+    return next_up(rows)
 
 
 if __name__ == "__main__":

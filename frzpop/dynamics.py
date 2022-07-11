@@ -2,7 +2,7 @@ from frzpop import additives
 from math import floor
 
 
-next_in = additives.next_in
+next_up = additives.next_up
 rng = additives.rng
 state_machine = additives.state_machine
 sip_water = additives.sip_water
@@ -12,7 +12,7 @@ def emphasize_16ths(center_vel: int):
     # curiously, identical to ordered dithering numerators
     stress_16ths = [7, -1, 3, -5, 5, -3, 1, -7, 6, -2, 2, -6, 4, -4, 0, -8]
     vels = [center_vel + stress for stress in stress_16ths]
-    return next_in(vels)
+    return next_up(vels)
 
 
 def ppp():
