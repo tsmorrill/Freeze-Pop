@@ -24,8 +24,8 @@ def freezer(note_len: float = 1 / 16, gate: float = 1, nudge: float = 0) -> Call
     note_len *= 4  # midiutil measures time in quarter notes
 
     def freezer_func(pitch, vel, time, s, t):
-        cube_time = time + nudge  # push cube off-grid and maintain time
-        cube_len = note_len * gate  # adjust cube length and maintain time
+        cube_time = time + nudge
+        cube_len = note_len * gate
         icecube = chill(pitch, cube_time, cube_len, vel)
         ice_tray = []
         if icecube is not None:
@@ -110,5 +110,3 @@ if __name__ == "__main__":
     for name in imports:
         names.remove(name)
     print(", ".join(names))
-
-    print(chill(pitch=None, time=0, note_len=1 / 4, vel=62))
