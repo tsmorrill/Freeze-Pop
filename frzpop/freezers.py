@@ -8,14 +8,17 @@ def chill(pitch, time, note_len, vel) -> Optional[tuple]:
     frozen_pitch = pitch
     if callable(pitch):
         frozen_pitch = pitch()
-    if frozen_pitch not in range(128) and frozen_pitch is not None:
-        raise ValueError(
-            f"Pitch must be an integer from 0 to 127, or None. Recieved {frozen_pitch}.")
+    assert (frozen_pitch in range(
+        128) or frozen_pitch is None), f"frozen_pitch must be an integer 0-127 or None. Recieved {frozen_pitch}."
+
+    assert(type(time) == float), f"time must be a float. Recieved {time}."
+    assert(type(note_len) == float), f"note_len must be a float. Recieved {note_len}."
+
     frozen_vel = vel
     if callable(vel):
         frozen_vel = vel()
-    if frozen_vel not in range(128):
-        raise ValueError(f"Velocity must be an integer from 0 to 127. Recieved {frozen_vel}.")
+    assert (frozen_vel in range(128)
+            ), f"frozen_vel must be an integer 0-127. Received {frozen_vel}."
 
     is_rest = frozen_vel == 0 or frozen_pitch is None
     icecube = None if is_rest else (frozen_pitch, time, note_len, frozen_vel)
@@ -114,4 +117,4 @@ if __name__ == "__main__":
         names.remove(name)
     print(", ".join(names))
 
-    freeze_phrase([None], name="test")
+    chill(27, None, 0, 0)
