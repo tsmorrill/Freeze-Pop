@@ -1,4 +1,4 @@
-# written using Freeze Pop v 0.1.2
+# written using Freeze Pop v 0.4.0
 
 from frzpop import dynamics
 from frzpop.freezers import freezer, freeze_section
