@@ -1,5 +1,6 @@
 NEXT CHANGELOG:
 
+
  * new machines
    - muse
  * renamed functions:
@@ -13,8 +14,6 @@ NEXT CHANGELOG:
 
 LOOSE ITEMS:
 
- * dynamics.py is still broken. Fix it.
-   - and check everything in machines that uses next_up
 
  * develop automated tests using the dunder clause in freezers.py
  * check if each script should be importing more from additives
@@ -38,12 +37,9 @@ ITEMS BY DIRECTORY/FILENAME:
      . trap hi hat
    - update all examples to 0.3.1 compatibility
 
+ * __init__.py
 
  * additives.py
-   - next_in -> next_up
-   - import simple machines into machines.py for user availability
-
- * __init__.py
 
  * chords.py
    - add ninth chords
@@ -53,8 +49,6 @@ ITEMS BY DIRECTORY/FILENAME:
  * feet.py
 
  * freezers.py
-   - rename make_freezer -> freezer
-     . this broke something last time
    - add ratchet freezer
    - add echo freezer
    - add conditional freezer
@@ -68,9 +62,15 @@ ITEMS BY DIRECTORY/FILENAME:
      . this is actually a different kind of thing than the machines. maybe a game?
    - bring back 2d heightmaps
 
+ * notes.py
+
+ * quantize.py
+   - add second order quantizer, ie two different scales depending on change sign
+
  * shuffle.py
    - add rotate(phrase)
-   - add random_walk, random_walk_2d
+   - add random_walk
+   - add random_walk_2d
    - research method ringing techniques
      . plain bob minor
    - research FFT techniques
@@ -89,7 +89,3 @@ ITEMS BY DIRECTORY/FILENAME:
      . harmonic minor
      . flamenco mode
      . name isn't right, find who came up with the generalization
-
-
- * quantize.py
-   - add second order quantizer, ie two different scales depending on change sign
