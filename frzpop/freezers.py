@@ -31,7 +31,7 @@ def chill(pitch, time: float, note_len: float, vel) -> Optional[tuple]:
 
 def freezer(note_len: float = 1 / 16, gate: float = 1, nudge: float = 0) -> Callable:
     """Create a freezer function."""
-    note_len *= 4  # midiutil measures time in quarter notes
+    note_len *= 4  # midiutil measures time floats in quarter notes
 
     def freezer_func(pitch, vel, time: float, s: int, t: int) -> tuple[list, float]:
         start = float(time + nudge)
