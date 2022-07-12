@@ -11,7 +11,7 @@ sip_water = additives.sip_water
 def emphasize_16ths(center_vel: int):
     stress_16ths = [7, -1, 3, -5, 5, -3, 1, -7, 6, -2, 2, -6, 4, -4, 0, -8]
     vels = [max(0, min(center_vel + stress, 127)) for stress in stress_16ths]
-    return(next_up(vels))
+    return next_up(vels)
 
 
 ppp = emphasize_16ths(8)  # 0 <= ppp <= 15

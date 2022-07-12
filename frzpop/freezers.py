@@ -8,17 +8,19 @@ def chill(pitch, time, note_len, vel) -> Optional[tuple]:
     frozen_pitch = pitch
     if callable(pitch):
         frozen_pitch = pitch()
-    assert (frozen_pitch in range(
-        128) or frozen_pitch is None), f"frozen_pitch must be an integer 0-127 or None. Recieved {frozen_pitch}."
+    assert (
+        frozen_pitch in range(128) or frozen_pitch is None
+    ), f"frozen_pitch must be an integer 0-127 or None. Recieved {frozen_pitch}."
 
-    assert(type(time) == float), f"time must be a float. Recieved {time}."
-    assert(type(note_len) == float), f"note_len must be a float. Recieved {note_len}."
+    assert type(time) == float, f"time must be a float. Recieved {time}."
+    assert type(note_len) == float, f"note_len must be a float. Recieved {note_len}."
 
     frozen_vel = vel
     if callable(vel):
         frozen_vel = vel()
-    assert (frozen_vel in range(128)
-            ), f"frozen_vel must be an integer 0-127. Received {frozen_vel}."
+    assert frozen_vel in range(
+        128
+    ), f"frozen_vel must be an integer 0-127. Received {frozen_vel}."
 
     is_rest = frozen_vel == 0 or frozen_pitch is None
     icecube = None if is_rest else (frozen_pitch, time, note_len, frozen_vel)
@@ -88,8 +90,14 @@ def freeze_song(
 
     for cube in ice_bucket:
         pitch, time, note_len, vel = cube
-        output_file.addNote(track=track_int, channel=0,
-                            pitch=pitch, time=time, duration=note_len, volume=vel)
+        output_file.addNote(
+            track=track_int,
+            channel=0,
+            pitch=pitch,
+            time=time,
+            duration=note_len,
+            volume=vel,
+        )
 
     filename = f"{filename}.mid"
     with open(filename, "wb") as outf:
