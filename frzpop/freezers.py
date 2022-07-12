@@ -5,9 +5,10 @@ from typing import Callable, Optional
 
 def chill(pitch, time: float, note_len: float, vel) -> Optional[tuple]:
     """Freeze callables and return an icecube."""
-    frozen_pitch = pitch
     if callable(pitch):
         frozen_pitch = pitch()
+    else:
+        frozen_pitch = pitch
     assert (
         frozen_pitch in range(128) or frozen_pitch is None
     ), f"frozen_pitch must be an integer 0-127 or None. Recieved {frozen_pitch}."
@@ -15,9 +16,10 @@ def chill(pitch, time: float, note_len: float, vel) -> Optional[tuple]:
     assert type(time) == float, f"time must be a float. Recieved {time}."
     assert type(note_len) == float, f"note_len must be a float. Recieved {note_len}."
 
-    frozen_vel = vel
     if callable(vel):
         frozen_vel = vel()
+    else:
+        frozen_vel = vel
     assert frozen_vel in range(
         128
     ), f"frozen_vel must be an integer 0-127. Received {frozen_vel}."
@@ -31,7 +33,7 @@ def freezer(note_len: float = 1 / 16, gate: float = 1, nudge: float = 0) -> Call
     """Create a freezer function."""
     note_len *= 4  # midiutil measures time in quarter notes
 
-    def freezer_func(pitch, vel, time: float, s: int, t: int):
+    def freezer_func(pitch, vel, time: float, s: int, t: int) -> tuple[list, float]:
         start = float(time + nudge)
         duration = float(note_len * gate)
         icecube = chill(pitch, start, duration, vel)
@@ -124,5 +126,3 @@ if __name__ == "__main__":
     for name in imports:
         names.remove(name)
     print(", ".join(names))
-
-    chill(27, None, 0, 0)
