@@ -3,7 +3,7 @@ from midiutil import MIDIFile
 from typing import Callable, Optional
 
 
-def chill(pitch, time, note_len, vel) -> Optional[tuple]:
+def chill(pitch, time: float, note_len: float, vel) -> Optional[tuple]:
     """Freeze callables and return an icecube."""
     frozen_pitch = pitch
     if callable(pitch):
