@@ -7,8 +7,11 @@ def gamut(root: int, intervals: list) -> list:
     specified by root and intervals."""
     root %= 12
     chromatics = [root]
+    note = root
     for interval in intervals:
-        chromatics.append(chromatics[-1] + interval)
+        note += interval
+        note %= 12
+        chromatics.append(note)
     all_octaves = [n for n in range(128) if n % 12 in chromatics]
     return all_octaves
 
@@ -84,3 +87,4 @@ if __name__ == "__main__":
     print("Things to test:")
     print(", ".join(names))
     print()
+    print(gamut(69, [2, 2, 1, 2, 2, 2, 1]))
