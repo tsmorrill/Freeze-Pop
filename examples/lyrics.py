@@ -1,4 +1,4 @@
-# written using Freeze Pop v0.3.0
+# written using Freeze Pop v0.4.0
 
 from frzpop.freezers import freeze_section
 from frzpop.machines import automaton, count_vowels, guido
@@ -13,7 +13,7 @@ lyrics = """
          """
 melody = guido(lyrics)
 
-row_0 = [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, ]
+row_0 = [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0]
 rule30 = automaton(row_0)
 
 section = []
