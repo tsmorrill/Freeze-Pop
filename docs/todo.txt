@@ -9,12 +9,15 @@ NEXT CHANGELOG:
    - next_in -> next_up
  * added frzpop.feet
  * predefined dynamics are now aliases, not function definitions
+ * bugfixes
+   - Fixed a bug where an empty track name was incorrectly checked
  * corrected list of requirements in setup.cfg
 
 
 LOOSE ITEMS:
 
 
+ * check that gamut is behaving correctly
  * make it so dynamcs.f doesn't need parentheses (see plain_hunt.py)
  * develop automated tests using the dunder clause in freezers.py
  * check if each script should be importing more from additives

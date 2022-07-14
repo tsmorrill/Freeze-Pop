@@ -63,7 +63,6 @@ def freeze_song(
             track_name = f"Track {track_int}"
 
         time = 0
-        print(track_name)
         output_file.addTrackName(track_int, time, track_name)
         ice_bucket = []
 
@@ -108,7 +107,11 @@ def freeze_song(
 
 
 def freeze_track(track: list, name: Optional[str] = None):
-    freeze_song(song=[track], filename=name, track_names=[name])
+    if name is not None:
+        track_names = [name]
+    else:
+        track_names = None
+    freeze_song(song=[track], filename=name, track_names=track_names)
 
 
 def freeze_section(section: list, name: Optional[str] = None):
@@ -116,8 +119,7 @@ def freeze_section(section: list, name: Optional[str] = None):
 
 
 def freeze_phrase(phrase: list, name: Optional[str] = None):
-    section = [phrase]
-    freeze_section(section, name)
+    freeze_section(section=[phrase], name=name)
 
 
 if __name__ == "__main__":
