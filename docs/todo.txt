@@ -1,20 +1,6 @@
 NEXT CHANGELOG:
 
 
- * new machines
-   - muse
- * renamed functions:
-   - make_cube -> chill
-   - make_freezer -> freezer
-   - next_in -> next_up
- * added frzpop.feet
- * predefined dynamics are now aliases, not function definitions
- * bugfixes
-   - Fixed a bug where an empty track name was incorrectly checked
-   - Fixed gamut logic
- * corrected list of requirements in setup.cfg
-
-
 LOOSE ITEMS:
 
 
