@@ -4,7 +4,8 @@ NEXT CHANGELOG:
 LOOSE ITEMS:
 
 
- * make it so dynamcs.f doesn't need parentheses (see plain_hunt.py)
+ * pip cannot see versions 0.3.1+. Figure out whats up with that.
+ * make it so dynamics.f doesn't need parentheses (see plain_hunt.py)
  * develop automated tests using the dunder clause in freezers.py
  * check if each script should be importing more from additives
  * get a royalty free image of freezer pops
@@ -21,7 +22,6 @@ ITEMS BY DIRECTORY/FILENAME:
  * /examples/
    - add new examples
      . metrical feet
-     . rhythmic modes
      . passing tones quantization
      . polyrhythm
      . trap hi hat
