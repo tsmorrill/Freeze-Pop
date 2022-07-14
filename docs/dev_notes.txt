@@ -2,6 +2,7 @@ How to upload to PyPi:
 
 1) increment version to next minor revision number
 2) run command "black frzpop"
+3) delete build folder
 3) run command "python3 -m build"
 4) if updating the markdown file, run command "twine check dist/*x.y.z*"
 5) run command "twine upload dist/*x.y.z*"
