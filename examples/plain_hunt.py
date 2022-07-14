@@ -7,7 +7,7 @@ from frzpop.shuffle import plain_hunt
 
 eighth = freezer(note_len=1/8)
 
-f = dynamics.f
+f = dynamics.f()
 
 init_phrase = [[C5, f, eighth],
                [B4, f, eighth],

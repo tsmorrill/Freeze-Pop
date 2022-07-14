@@ -15,6 +15,7 @@ NEXT CHANGELOG:
 LOOSE ITEMS:
 
 
+ * make it so dynamcs.f doesn't need parentheses (see plain_hunt.py)
  * develop automated tests using the dunder clause in freezers.py
  * check if each script should be importing more from additives
  * get a royalty free image of freezer pops
