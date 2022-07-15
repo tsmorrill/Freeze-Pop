@@ -1,6 +1,9 @@
 NEXT CHANGELOG:
 
 
+ * fixed bugs in contour and attenuvert
+
+
 LOOSE ITEMS:
 
 
@@ -44,9 +47,13 @@ ITEMS BY DIRECTORY/FILENAME:
    - add conditional freezer
      . prob freezer is a kind of conditional freezer
      . maybe not...
+   - rename
+     - time -> onset
+     - note_len -> duration
    - consider adding a freezer decorator
 
  * machines.py
+   - update complex machines to check if their input is callable
    - add offset parameter to sine machines
    - add grid machine, accepts controls "up", "down", "left", "right"
      . this is actually a different kind of thing than the machines. maybe a game?
