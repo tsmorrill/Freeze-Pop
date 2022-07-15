@@ -24,6 +24,8 @@ def contour(
     noise = rng(seed=seed)
     if init is None:
         vals = [noise(), noise()]
+    else:
+        vals = init
 
     for i in range(iter):
         new_vals = []
@@ -399,9 +401,8 @@ def pulse(steps: int, duty: float = 0.5):
 
 @state_machine
 def attenuvert(machine, mult: float, offset: float = 0):
-    instance = machine()
     while True:
-        yield mult * instance() + offset
+        yield mult * machine() + offset
 
 
 def offset(machine, offset: float):
@@ -446,5 +447,4 @@ def mix(*machines):  # don't colide names with sum()
 if __name__ == "__main__":
     sip_water()
 
-    Schill = resultant(3, 4)
-    print(Schill(), Schill())
+    print(contour(iter=5, init=[0, 1])())
