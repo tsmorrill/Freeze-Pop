@@ -14,6 +14,7 @@ LOOSE ITEMS:
  * check if each script should be importing more from additives
  * get a royalty free image of freezer pops
  * add note definitions for 19edo
+ * add grid machine, accepts controls "up", "down", "left", "right"
  * figure out what types mypy wants state_machine to output
  * fork into a liveplay project?
 
@@ -51,15 +52,14 @@ ITEMS BY DIRECTORY/FILENAME:
  * machines.py
    - update complex machines to check if their input is callable
    - add offset parameter to sine machines
-   - add grid machine, accepts controls "up", "down", "left", "right"
-     . this is actually a different kind of thing than the machines. maybe a game?
    - bring back 2d heightmaps
 
  * notes.py
 
  * quantize.py
    - quantizer should check if its input is a state machine
-   - add second order quantizer, ie two different scales depending on change sign
+   - add harmonic minor quantizer
+   - add flamenco mode quantizer
 
  * shuffle.py
    - add rotate(phrase)
@@ -79,7 +79,3 @@ ITEMS BY DIRECTORY/FILENAME:
      . major
      . minor
      . Japanese
-   - add "scale pairs"
-     . harmonic minor
-     . flamenco mode
-     . name isn't right, find who came up with the generalization
