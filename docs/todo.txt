@@ -44,6 +44,7 @@ ITEMS BY DIRECTORY/FILENAME:
    - add conditional freezer
      . prob freezer is a kind of conditional freezer
      . maybe not...
+   - add chord freezer
    - rename
      - time -> onset
      - note_len -> duration
