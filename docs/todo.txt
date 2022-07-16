@@ -25,10 +25,8 @@ ITEMS BY DIRECTORY/FILENAME:
  * /examples/
    - add new examples
      . metrical feet
-     . passing tones quantization
      . polyrhythm
      . trap hi hat
-   - update all examples to 0.3.1 compatibility
 
  * __init__.py
 
@@ -62,6 +60,7 @@ ITEMS BY DIRECTORY/FILENAME:
  * notes.py
 
  * quantize.py
+   - quantizer should check if its input is a state machine
    - add second order quantizer, ie two different scales depending on change sign
 
  * shuffle.py
