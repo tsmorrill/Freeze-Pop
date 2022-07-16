@@ -1,6 +1,8 @@
 NEXT CHANGELOG:
 
-
+ * renamed internal variables for clarity
+   - time -> onset
+   - note_len -> duration
  * fixed bugs in contour and attenuvert
 
 
