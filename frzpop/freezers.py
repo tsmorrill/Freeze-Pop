@@ -11,10 +11,10 @@ def chill(pitch, onset: float, duration: float, vel) -> Optional[tuple]:
         frozen_pitch = pitch
     assert (
         frozen_pitch in range(128) or frozen_pitch is None
-    ), f"frozen_pitch must be an integer 0-127 or None. Recieved {frozen_pitch}."
+    ), f"Expected an integer 0-127 or None. Recieved {frozen_pitch}."
 
-    assert type(onset) == float, f"onset must be a float. Recieved {onset}."
-    assert type(duration) == float, f"duration must be a float. Recieved {duration}."
+    assert type(onset) == float, f"Expected a float. Recieved {onset}."
+    assert type(duration) == float, f"Expected a float. Recieved {duration}."
 
     if callable(vel):
         frozen_vel = vel()
@@ -22,7 +22,7 @@ def chill(pitch, onset: float, duration: float, vel) -> Optional[tuple]:
         frozen_vel = vel
     assert frozen_vel in range(
         128
-    ), f"frozen_vel must be an integer 0-127. Received {frozen_vel}."
+    ), f"Expected an integer 0-127. Received {frozen_vel}."
 
     is_rest = frozen_vel == 0 or frozen_pitch is None
     icecube = None if is_rest else (frozen_pitch, onset, duration, frozen_vel)
