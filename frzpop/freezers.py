@@ -3,7 +3,7 @@ from midiutil import MIDIFile
 from typing import Callable, Optional
 
 
-def chill(pitch, time: float, note_len: float, vel) -> Optional[tuple]:
+def chill(pitch, time: float, duration: float, vel) -> Optional[tuple]:
     """Freeze callables and return an icecube."""
     if callable(pitch):
         frozen_pitch = pitch()
@@ -14,7 +14,7 @@ def chill(pitch, time: float, note_len: float, vel) -> Optional[tuple]:
     ), f"frozen_pitch must be an integer 0-127 or None. Recieved {frozen_pitch}."
 
     assert type(time) == float, f"time must be a float. Recieved {time}."
-    assert type(note_len) == float, f"note_len must be a float. Recieved {note_len}."
+    assert type(duration) == float, f"duration must be a float. Recieved {duration}."
 
     if callable(vel):
         frozen_vel = vel()
@@ -25,22 +25,22 @@ def chill(pitch, time: float, note_len: float, vel) -> Optional[tuple]:
     ), f"frozen_vel must be an integer 0-127. Received {frozen_vel}."
 
     is_rest = frozen_vel == 0 or frozen_pitch is None
-    icecube = None if is_rest else (frozen_pitch, time, note_len, frozen_vel)
+    icecube = None if is_rest else (frozen_pitch, time, duration, frozen_vel)
     return icecube
 
 
-def freezer(note_len: float = 1 / 16, gate: float = 1, nudge: float = 0) -> Callable:
+def freezer(duration: float = 1 / 16, gate: float = 1, nudge: float = 0) -> Callable:
     """Create a freezer function."""
-    note_len *= 4  # midiutil measures time floats in quarter notes
+    duration *= 4  # midiutil measures time floats in quarter notes
+    gate *= duration
 
     def freezer_func(pitch, vel, time: float, s: int, t: int) -> tuple[list, float]:
         start = float(time + nudge)
-        duration = float(note_len * gate)
         icecube = chill(pitch, start, duration, vel)
         ice_tray = []
         if icecube is not None:
             ice_tray.append(icecube)
-        return ice_tray, time + note_len
+        return ice_tray, time + duration
 
     return freezer_func
 
@@ -90,13 +90,13 @@ def freeze_song(
                 s += 1
 
     for cube in ice_bucket:
-        pitch, time, note_len, vel = cube
+        pitch, time, duration, vel = cube
         output_file.addNote(
             track=track_int,
             channel=0,
             pitch=pitch,
             time=time,
-            duration=note_len,
+            duration=duration,
             volume=vel,
         )
 
