@@ -26,7 +26,7 @@ A note is a triple of the form (pitch, vel, freezer). Writing a single integer i
 
 ### Pitches
 
-A pitch an integer from 0-127 inclusive. These correspond to the standard MIDI note values. Import convenient aliases for these values from frzpop.notes.
+A pitch an integer from 0-127 inclusive. These correspond to the standard MIDI note values. Convenient aliases for these values can be imported from frzpop.notes.
 
 ### Velocities
 A velocity is an integer from 0-127 inclusive. These correspond to the standard MIDI note values. A velocity of zero will not generate any note events.
