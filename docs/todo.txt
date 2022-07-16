@@ -7,7 +7,6 @@ NEXT CHANGELOG:
 LOOSE ITEMS:
 
 
- * pip cannot see versions 0.3.1+. Figure out whats up with that.
  * make it so dynamics.f doesn't need parentheses (see plain_hunt.py)
  * develop automated tests using the dunder clause in freezers.py
  * check if each script should be importing more from additives
