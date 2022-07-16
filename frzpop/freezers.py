@@ -3,7 +3,7 @@ from midiutil import MIDIFile
 from typing import Callable, Optional
 
 
-def chill(pitch, time: float, duration: float, vel) -> Optional[tuple]:
+def chill(pitch, onset: float, duration: float, vel) -> Optional[tuple]:
     """Freeze callables and return an icecube."""
     if callable(pitch):
         frozen_pitch = pitch()
@@ -13,7 +13,7 @@ def chill(pitch, time: float, duration: float, vel) -> Optional[tuple]:
         frozen_pitch in range(128) or frozen_pitch is None
     ), f"frozen_pitch must be an integer 0-127 or None. Recieved {frozen_pitch}."
 
-    assert type(time) == float, f"time must be a float. Recieved {time}."
+    assert type(onset) == float, f"onset must be a float. Recieved {onset}."
     assert type(duration) == float, f"duration must be a float. Recieved {duration}."
 
     if callable(vel):
@@ -25,7 +25,7 @@ def chill(pitch, time: float, duration: float, vel) -> Optional[tuple]:
     ), f"frozen_vel must be an integer 0-127. Received {frozen_vel}."
 
     is_rest = frozen_vel == 0 or frozen_pitch is None
-    icecube = None if is_rest else (frozen_pitch, time, duration, frozen_vel)
+    icecube = None if is_rest else (frozen_pitch, onset, duration, frozen_vel)
     return icecube
 
 
@@ -35,8 +35,8 @@ def freezer(duration: float = 1 / 16, gate: float = 1, nudge: float = 0) -> Call
     gate *= duration
 
     def freezer_func(pitch, vel, time: float, s: int, t: int) -> tuple[list, float]:
-        start = float(time + nudge)
-        icecube = chill(pitch, start, duration, vel)
+        onset = float(time + nudge)
+        icecube = chill(pitch, onset, duration, vel)
         ice_tray = []
         if icecube is not None:
             ice_tray.append(icecube)
@@ -90,12 +90,12 @@ def freeze_song(
                 s += 1
 
     for cube in ice_bucket:
-        pitch, time, duration, vel = cube
+        pitch, onset, duration, vel = cube
         output_file.addNote(
             track=track_int,
             channel=0,
             pitch=pitch,
-            time=time,
+            time=onset,
             duration=duration,
             volume=vel,
         )
