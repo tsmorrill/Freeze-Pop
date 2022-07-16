@@ -45,10 +45,10 @@ ITEMS BY DIRECTORY/FILENAME:
      . prob freezer is a kind of conditional freezer
      . maybe not...
    - add chord freezer
+   - add simul freezer (does not increment time)
    - rename
      - time -> onset
      - note_len -> duration
-   - consider adding a freezer decorator
 
  * machines.py
    - update complex machines to check if their input is callable
