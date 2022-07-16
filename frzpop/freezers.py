@@ -29,7 +29,7 @@ def chill(pitch, onset: float, duration: float, vel) -> Optional[tuple]:
     return icecube
 
 
-def freezer(duration: float = 1 / 16, gate: float = 1, nudge: float = 0) -> Callable:
+def freezer(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0) -> Callable:
     """Create a freezer function."""
     duration *= 4  # midiutil measures time floats in quarter notes
     gate *= duration
