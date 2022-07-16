@@ -382,16 +382,14 @@ def xshift(n_0: int):
 
 @state_machine
 def clip(machine, lower: float, upper: float):
-    instance = machine()
     while True:
-        yield max(lower, min(instance(), upper))
+        yield max(lower, min(machine(), upper))
 
 
 @state_machine
 def is_over(machine, threshold: float):
-    instance = machine()
     while True:
-        yield int(instance() > threshold)
+        yield int(machine() > threshold)
 
 
 def pulse(steps: int, duty: float = 0.5):
@@ -411,11 +409,10 @@ def offset(machine, offset: float):
 
 @state_machine
 def skip(machine, batches: int):
-    instance = machine()
     while True:
-        yield instance()
+        yield machine()
         for _ in range(batches - 1):
-            instance()
+            machine()
 
 
 # machines which input multiple other machines
@@ -427,10 +424,9 @@ def interleave(*machines):
     if not machines:
         raise ValueError("interleave requires a nonempty list of machines.")
     length = len(machines)
-    instances = [machine() for machine in machines]
     i = 0
     while True:
-        yield instances[i]()
+        yield machines[i]()
         i += 1
         i %= length
 
@@ -439,9 +435,8 @@ def interleave(*machines):
 def mix(*machines):  # don't colide names with sum()
     if not machines:
         raise ValueError("mix requires a nonempty list of machines.")
-    instances = [machine() for machine in machines]
     while True:
-        yield sum(instance() for instance in instances)
+        yield sum(machine() for machine in machines)
 
 
 if __name__ == "__main__":
