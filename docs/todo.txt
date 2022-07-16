@@ -42,13 +42,9 @@ ITEMS BY DIRECTORY/FILENAME:
    - add ratchet freezer
    - add echo freezer
    - add conditional freezer
-     . prob freezer is a kind of conditional freezer
-     . maybe not...
+   - add prob freezer
    - add chord freezer
    - add simul freezer (does not increment time)
-   - rename
-     - time -> onset
-     - note_len -> duration
 
  * machines.py
    - update complex machines to check if their input is callable
