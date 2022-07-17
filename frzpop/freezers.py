@@ -29,7 +29,7 @@ def chill(pitch, onset: float, duration: float, vel) -> Optional[tuple]:
     return icecube
 
 
-def freezer(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0) -> Callable:
+def freezer(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0, advance_time: bool = True) -> Callable:
     """Create a freezer function."""
     duration *= 4  # midiutil measures time floats in quarter notes
     gate *= duration
@@ -40,9 +40,15 @@ def freezer(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0) -> Ca
         ice_tray = []
         if icecube is not None:
             ice_tray.append(icecube)
-        return ice_tray, time + duration
+        if advance_time:
+            time += duration
+        return ice_tray, time
 
     return freezer_func
+
+
+def simul(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0) -> Callable:
+    return freezer(duration=duration, gate=gate, nudge=nudge, advance_time=False)
 
 
 def freeze_song(

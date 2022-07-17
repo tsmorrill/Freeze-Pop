@@ -47,7 +47,8 @@ ITEMS BY DIRECTORY/FILENAME:
    - add conditional freezer
    - add prob freezer
    - add chord freezer
-   - add simul freezer (does not increment time)
+   - are there actually uses for the t variable?
+   - split off freeze_foo functions into midi.py?
 
  * machines.py
    - update complex machines to check if their input is callable
