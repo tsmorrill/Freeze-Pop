@@ -87,7 +87,7 @@ def freeze_song(
                         note = [None, 0, freezer()]
                     if type(note) is int:
                         pitch = note
-                        note = [pitch, 80, freezer()]
+                        note = [pitch, 92, freezer()]
 
                     pitch, vel, freezer_func = note
                     if freezer_func is None:
