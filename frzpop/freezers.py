@@ -11,7 +11,7 @@ def try_calling(x):
     return output
 
 
-def chill(pitch: int, onset: float, duration: float, vel: int) -> tuple:
+def check(pitch: int, onset: float, duration: float, vel: int) -> tuple:
     """Check types and return an icecube."""
     assert (
         pitch in range(128)
@@ -21,7 +21,6 @@ def chill(pitch: int, onset: float, duration: float, vel: int) -> tuple:
     assert vel in range(
         128
     ), f"Expected an integer 0-127. Received {vel}."
-    return (pitch, onset, duration, vel)
 
 
 def freezer(
@@ -38,9 +37,10 @@ def freezer(
         pitch = try_calling(pitch)
         onset = float(time + nudge)
         vel = try_calling(vel)
+        check(pitch, onset, duration, vel)
         ice_tray = []
-        if pitch is not None and vel != 0:
-            icecube = chill(pitch, onset, duration, vel)
+        if vel != 0:
+            icecube = (pitch, onset, duration, vel)
             ice_tray.append(icecube)
         if advance_time:
             time += duration
@@ -78,13 +78,13 @@ def freeze_song(
             s = 0  # phrase counter
 
             for phrase in section:
-                if callable(phrase):
-                    phrase = phrase()
+                phrase = try_calling(phrase)
                 t = 0  # note counter
 
                 for note in phrase:
+                    note = try_calling(note)
                     if note is None:
-                        note = [None, 0, freezer()]
+                        note = [0, 0, freezer()]
                     if type(note) is int:
                         pitch = note
                         note = [pitch, 92, freezer()]
