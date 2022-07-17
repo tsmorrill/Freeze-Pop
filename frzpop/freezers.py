@@ -11,30 +11,17 @@ def try_calling(x) -> Optional[int]:
     return output
 
 
-def chill(pitch, onset: float, duration: float, vel) -> Optional[tuple]:
-    """Freeze callables and return an icecube."""
-    if callable(pitch):
-        frozen_pitch = pitch()
-    else:
-        frozen_pitch = pitch
+def chill(pitch: int, onset: float, duration: float, vel: int) -> tuple:
+    """Check types and return an icecube."""
     assert (
-        frozen_pitch in range(128) or frozen_pitch is None
-    ), f"Expected an integer 0-127 or None. Recieved {frozen_pitch}."
-
+        pitch in range(128)
+    ), f"Expected an integer 0-127 or None. Recieved {pitch}."
     assert type(onset) == float, f"Expected a float. Recieved {onset}."
     assert type(duration) == float, f"Expected a float. Recieved {duration}."
-
-    if callable(vel):
-        frozen_vel = vel()
-    else:
-        frozen_vel = vel
-    assert frozen_vel in range(
+    assert vel in range(
         128
-    ), f"Expected an integer 0-127. Received {frozen_vel}."
-
-    is_rest = frozen_vel == 0 or frozen_pitch is None
-    icecube = None if is_rest else (frozen_pitch, onset, duration, frozen_vel)
-    return icecube
+    ), f"Expected an integer 0-127. Received {vel}."
+    return (pitch, onset, duration, vel)
 
 
 def freezer(
@@ -48,10 +35,12 @@ def freezer(
     gate *= duration
 
     def freezer_func(pitch, vel, time: float, s: int, t: int) -> tuple[list, float]:
+        pitch = try_calling(pitch)
         onset = float(time + nudge)
-        icecube = chill(pitch, onset, duration, vel)
+        vel = try_calling(vel)
         ice_tray = []
-        if icecube is not None:
+        if pitch is not None and vel != 0:
+            icecube = chill(pitch, onset, duration, vel)
             ice_tray.append(icecube)
         if advance_time:
             time += duration

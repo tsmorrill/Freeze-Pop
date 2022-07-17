@@ -42,7 +42,6 @@ ITEMS BY DIRECTORY/FILENAME:
  * feet.py
 
  * freezers.py
-   - move type checking from chill to freezer_func
    - add ratchet freezer
    - add echo freezer
    - add conditional freezer
