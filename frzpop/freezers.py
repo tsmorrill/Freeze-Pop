@@ -15,9 +15,8 @@ def try_calling(x):
     return output
 
 
-def check(pitch: int, onset: float, duration: float, vel: int) -> tuple:
+def check(pitch: int, duration: float, vel: int) -> tuple:
     assert pitch in range(128), f"Expected an integer 0-127. Recieved {pitch}."
-    assert type(onset) == float, f"Expected a float. Recieved {onset}."
     assert type(duration) == float, f"Expected a float. Recieved {duration}."
     assert vel in range(128), f"Expected an integer 0-127. Received {vel}."
 
@@ -43,11 +42,10 @@ def freezer(
 
     def freezer_func(pitch, vel, time: float, s: int, t: int) -> tuple[list, float]:
         pitch = try_calling(pitch)
-        onset = float(time + nudge)
         if ratcheting:
             repeats_offset = duration / repeats
         vel = try_calling(vel)
-        check(pitch, onset, duration, vel)
+        check(pitch, duration, vel)
         if prob >= 1.0:
             under_prob = True
         else:
@@ -56,7 +54,7 @@ def freezer(
         ice_tray = []
         if under_prob and condition and vel != 0:
             for r in range(repeats):
-                cube_onset = onset + r * repeats_offset
+                cube_onset = time + nudge + r * repeats_offset
                 cube_duration = duration * gate
                 if ratcheting:
                     cube_duration /= repeats

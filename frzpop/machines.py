@@ -292,17 +292,17 @@ def muse(
     out_b: int,
     out_c: int,
     out_d: int,
-    feed_w: int,
-    feed_x: int,
-    feed_y: int,
-    feed_z: int,
+    in_w: int,
+    in_x: int,
+    in_y: int,
+    in_z: int,
     notes: Optional[list] = None,
     seed=None,
 ):
     """Emulate the Triadex Muse."""
     if (
-        min(out_a, out_b, out_c, out_d, feed_w, feed_x, feed_y, feed_z) < 0
-        or max(out_a, out_b, out_c, out_d, feed_w, feed_x, feed_y, feed_z) > 39
+        min(out_a, out_b, out_c, out_d, in_w, in_x, in_y, in_z) < 0
+        or max(out_a, out_b, out_c, out_d, in_w, in_x, in_y, in_z) > 39
     ):
         raise ValueError("tap locations must be integers from 0 to 39.")
 
@@ -327,8 +327,9 @@ def muse(
         )
         yield notes[scale_degree % len(notes)]
 
-        bit = all_taps[feed_w] + all_taps[feed_x] + all_taps[feed_y] + all_taps[feed_z]
-        bit %= 2
+        bit = (
+            all_taps[in_w] + all_taps[in_x] + all_taps[in_y] + all_taps[in_z]
+        ) % 2
 
         shift_register.insert(0, bit)
         shift_register.pop()

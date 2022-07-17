@@ -1,5 +1,9 @@
 NEXT CHANGELOG:
 
+ * added new freezers
+   - cond
+   - prob
+   - ratchet
  * renamed internal variables for clarity
    - time -> onset
    - note_len -> duration
