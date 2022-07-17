@@ -1,6 +1,10 @@
 from datetime import datetime
+from frzpop import additives
+from math import floor
 from midiutil import MIDIFile
 from typing import Callable, Optional
+
+rng = additives.rng
 
 
 def try_calling(x):
@@ -27,21 +31,43 @@ def freezer(
     duration: float = 1 / 16,
     gate: float = 1.0,
     nudge: float = 0.0,
+    repeats: int = 1,
+    repeats_offset: float = 1 / 16,
+    repeats_decay: float = 1.0,
+    ratcheting: bool = False,
+    prob: float = 1.0,
+    seed=None,
+    condition_freq: int = 0,
+    condition_offset: int = 0,
     advance_time: bool = True,
 ) -> Callable:
     """Create a freezer function."""
     duration *= 4  # midiutil measures time floats in quarter notes
-    gate *= duration
+    if prob < 1.0:
+        noise = rng(seed=seed)
 
     def freezer_func(pitch, vel, time: float, s: int, t: int) -> tuple[list, float]:
         pitch = try_calling(pitch)
         onset = float(time + nudge)
+        if ratcheting:
+            repeats_offset = duration / repeats
         vel = try_calling(vel)
         check(pitch, onset, duration, vel)
+        if prob >= 1.0:
+            under_prob = True
+        else:
+            under_prob = noise() > prob
+        condition = s % condition_freq == condition_offset
         ice_tray = []
-        if vel != 0:
-            icecube = (pitch, onset, duration, vel)
-            ice_tray.append(icecube)
+        if under_prob and condition and vel != 0:
+            for r in range(repeats):
+                cube_onset = onset + r * repeats_offset
+                cube_duration = duration * gate
+                if ratcheting:
+                    cube_duration /= repeats
+                cube_vel = floor(vel * repeats_decay ** r)
+                cube = (pitch, cube_onset, cube_duration, cube_vel)
+                ice_tray.append(cube)
         if advance_time:
             time += duration
         return ice_tray, time
@@ -49,8 +75,20 @@ def freezer(
     return freezer_func
 
 
+def cond(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0, freq: int = 0, offset: int = 0) -> Callable:
+    return freezer(duration=duration, gate=gate, nudge=nudge, condition_freq=freq, condition_offset=offset)
+
+
+def prob(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0, prob: float = 1.0, seed=None) -> Callable:
+    return freezer(duration=duration, gate=gate, nudge=nudge, prob=prob, seed=seed)
+
+
 def simul(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0) -> Callable:
     return freezer(duration=duration, gate=gate, nudge=nudge, advance_time=False)
+
+
+def ratchet(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0, ratchets: int = 1) -> Callable:
+    return freezer(duration=duration, gate=gate, nudge=nudge, repeats=ratchets, ratcheting=True)
 
 
 def freeze_song(

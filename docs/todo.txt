@@ -43,10 +43,7 @@ ITEMS BY DIRECTORY/FILENAME:
  * feet.py
 
  * freezers.py
-   - add ratchet freezer
    - add echo freezer
-   - add conditional freezer
-   - add prob freezer
    - add chord freezer
    - are there actually uses for the t variable?
    - split off freeze_foo functions into midi.py?
