@@ -16,15 +16,10 @@ def try_calling(x):
 
 
 def check(pitch: int, onset: float, duration: float, vel: int) -> tuple:
-    """Check types and return an icecube."""
-    assert (
-        pitch in range(128)
-    ), f"Expected an integer 0-127 or None. Recieved {pitch}."
+    assert pitch in range(128), f"Expected an integer 0-127. Recieved {pitch}."
     assert type(onset) == float, f"Expected a float. Recieved {onset}."
     assert type(duration) == float, f"Expected a float. Recieved {duration}."
-    assert vel in range(
-        128
-    ), f"Expected an integer 0-127. Received {vel}."
+    assert vel in range(128), f"Expected an integer 0-127. Received {vel}."
 
 
 def freezer(
@@ -65,7 +60,7 @@ def freezer(
                 cube_duration = duration * gate
                 if ratcheting:
                     cube_duration /= repeats
-                cube_vel = floor(vel * repeats_decay ** r)
+                cube_vel = floor(vel * repeats_decay**r)
                 cube = (pitch, cube_onset, cube_duration, cube_vel)
                 ice_tray.append(cube)
         if advance_time:
@@ -75,11 +70,29 @@ def freezer(
     return freezer_func
 
 
-def cond(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0, freq: int = 0, offset: int = 0) -> Callable:
-    return freezer(duration=duration, gate=gate, nudge=nudge, condition_freq=freq, condition_offset=offset)
+def cond(
+    duration: float = 1 / 16,
+    gate: float = 1.0,
+    nudge: float = 0.0,
+    freq: int = 0,
+    offset: int = 0,
+) -> Callable:
+    return freezer(
+        duration=duration,
+        gate=gate,
+        nudge=nudge,
+        condition_freq=freq,
+        condition_offset=offset,
+    )
 
 
-def prob(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0, prob: float = 1.0, seed=None) -> Callable:
+def prob(
+    duration: float = 1 / 16,
+    gate: float = 1.0,
+    nudge: float = 0.0,
+    prob: float = 1.0,
+    seed=None,
+) -> Callable:
     return freezer(duration=duration, gate=gate, nudge=nudge, prob=prob, seed=seed)
 
 
@@ -87,8 +100,12 @@ def simul(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0) -> Ca
     return freezer(duration=duration, gate=gate, nudge=nudge, advance_time=False)
 
 
-def ratchet(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0, ratchets: int = 1) -> Callable:
-    return freezer(duration=duration, gate=gate, nudge=nudge, repeats=ratchets, ratcheting=True)
+def ratchet(
+    duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0, ratchets: int = 1
+) -> Callable:
+    return freezer(
+        duration=duration, gate=gate, nudge=nudge, repeats=ratchets, ratcheting=True
+    )
 
 
 def freeze_song(
