@@ -327,9 +327,7 @@ def muse(
         )
         yield notes[scale_degree % len(notes)]
 
-        bit = (
-            all_taps[in_w] + all_taps[in_x] + all_taps[in_y] + all_taps[in_z]
-        ) % 2
+        bit = (all_taps[in_w] + all_taps[in_x] + all_taps[in_y] + all_taps[in_z]) % 2
 
         shift_register.insert(0, bit)
         shift_register.pop()

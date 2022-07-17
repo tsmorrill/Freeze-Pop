@@ -42,8 +42,6 @@ def freezer(
 
     def freezer_func(pitch, vel, time: float, s: int, t: int) -> tuple[list, float]:
         pitch = try_calling(pitch)
-        if ratcheting:
-            repeats_offset = duration / repeats
         vel = try_calling(vel)
         check(pitch, duration, vel)
         if prob >= 1.0:
@@ -54,10 +52,11 @@ def freezer(
         ice_tray = []
         if under_prob and condition and vel != 0:
             for r in range(repeats):
-                cube_onset = time + nudge + r * repeats_offset
                 cube_duration = duration * gate
                 if ratcheting:
                     cube_duration /= repeats
+                    repeats_offset = duration / repeats
+                cube_onset = time + nudge + r * repeats_offset
                 cube_vel = floor(vel * repeats_decay**r)
                 cube = (pitch, cube_onset, cube_duration, cube_vel)
                 ice_tray.append(cube)
@@ -69,11 +68,11 @@ def freezer(
 
 
 def cond(
+    freq: int = 0,
+    offset: int = 0,
     duration: float = 1 / 16,
     gate: float = 1.0,
     nudge: float = 0.0,
-    freq: int = 0,
-    offset: int = 0,
 ) -> Callable:
     return freezer(
         duration=duration,
@@ -85,11 +84,11 @@ def cond(
 
 
 def prob(
+    prob: float = 1.0,
+    seed=None,
     duration: float = 1 / 16,
     gate: float = 1.0,
     nudge: float = 0.0,
-    prob: float = 1.0,
-    seed=None,
 ) -> Callable:
     return freezer(duration=duration, gate=gate, nudge=nudge, prob=prob, seed=seed)
 
@@ -99,7 +98,10 @@ def simul(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0) -> Ca
 
 
 def ratchet(
-    duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0, ratchets: int = 1
+    ratchets: int = 1,
+    duration: float = 1 / 16,
+    gate: float = 1.0,
+    nudge: float = 0.0,
 ) -> Callable:
     return freezer(
         duration=duration, gate=gate, nudge=nudge, repeats=ratchets, ratcheting=True
