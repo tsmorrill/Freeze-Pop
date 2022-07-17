@@ -3,7 +3,7 @@ from midiutil import MIDIFile
 from typing import Callable, Optional
 
 
-def try_calling(x) -> Optional[int]:
+def try_calling(x):
     if callable(x):
         output = x()
     else:
