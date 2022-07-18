@@ -12,7 +12,8 @@ def check(cube: tuple[int, float, float, int]):
     pitch, onset, duration, vel = cube
     assert pitch in range(128), f"Expected an integer 0-127. Recieved {pitch}."
     assert type(onset) == float, f"Expected a float. Recieved {onset}."
-    assert type(duration) == float, f"Expected a float. Recieved {duration}."
+    assert type(
+        duration) == float and duration > 0, f"Expected a positive float. Recieved {duration}."
     assert vel in range(128), f"Expected an integer 0-127. Received {vel}."
 
 
@@ -21,9 +22,9 @@ def freezer(
     gate: float = 1.0,
     nudge: float = 0.0,
     repeats: int = 1,
+    ratcheting: bool = False,
     repeats_offset: float = 1 / 16,
     repeats_decay: float = 1.0,
-    ratcheting: bool = False,
     prob: float = 1.0,
     seed=None,
     condition_freq: int = 0,
@@ -42,16 +43,16 @@ def freezer(
             under_prob = True
         else:
             under_prob = noise() > prob
-        condition = s % condition_freq == condition_offset
+        once_every = s % condition_freq == condition_offset
         ice_tray = []
-        if under_prob and condition and vel != 0:
+        if under_prob and once_every and vel != 0:
+            cube_duration = duration * gate
+            if ratcheting:
+                cube_duration /= repeats
+                repeats_offset = duration / repeats
             for r in range(repeats):
-                cube_duration = duration * gate
-                if ratcheting:
-                    cube_duration /= repeats
-                    repeats_offset = duration / repeats
                 cube_onset = time + nudge + r * repeats_offset
-                cube_vel = floor(vel * repeats_decay**r)
+                cube_vel = floor(vel * repeats_decay ** r)
                 cube = (pitch, cube_onset, cube_duration, cube_vel)
                 check(cube)
                 ice_tray.append(cube)
@@ -99,7 +100,7 @@ def ratchet(
     nudge: float = 0.0,
 ) -> Callable:
     return freezer(
-        duration=duration, gate=gate, nudge=nudge, repeats=ratchets, ratcheting=True
+        duration=duration, gate=gate, nudge=nudge, ratcheting=True, repeats=ratchets
     )
 
 
@@ -120,7 +121,7 @@ def freeze_song(
         else:
             track_name = f"Track {track_int}"
 
-        time = 0
+        time = 0.0
         output_file.addTrackName(track_int, time, track_name)
         ice_bucket = []
 
@@ -135,7 +136,7 @@ def freeze_song(
                     note = try_calling(note)
                     if note is None:
                         note = [0, 0, freezer()]
-                    if type(note) is int:
+                    elif type(note) is int:
                         pitch = note
                         note = [pitch, 92, freezer()]
 
