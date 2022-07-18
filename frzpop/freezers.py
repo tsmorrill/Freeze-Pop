@@ -4,19 +4,14 @@ from math import floor
 from midiutil import MIDIFile
 from typing import Callable, Optional
 
+try_calling = additives.try_calling
 rng = additives.rng
 
 
-def try_calling(x):
-    if callable(x):
-        output = x()
-    else:
-        output = x
-    return output
-
-
-def check(pitch: int, duration: float, vel: int) -> tuple:
+def check(cube: tuple[int, float, float, int]):
+    pitch, onset, duration, vel = cube
     assert pitch in range(128), f"Expected an integer 0-127. Recieved {pitch}."
+    assert type(onset) == float, f"Expected a float. Recieved {onset}."
     assert type(duration) == float, f"Expected a float. Recieved {duration}."
     assert vel in range(128), f"Expected an integer 0-127. Received {vel}."
 
@@ -43,7 +38,6 @@ def freezer(
     def freezer_func(pitch, vel, time: float, s: int, t: int) -> tuple[list, float]:
         pitch = try_calling(pitch)
         vel = try_calling(vel)
-        check(pitch, duration, vel)
         if prob >= 1.0:
             under_prob = True
         else:
@@ -59,6 +53,7 @@ def freezer(
                 cube_onset = time + nudge + r * repeats_offset
                 cube_vel = floor(vel * repeats_decay**r)
                 cube = (pitch, cube_onset, cube_duration, cube_vel)
+                check(cube)
                 ice_tray.append(cube)
         if advance_time:
             time += duration

@@ -2,6 +2,19 @@ from random import Random
 from typing import Callable, Generator
 
 
+def sip_water():
+    """Check that import is working"""
+    print("Sipped a glass of water. Refreshing!")
+
+
+def try_calling(x):
+    if callable(x):
+        output = x()
+    else:
+        output = x
+    return output
+
+
 def gamut(root: int, intervals: list) -> list:
     """Return a list of all MIDI note values which belong to the chord
     specified by root and intervals."""
@@ -14,11 +27,6 @@ def gamut(root: int, intervals: list) -> list:
         chromatics.append(note)
     all_octaves = [n for n in range(128) if n % 12 in chromatics]
     return all_octaves
-
-
-def sip_water():
-    """Check that import is working"""
-    print("Sipped a glass of water. Refreshing!")
 
 
 def state_machine(machine: Callable):
