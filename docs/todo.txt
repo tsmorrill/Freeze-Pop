@@ -47,9 +47,9 @@ ITEMS BY DIRECTORY/FILENAME:
  * feet.py
 
  * freezers.py
-   - add echo freezer
    - add chord freezer
    - are there actually uses for the t variable?
+   - rename check -> _check
    - split off freeze_foo functions into midi.py?
 
  * machines.py
@@ -60,7 +60,8 @@ ITEMS BY DIRECTORY/FILENAME:
  * notes.py
 
  * quantize.py
-   - quantizer should check if its input is a state machine
+   - refactor using try_calling
+   - rename float_to_CC -> force_CC
    - add harmonic minor quantizer
    - add flamenco mode quantizer
 

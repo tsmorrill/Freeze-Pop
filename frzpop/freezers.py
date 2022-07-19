@@ -10,11 +10,14 @@ rng = additives.rng
 
 def check(cube: tuple[int, float, float, int]):
     pitch, onset, duration, vel = cube
-    assert pitch in range(128), f"Expected an integer 0-127. Recieved {pitch}."
-    assert type(onset) == float, f"Expected a float. Recieved {onset}."
-    assert type(
-        duration) == float and duration > 0, f"Expected a positive float. Recieved {duration}."
-    assert vel in range(128), f"Expected an integer 0-127. Received {vel}."
+    err_str = f"Expected an integer 0-127. Recieved {pitch}."
+    assert pitch in range(128), err_str
+    err_str = f"Expected a float. Recieved {onset}."
+    assert type(onset) == float, err_str
+    err_str = f"Expected a positive float. Recieved {duration}."
+    assert type(duration) == float and duration > 0, err_str
+    err_str = f"Expected an integer 0-127. Received {vel}."
+    assert vel in range(128), err_str
 
 
 def freezer(
