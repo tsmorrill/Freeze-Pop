@@ -45,7 +45,7 @@ def freezer(
         if prob >= 1.0:
             under_prob = True
         else:
-            under_prob = noise() > prob
+            under_prob = noise() < prob
         once_every = s % condition_freq == condition_offset
         ice_tray = []
         if under_prob and once_every and vel != 0:
