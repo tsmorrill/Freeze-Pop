@@ -184,39 +184,21 @@ def sine_free(wavelength: float, offset: float = 0):
 
 
 @state_machine
-def automaton(row_0: list = None, rule: int = 30, seed=None):
+def automaton(row: Optional[list] = None, rule: int = 30, seed=None):
     """Generate an elementary cellular automaton with wraparound."""
-    if row_0 is None:
-        row_0 = [int(i == 0) for i in range(8)]
-    row = row_0
+    if row is None:
+        row = [int(i == 0) for i in range(8)]
+    outcomes = [rule >> i & 1 for i in range(8)]
 
-    def unpack(rule):
-        """Calculate binary representation, but backwards to work with list
-        indexing."""
-        results = [rule >> i & 1 for i in range(8)]
-        return results
-
-    results = unpack(rule)
-
-    def iteration(row: list):
-        def look_next_door(index, row):
-            left = row[index - 1]
-            center = row[index]
-            right = row[(index + 1) % len(row)]
-
-            return 4 * left + 2 * center + right
-
-        new_row = []
-
-        for index, _ in enumerate(row):
-            bit = results[look_next_door(index, row)]
-            new_row.append(bit)
-
-        return new_row
+    def next_state(position, row):
+        left = row[position - 1]
+        center = row[position]
+        right = row[(position + 1) % len(row)]
+        return outcomes[4 * left + 2 * center + right]
 
     while True:
         yield row
-        row = iteration(row)
+        row = [next_state(position, row) for position in range(len(row))]
 
 
 @state_machine
