@@ -112,11 +112,11 @@ def guido(lyric: str, gamut: list = None, seed=None):
 
     def weigh(potential_notes, prev_note):
         if prev_note is None:
-            return [1 for note in potential_notes]
-        weights = [
-            1 / max(abs(note - prev_note), 1)  # avoid division by 0
-            for note in potential_notes
-        ]
+            weights = [1 for note in potential_notes]
+        else:
+            weights = [
+                1 / max(abs(note - prev_note), 1) for note in potential_notes
+            ]
         return weights
 
     notes = []
