@@ -30,7 +30,7 @@ def freezer(
     repeats_decay: float = 1.0,
     prob: float = 1.0,
     seed=None,
-    condition_freq: int = 0,
+    condition_freq: int = 1,
     condition_offset: int = 0,
     advance_time: bool = True,
 ) -> Callable:
