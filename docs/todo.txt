@@ -49,7 +49,6 @@ ITEMS BY DIRECTORY/FILENAME:
  * freezers.py
    - add chord freezer
    - are there actually uses for the t variable?
-   - rename check -> _check
    - split off freeze_foo functions into midi.py?
 
  * machines.py

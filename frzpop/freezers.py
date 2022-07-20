@@ -8,7 +8,7 @@ try_calling = additives.try_calling
 rng = additives.rng
 
 
-def check(cube: tuple[int, float, float, int]):
+def _check(cube: tuple[int, float, float, int]):
     pitch, onset, duration, vel = cube
     err_str = f"Expected an integer 0-127. Recieved {pitch}."
     assert pitch in range(128), err_str
@@ -57,7 +57,7 @@ def freezer(
                 cube_onset = time + nudge + r * repeats_offset
                 cube_vel = floor(vel * repeats_decay ** r)
                 cube = (pitch, cube_onset, cube_duration, cube_vel)
-                check(cube)
+                _check(cube)
                 ice_tray.append(cube)
         if advance_time:
             time += duration
