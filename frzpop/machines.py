@@ -313,8 +313,8 @@ def muse(
     if notes is None:
         notes = [0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 24]
 
+    constant_taps = [0, 1]
     while True:
-        constant_taps = [0, 1]
         bit_taps = [(t >> i) & 1 for i in range(5)]
         tri_taps = [int(t % 6 > 2), int(t % 12 > 5)]
         all_taps = constant_taps + shift_register + bit_taps + tri_taps
@@ -327,7 +327,8 @@ def muse(
         )
         yield notes[scale_degree % len(notes)]
 
-        bit = (all_taps[in_w] + all_taps[in_x] + all_taps[in_y] + all_taps[in_z]) % 2
+        bit = all_taps[in_w] + all_taps[in_x] + all_taps[in_y] + all_taps[in_z]
+        bit %= 2
 
         shift_register.insert(0, bit)
         shift_register.pop()
