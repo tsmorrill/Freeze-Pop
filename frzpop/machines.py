@@ -15,7 +15,7 @@ rng = additives.rng
 def contour(
     iter: int,
     init: Optional[list] = None,
-    smoothing: float = 1,
+    smoothing: float = 1.0,
     seed=None,
     truncate: int = -1,
 ):
@@ -28,12 +28,10 @@ def contour(
         vals = init
 
     for i in range(iter):
-        new_vals = []
-
         *head, _ = vals
         _, *tail = vals
         pairs = zip(head, tail)
-
+        new_vals = []
         for a, b in pairs:
             new_vals.append(a)
             midpoint = (a + b) / 2
@@ -41,11 +39,10 @@ def contour(
             new_vals.append(midpoint + displacement)
         new_vals.append(vals[-1])
         vals = new_vals
-
     vals = vals[:truncate]
 
     offset = min(vals)
-    vals = [val + offset for val in vals]
+    vals = [val - offset for val in vals]
     multiplier = 1 / max(vals)
     vals = [multiplier * val for val in vals]
 
