@@ -39,7 +39,13 @@ def freezer(
     if prob < 1.0:
         noise = rng(seed=seed)
 
-    def freezer_func(pitch, vel, time: float, s: int, t: int) -> tuple[list, float]:
+    def freezer_func(
+        pitch,
+        vel,
+        time: float,
+        s: int,
+        t: int,
+    ) -> tuple[list, float]:
         pitch = try_calling(pitch)
         vel = try_calling(vel)
         if prob >= 1.0:
@@ -55,7 +61,7 @@ def freezer(
                 repeats_offset = duration / repeats
             for r in range(repeats):
                 cube_onset = time + nudge + r * repeats_offset
-                cube_vel = floor(vel * repeats_decay ** r)
+                cube_vel = floor(vel * repeats_decay**r)
                 cube = (pitch, cube_onset, cube_duration, cube_vel)
                 _check(cube)
                 ice_tray.append(cube)
@@ -89,11 +95,26 @@ def prob(
     gate: float = 1.0,
     nudge: float = 0.0,
 ) -> Callable:
-    return freezer(duration=duration, gate=gate, nudge=nudge, prob=prob, seed=seed)
+    return freezer(
+        duration=duration,
+        gate=gate,
+        nudge=nudge,
+        prob=prob,
+        seed=seed,
+    )
 
 
-def simul(duration: float = 1 / 16, gate: float = 1.0, nudge: float = 0.0) -> Callable:
-    return freezer(duration=duration, gate=gate, nudge=nudge, advance_time=False)
+def simul(
+    duration: float = 1 / 16,
+    gate: float = 1.0,
+    nudge: float = 0.0,
+) -> Callable:
+    return freezer(
+        duration=duration,
+        gate=gate,
+        nudge=nudge,
+        advance_time=False,
+    )
 
 
 def ratchet(
@@ -103,7 +124,11 @@ def ratchet(
     nudge: float = 0.0,
 ) -> Callable:
     return freezer(
-        duration=duration, gate=gate, nudge=nudge, ratcheting=True, repeats=ratchets
+        duration=duration,
+        gate=gate,
+        nudge=nudge,
+        ratcheting=True,
+        repeats=ratchets,
     )
 
 

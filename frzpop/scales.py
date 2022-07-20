@@ -77,6 +77,4 @@ def messiaen(root: int, mode: int) -> list:
 
 
 if __name__ == "__main__":
-    C = major(60)
-    for i in range(0, len(C), 7):
-        print(C[i : i + 8])
+    ...
