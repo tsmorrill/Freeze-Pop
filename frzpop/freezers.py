@@ -199,8 +199,9 @@ def freeze_section(section: list, name: Optional[str] = None):
     freeze_track(track=[section], name=name)
 
 
-def freeze_phrase(phrase: list, name: Optional[str] = None):
-    freeze_section(section=[phrase], name=name)
+def freeze_phrase(phrase: list, repeats: int = 1, name: Optional[str] = None):
+    section = [phrase for _ in range(repeats)]
+    freeze_section(section=section, name=name)
 
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ NEXT CHANGELOG:
  * added new additives
    - base_2
    - pairs_of
+ * added repeats parameter to freeze_phrase
  * renamed internal variables for clarity
    - time -> onset
    - note_len -> duration
