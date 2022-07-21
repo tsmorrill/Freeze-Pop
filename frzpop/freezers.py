@@ -207,6 +207,5 @@ def freeze_phrase(phrase: list, repeats: int = 1, name: Optional[str] = None):
 if __name__ == "__main__":
     names = [name for name in dir() if not name.startswith("_")]
     imports = ["Callable", "datetime", "MIDIFile", "Optional"]
-    for name in imports:
-        names.remove(name)
+    names = list(set(names) - set(imports))
     print(", ".join(names))
