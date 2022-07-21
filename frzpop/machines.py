@@ -41,11 +41,11 @@ def contour(
     vals = vals[:truncate]
 
     offset = min(vals)
-    vals = map(lambda x: x - offset, vals)
+    vals = [val - offset for val in vals]
     multiplier = 1 / max(vals)
-    vals = map(lambda x: multiplier * x, vals)
+    vals = [multiplier * val for val in vals]
 
-    return next_up(list(vals))
+    return next_up(vals)
 
 
 def euclid(k: int, n: int):
@@ -139,9 +139,9 @@ def count_vowels(lyric: str) -> int:
 
 def sweep(start: float, end: float, steps: int):
     jump = (end - start) / steps
-    vals = map(lambda i: jump * i + start, list(range(steps)))
+    vals = [start + jump * i for i in range(steps)]
 
-    return next_up(list(vals))
+    return next_up(vals)
 
 
 def ramp(steps: int):
@@ -163,11 +163,8 @@ def resultant(a: int, b: int):
 
 def sine_fixed(length: int, offset: float = 0):
     step = 2 * pi / length
-
-    def wave(i: int) -> float:
-        return sin(step * i + offset)
-    vals = map(wave, range(length))
-    return next_up(list(vals))
+    vals = [sin(step * i + offset) for i in range(length)]
+    return next_up(vals)
 
 
 @state_machine
@@ -183,10 +180,11 @@ def sine_free(wavelength: float, offset: float = 0):
 
 
 @state_machine
-def automaton(row: list = [1, 0, 0, 0, 0, 0, 0, 0], rule: int = 30, seed=None):
+def automaton(row: Optional[list] = None, rule: int = 30, seed=None):
     """Generate an elementary cellular automaton with wraparound."""
-    outcomes = map(lambda i: rule >> i & 1, range(8))
-    outcomes = list(outcomes)
+    if row is None:
+        row = [int(i == 0) for i in range(8)]
+    outcomes = [rule >> i & 1 for i in range(8)]
 
     def next_state(position, row):
         left = row[position - 1]
@@ -214,34 +212,40 @@ def circle_map(x_0: float, omega: float, coupling: float):
 
 
 @state_machine
-def duffing(x: float, y: float, a: float = 2.75, b: float = 0.2):
+def duffing(x_0: float, y_0: float, a: float = 2.75, b: float = 0.2):
     """Generate the Duffing map."""
+    x, y = x_0, x_0
+
     while True:
         yield x
         x, y = y, -b * x + a * y - y**3
 
 
 @state_machine
-def gingerbread(x: float, y: float, a: float = 1, b: float = 1):
+def gingerbread(x_0: float, y_0: float, a: float = 1, b: float = 1):
     """Generate the Gingerbreadman map."""
+    x, y = x_0, y_0
+
     while True:
         yield x
         x, y = 1 - a * y + b * abs(x), x
 
 
 @state_machine
-def henon(x: float, y: float, a: float = 1.4, b: float = 0.3):
+def henon(x_0: float, y_0: float, a: float = 1.4, b: float = 0.3):
     """Generate the Henon map."""
+    x, y = x_0, y_0
+
     while True:
         yield x
         x, y = 1 - a * x**2 + y, b * x
 
 
 @state_machine
-def lfsr(n: int = 1):
+def lfsr(n_0: int = 1):
     """Generate a 16-bit linear feedback shift register."""
     modulus = 1 << 16
-    n %= modulus
+    n = n_0 % modulus
     n += int(n == 0)  # don't initialize on 0
     while True:
         yield n
@@ -251,8 +255,10 @@ def lfsr(n: int = 1):
 
 
 @state_machine
-def logistic(x: float, r: float = 3.56995):
+def logistic(x_0: float, r: float = 3.56995):
     """Generate the logistic map."""
+    x = x_0
+
     while True:
         yield x
         x = r * x * (1 - x)
