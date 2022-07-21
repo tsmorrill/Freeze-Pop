@@ -7,6 +7,15 @@ def sip_water():
     print("Sipped a glass of water. Refreshing!")
 
 
+def base_2(*args) -> int:
+    sum = 0
+    power = 0
+    for bit in args[::-1]:
+        sum += bit * 2**power
+        power += 1
+    return sum
+
+
 def try_calling(x):
     if callable(x):
         output = x()
@@ -27,6 +36,12 @@ def gamut(root: int, intervals: list) -> list:
         chromatics.append(note)
     all_octaves = [n for n in range(128) if n % 12 in chromatics]
     return all_octaves
+
+
+def pairs_of(list: list) -> list:
+    *head, _ = list
+    _, *tail = list
+    return zip(head, tail)
 
 
 def state_machine(machine: Callable):
@@ -95,4 +110,4 @@ if __name__ == "__main__":
     print("Things to test:")
     print(", ".join(names))
     print()
-    print(gamut(69, [2, 2, 1, 2, 2, 2, 1]))
+    print(base_2(1, 1, 1, 0))

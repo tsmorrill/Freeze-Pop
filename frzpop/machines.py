@@ -1,12 +1,14 @@
-from frzpop import additives
+from frzpop.additives import (
+    base_2,
+    next_up,
+    pairs_of,
+    Random,
+    rng,
+    state_machine,
+    sip_water,
+)
 from math import sin, pi, pow
 from typing import Optional
-
-next_up = additives.next_up
-state_machine = additives.state_machine
-sip_water = additives.sip_water
-Random = additives.Random
-rng = additives.rng
 
 
 # undecorated machines and their derivatives
@@ -28,11 +30,8 @@ def contour(
         vals = init
 
     for i in range(iter):
-        *head, _ = vals
-        _, *tail = vals
-        pairs = zip(head, tail)
         new_vals = []
-        for a, b in pairs:
+        for a, b in pairs_of(vals):
             new_vals.append(a)
             midpoint = (a + b) / 2
             displacement = (2 * noise() - 1) * pow(2, -smoothing * (i + 1))
@@ -191,7 +190,7 @@ def automaton(row: Optional[list] = None, rule: int = 30, seed=None):
         left = row[position - 1]
         center = row[position]
         right = row[(position + 1) % len(row)]
-        return outcomes[4 * left + 2 * center + right]
+        return outcomes[base_2(left, center, right)]
 
     while True:
         yield row
@@ -285,29 +284,27 @@ def muse(
     ):
         raise ValueError("tap locations must be integers from 0 to 39.")
 
+    if notes is None:
+        notes = [0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 24]
     noise = rng(seed=seed)
     shift_register = [int(noise() > 0.5) for _ in range(31)]
     t = 0
-
-    if notes is None:
-        notes = [0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 24]
-
     constant_taps = [0, 1]
-    while True:
-        bit_taps = [(t >> i) & 1 for i in range(5)]
-        tri_taps = [int(t % 6 > 2), int(t % 12 > 5)]
-        all_taps = constant_taps + shift_register + bit_taps + tri_taps
 
-        scale_degree = (
-            8 * all_taps[out_d]
-            + 4 * all_taps[out_c]
-            + 2 * all_taps[out_b]
-            + all_taps[out_a]
+    while True:
+        bin_taps = [(t >> i) & 1 for i in range(5)]
+        tri_taps = [int(t % 6 > 2), int(t % 12 > 5)]
+        all_taps = constant_taps + shift_register + bin_taps + tri_taps
+
+        scale_degree = base_2(
+            all_taps[out_d],
+            all_taps[out_c],
+            all_taps[out_b],
+            all_taps[out_a],
         )
         yield notes[scale_degree % len(notes)]
 
-        bit = all_taps[in_w] + all_taps[in_x] + all_taps[in_y] + all_taps[in_z]
-        bit %= 2
+        bit = all_taps[in_w] ^ all_taps[in_x] ^ all_taps[in_y] ^ all_taps[in_z]
 
         shift_register.insert(0, bit)
         shift_register.pop()
@@ -383,7 +380,7 @@ def attenuvert(machine, mult: float, offset: float = 0):
 
 
 def offset(machine, offset: float):
-    return attenuvert(machine, mult=1, offset=offset)
+    return attenuvert(machine, mult=1.0, offset=offset)
 
 
 @state_machine

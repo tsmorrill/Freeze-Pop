@@ -4,6 +4,9 @@ NEXT CHANGELOG:
    - cond
    - prob
    - ratchet
+ * added new additives
+   - base_2
+   - pairs_of
  * renamed internal variables for clarity
    - time -> onset
    - note_len -> duration
@@ -37,7 +40,6 @@ ITEMS BY DIRECTORY/FILENAME:
  * __init__.py
 
  * additives.py
-   - move try_calling here
 
  * chords.py
    - add ninth chords
@@ -54,6 +56,7 @@ ITEMS BY DIRECTORY/FILENAME:
  * machines.py
    - update complex machines to check if their input is callable
    - add offset parameter to sine machines
+   - rewrite pulse to look like tri_taps from muse
    - bring back 2d heightmaps
 
  * notes.py
