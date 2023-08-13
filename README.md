@@ -1,6 +1,8 @@
 # Freeze Pop
 Generate MIDI files with tracker-inspired methods.
 
+TODO: Rewrite with less OOP.
+
 ## Objects
 
 ### State Machines
